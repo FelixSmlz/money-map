@@ -35,7 +35,7 @@ class ExpenseController extends Controller
         $expense->user_id = $request->user_id;
         $expense->name = $request->name;
         $expense->amount = $request->amount;
-        $expense->date = now();
+        $expense->date = now(); // Add the current date
         $expense->save();
         return response()->json($expense);
     }
@@ -46,6 +46,10 @@ class ExpenseController extends Controller
     public function show(string $id)
     {
         $expense = Expense::find($id);
+        $authResponse = Gate::inspect('delete', $expense);
+        if ($authResponse->denied()) {
+            return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
+        }
         return response()->json($expense);
     }
 
@@ -69,6 +73,7 @@ class ExpenseController extends Controller
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
         $expense->name = $request->name;
+        $expense->amount = $request->amount;
         $expense->save();
         return response()->json($expense, Response::HTTP_OK);
     }
@@ -79,6 +84,10 @@ class ExpenseController extends Controller
     public function destroy(string $id)
     {
         $expense = Expense::find($id);
+        $authResponse = Gate::inspect('delete', $expense);
+        if ($authResponse->denied()) {
+            return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
+        }
         $expense->delete();
         return response()->json($expense);
     }
