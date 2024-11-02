@@ -16,28 +16,34 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $expenses = Expense::where('user_id', $user->id)->get();
+        $expenses = Expense::where('user_id', Auth::id())->get();
         return response()->json($expenses);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {}
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+
+        $user = Auth::user();
         $expense = new Expense();
-        $expense->user_id = $request->user_id;
         $expense->name = $request->name;
         $expense->amount = $request->amount;
-        $expense->date = now(); // Add the current date
+        $expense->date = $request->date;
+        $expense->category_id = $request->category_id;
+        $expense->user_id = $user->id;
         $expense->save();
-        return response()->json($expense);
+
+        return response()->json($expense, Response::HTTP_CREATED);
     }
 
     /**
@@ -46,11 +52,17 @@ class ExpenseController extends Controller
     public function show(string $id)
     {
         $expense = Expense::find($id);
-        $authResponse = Gate::inspect('delete', $expense);
+        if (!$expense) {
+            return response()->json(['message' => 'Expense not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $authResponse = Gate::inspect('show', $expense);
         if ($authResponse->denied()) {
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
-        return response()->json($expense);
+
+
+        return response()->json($expense, Response::HTTP_OK);
     }
 
     /**
@@ -68,13 +80,21 @@ class ExpenseController extends Controller
     {
 
         $expense = Expense::find($id);
+
         $authResponse = Gate::inspect('update', $expense);
         if ($authResponse->denied()) {
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
+
+        if (!$expense) {
+            return response()->json(['message' => 'Expense not found'], Response::HTTP_NOT_FOUND);
+        }
+
+
         $expense->name = $request->name;
         $expense->amount = $request->amount;
         $expense->save();
+
         return response()->json($expense, Response::HTTP_OK);
     }
 
@@ -84,11 +104,17 @@ class ExpenseController extends Controller
     public function destroy(string $id)
     {
         $expense = Expense::find($id);
-        $authResponse = Gate::inspect('delete', $expense);
+
+        $authResponse = Gate::inspect('destroy', $expense);
         if ($authResponse->denied()) {
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
+
+        if (!$expense) {
+            return response()->json(['message' => 'Expense not found'], Response::HTTP_NOT_FOUND);
+        }
+
         $expense->delete();
-        return response()->json($expense);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

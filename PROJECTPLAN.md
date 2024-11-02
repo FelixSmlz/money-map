@@ -1,96 +1,35 @@
-# MoneyMap API Documentation
+# Money Map Project Plan
+
+## Description
+
+This document provides an overview of the endpoints available in the Money Map API. The API allows users to manage their expenses, categories, budgets, and financial goals. The API is secured using Bearer Tokens, and users must register and log in to access the endpoints.
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Authentication](#authentication)
-3. [Error Handling](#error-handling)
-4. [Pagination](#pagination)
-5. [Filtering](#filtering)
-6. [Sorting](#sorting)
-7. [Searching](#searching)
-8. [Data Validation](#data-validation)
-9. [API Endpoints](#api-endpoints)
-   1. [User Registration and Authentication](#1-user-registration-and-authentication)
+1. [Backend](#backend)
+   1. [Authentication](#1-user-registration-and-authentication)
    2. [User profile management](#2-user-profile-management)
    3. [Expenses](#3-expenses)
    4. [Categories](#4-categories)
    5. [Budgets](#5-budgets)
    6. [Goals](#6-goals)
+   7. [Libraries](#7-libraries-api)
+2. [Frontend](#frontend)
+   1. [Site Map](#site-map)
+   2. [Libraries](#libraries-client)
+3. [Timeline](#timeline)
 
-## Introduction
+# Backend
 
-MoneyMap is an expense tracker that allows users to manage their personal finances, including tracking expenses, categories, budgets, goals, and overall financial health. The API provides endpoints to create, read, update, and delete expenses, categories, budgets, and goals for authenticated users. Users can also manage their accounts and update their profiles.
-
-## Authorization
-
-Each user must authenticate using their login credentials to receive a Bearer Token. The token must be included in the `Authorization` header in the format `Bearer <your_token>` in all subsequent requests. The token is valid until the user logs out or it expires.
-
-## Error Handling
-
-The API returns standard HTTP status codes to indicate the success or failure of a request. In case of an error, the response body will include an `error` object with a `message` field containing a human-readable error message.
-
-```json
-{
-  "error": {
-    "message": "Invalid credentials"
-  }
-}
-```
-
-## Pagination
-
-Some endpoints return a list of items, such as expenses, categories, budgets, and goals. These endpoints support pagination to limit the number of items returned per page. The response includes a `meta` object with information about the pagination, such as the total number of items, the number of items per page, and the current page.
-
-```json
-{
-  "meta": {
-    "total": 100,
-    "per_page": 10,
-    "current_page": 1
-  },
-  "data": [
-    {
-      "id": 1,
-      "name": "Expense 1"
-    },
-    {
-      "id": 2,
-      "name": "Expense 2"
-    }
-  ]
-}
-```
-
-To paginate the results, you can use the `page` query parameter to specify the page number and the `limit` query parameter to specify the number of items per page.
-
-**GET** `/api/expenses?page=2&limit=10`
-
-## Filtering
-
-Some endpoints support filtering the results based on specific criteria. You can use query parameters to filter the results. For example, to filter expenses by category, you can use the `category_id` query parameter.
-
-**GET** `/api/expenses?category_id=1`
-
-## Sorting
-
-Some endpoints support sorting the results based on specific fields. You can use the `sort` query parameter to specify the field to sort by and the `order` query parameter to specify the sort order (`asc` for ascending, `desc` for descending).
-
-**GET** `/api/expenses?sort=date&order=desc`
-
-## Searching
-
-The API supports searching for expenses, categories, budgets, and goals based on specific keywords. You can use the `search` query parameter to perform a search.
-
-**GET** `/api/expenses?search=keyword`
-
-## API Endpoints
+## Endpoints
 
 The API provides the following endpoints for managing users, expenses, categories, budgets, and goals.
 
 ### 1. **User Registration and Authentication**
 
 ### Register a New User
+
+![Protected](https://img.shields.io/badge/Public-blue)
 
 **POST** `/api/register`
 
@@ -122,6 +61,8 @@ Registers a new user by providing the required information. Ensure that the pass
 
 ### Login a New User
 
+![Protected](https://img.shields.io/badge/Public-blue)
+
 **POST** `/api/login`
 
 Logs in an existing user. On success, a **Bearer Token** is returned, which must be used to authenticate future API requests.
@@ -150,6 +91,8 @@ Logs in an existing user. On success, a **Bearer Token** is returned, which must
 
 ### Logout a User
 
+![Protected](https://img.shields.io/badge/Protected-red)
+
 **POST** `/api/logout`
 
 Logs out the authenticated user and invalidates the token.
@@ -165,6 +108,8 @@ Logs out the authenticated user and invalidates the token.
 ### 2. **User profile management**
 
 ### Update profile
+
+![Protected](https://img.shields.io/badge/Protected-red)
 
 **PUT** `/api/user/profile`
 
@@ -194,6 +139,8 @@ Allows an authenticated user to update their profile information.
 
 ### Delete user account
 
+![Protected](https://img.shields.io/badge/Protected-red)
+
 **DELETE** `/api/user/delete`
 
 Deletes the user's account and all associated data. Warning: This action is irreversible.
@@ -207,6 +154,8 @@ Deletes the user's account and all associated data. Warning: This action is irre
 ```
 
 ### 3. **Expenses**
+
+![Protected](https://img.shields.io/badge/Protected-red)
 
 #### Create new expense
 
@@ -329,6 +278,8 @@ Deletes an existing expense.
 ```
 
 ### 4. **Categories**
+
+![Protected](https://img.shields.io/badge/Protected-red)
 
 #### Create new category
 
@@ -458,6 +409,8 @@ Deletes a specific category by its ID.
 
 ### 5. **Budgets**
 
+![Protected](https://img.shields.io/badge/Protected-red)
+
 #### Create new budget
 
 **POST** `/api/budgets`
@@ -501,7 +454,6 @@ Retrieves all budgets created by the user.
     "name": "Groceries",
     "duration_type": "custom",
     "start_date": "2024-10-01",
-    "end_date": "2024-10-22",
     "duration_custom_days": NULL,
     "user_id": 1
   },
@@ -512,7 +464,6 @@ Retrieves all budgets created by the user.
     "name": "Coffee",
     "duration_type": "weekly",
     "start_date": "2024-10-01",
-    "end_date": NULL,
     "duration_custom_days": NULL,
     "user_id": 1
   },
@@ -523,7 +474,6 @@ Retrieves all budgets created by the user.
     "name": "Streaming services",
     "duration_type": "monthly",
     "start_date": "2024-10-01",
-    "end_date": NULL,
     "duration_custom_days": NULL,
     "user_id": 1
   }
@@ -593,6 +543,8 @@ Deletes a specific budget by its ID.
 ```
 
 ### 6. **Goals**
+
+![Protected](https://img.shields.io/badge/Protected-red)
 
 #### Create new goal
 
@@ -719,3 +671,87 @@ Deletes a specific goal by its ID.
   "message": "Goal deleted successfully"
 }
 ```
+
+## Libraries Api
+
+The following libraries could be used to implement the Money Map API:
+
+- **[Sanctum](https://laravel.com/docs/11.x/sanctum)**: Laravel's built-in API token authentication system.‚
+- **[Socialite](https://laravel.com/docs/11.x/socialite)**: Laravel's built-in OAuth authentication system.
+
+# Frontend
+
+## Site Map
+
+The following diagram shows the sites of the app and the functionality they provide:
+
+```plaintext
+MoneyMap Web App
+|
+├── Dashboard                      #Protected
+│   ├── Overview
+│   └── Data Visualizations
+|   ├── Manage Widgets
+|   |── Logout
+|   └── Quick Add Expense/Budget/Goal/Category
+|
+├── Expenses                       #Protected
+│   ├── Add Expense
+│   ├── Edit Expense
+|   ├── Delete Expense
+│   ├── View Expenses
+│   ├── Sort Expenses
+│   ├── Search Expenses
+│   └── Filter Expenses
+|
+├── Control Center                 #Protected
+|   ├── Notifications
+│   ├── Add/Edit/Delete/View Budgets
+│   ├── Add/Edit/Delete/View Goals
+│   └── Add/Edit/Delete/View Categories
+|
+├── Reports                        #Protected
+│   ├── Expense Reports
+│   ├── Income Reports
+│   ├── Budget vs. Actual
+│   └── Goal Progress
+|
+├── User Profile                   #Protected
+|   ├── Edit Profile
+│   ├── Delete Account
+│   └── Logout
+|
+├── Settings                       #Protected
+│   ├── Currency Settings
+│   ├── Notification Settings
+|   ├── Privacy Settings
+│   ├── Theme Settings
+|   |── Timezone Settings
+│   └── Language Settings
+|
+├── Login/Registration              #Public
+│   ├── Login
+│   ├── Register
+│   └── Forgot Password
+|
+└── Help / Documentation            #Public
+    ├── FAQ
+    └── Contact Support
+
+```
+
+## Libraries Client
+
+The following libraries could be used to implement the Money Map Client:
+
+- **[Recharts](https://recharts.org/en-US/)**: A composable charting library built on React components.
+- **[React Toastify](https://www.npmjs.com/package/react-toastify)**: A React notification library.
+- **[Axios](https://axios-http.com/docs/intro)**: A promise-based HTTP client for the browser and Node.js.
+- **[Framer Motion](https://www.framer.com/motion/)**: A production-ready motion library for React.
+- **[Node](https://nodejs.org/en)**: A JavaScript runtime built on Chrome's V8 JavaScript engine.
+
+# Timeline
+
+The following timeline outlines the development milestones for the Money Map project:
+
+### _**[Link to Linear Project](https://linear.app/felixworkspace/project/moneymap-8fa8ce93979f/issues)**_

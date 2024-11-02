@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('name', 250);
             $table->float('amount');
             $table->date('date');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained('users');
             $table->index('user_id');
+            $table->foreignId('category_id')->constrained('categories');
+            $table->index('category_id');
         });
     }
 

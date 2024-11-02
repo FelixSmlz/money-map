@@ -7,6 +7,7 @@ use App\Models\Category;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -33,8 +34,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'color_hex' => 'required|string|regex:/^#([A-Fa-f0-9]{6})$/', // Must be a valid hex color code
+        ]);
+
+        $user = Auth::user();
         $category = new Category();
-        $category->user_id = $request->user_id;
+        $category->user_id = $user->id;
         $category->name = $request->name;
         $category->color_code = $request->color_code;
         $category->save();
@@ -47,6 +54,14 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $category = Category::find($id);
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $authResponse = Gate::inspect('show', $category);
+        if ($authResponse->denied()) {
+            return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
+        }
         return response()->json($category);
     }
 
