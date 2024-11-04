@@ -33,6 +33,12 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:250',
+            'amount' => 'required|numeric|min:0|max:999999',
+            'date' => 'required|date|date_format:Y-m-d',
+            'category_id' => 'exists:categories,id'
+        ]);
 
         $user = Auth::user();
         $expense = new Expense();

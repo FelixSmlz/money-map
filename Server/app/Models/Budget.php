@@ -12,10 +12,10 @@ class Budget extends Model
     protected $fillable = [
         'name',
         'limit',
-        'duration_type',
+        'period',
         'start_date',
         'category_id',
-        'duration_value'
+        'custom_period'
     ];
 
     public function user()

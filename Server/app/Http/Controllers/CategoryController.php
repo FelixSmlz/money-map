@@ -16,8 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $categories = Category::where('user_id', $user->id)->get();
+        $categories = Category::where('user_id', Auth::id())->get();
         return response()->json($categories);
     }
 
@@ -36,7 +35,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'color_hex' => 'required|string|regex:/^#([A-Fa-f0-9]{6})$/', // Must be a valid hex color code
+            'color_code' => 'required|string|regex:/^#([A-Fa-f0-9]{6})$/',
         ]);
 
         $user = Auth::user();
