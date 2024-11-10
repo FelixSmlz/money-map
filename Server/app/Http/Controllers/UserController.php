@@ -77,10 +77,4 @@ class UserController extends Controller
         $user->delete();
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
-
-    public function getByExpenseId(string $id)
-    {
-        $user = Transaction::find($id)->user;
-        return response()->json($user);
-    }
 }
