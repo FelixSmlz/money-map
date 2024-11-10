@@ -19,18 +19,8 @@ Route::middleware('web', 'auth:sanctum')->controller(TransactionController::clas
     Route::delete('transactions/{id}', 'destroy');
 });
 
-// Route::controller(UserController::class)->group(function () {
-//     Route::get('user/get-all', 'index');
-//     Route::get('user/get-by-id/{id}', 'show');
-//     Route::get('user/get-by-expense-id/{id}', 'getByExpenseId');
-//     Route::post('user/insert', 'store');
-//     Route::put('user/update/{id}', 'update');
-//     Route::delete('user/delete/{id}', 'destroy');
-// });
-
 Route::middleware(['web', 'auth:sanctum'])->controller(UserDetailsController::class)->group(function () {
     Route::get('user-details', 'index');
-    Route::get('user-details/{id}', 'show');
     Route::post('user-details', 'store');
     Route::put('user-details/{id}', 'update');
     Route::delete('user-details/{id}', 'destroy');
@@ -65,6 +55,7 @@ Route::middleware('web')->controller(AuthController::class)->group(function () {
     Route::post('login', 'login')->name('login');
     Route::post('logout', 'logout')->middleware('auth:sanctum')->name('logout');
     Route::get('current-user', 'currentUser');
+    Route::delete('delete-account', 'deleteAccount')->middleware('auth:sanctum');
 });
 
 Route::post('/cors', function () {

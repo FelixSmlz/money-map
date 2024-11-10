@@ -84,6 +84,23 @@ class AuthController extends Controller
         ], Response::HTTP_OK);
     }
 
+    public function deleteAccount()
+    {
+        $user = Auth::user();
+
+        if (self::isAdmin($user)) {
+            return response()->json([
+                'message' => 'Admin account cannot be deleted'
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        User::destroy($user->id);
+
+        return response()->json([
+            'message' => 'Account deleted'
+        ], Response::HTTP_OK);
+    }
+
     public static function isAdmin(User $user): bool
     {
         return strtolower($user->name) === strtolower('admin');
