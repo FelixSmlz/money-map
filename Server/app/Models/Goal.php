@@ -12,10 +12,23 @@ class Goal extends Model
     protected $fillable = [
         'name',
         'target_amount',
-        'target_date',
+        'start_date',
+        'end_date',
         'category_id',
     ];
 
+    public function updateSavedAmount()
+    {
+        $savedAmount = Transaction::where('category_id', $this->category_id)
+            ->where('user_id', $this->user_id)
+            ->where('type', 'income')
+            ->where('date', '>=', $this->start_date)
+            ->where('date', '<=', $this->end_date)
+            ->sum('amount');
+
+        $this->current_amount = $savedAmount;
+        $this->save();
+    }
 
     public function user()
     {

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name', 250)->nullable(false);
             $table->string('color_code', 7)->nullable(false);
+            $table->string('icon_name', 50)->nullable(false);
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->index('user_id');
         });

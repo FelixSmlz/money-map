@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name', 250);
-            $table->float('target_amount');
-            $table->float('current_amount')->default(0);
-            $table->date('target_date');
+            $table->string('name', 250)->nullable(false);
+            $table->float('target_amount')->nullable(false)->unsigned();
+            $table->float('current_amount')->default(0)->unsigned()->nullable(true);
+            $table->date('start_date')->nullable(false)->default(now());
+            $table->date('end_date')->nullable(false);
             $table->foreignId('category_id')->constrained('categories');
             $table->index('category_id');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->index('user_id');
         });
     }

@@ -12,6 +12,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'color_code',
+        'icon_name'
     ];
 
     public function user()
@@ -31,6 +32,6 @@ class Category extends Model
 
     public function expenses()
     {
-        return $this->hasMany(Expense::class);
+        return $this->hasMany(Transaction::class);
     }
 }

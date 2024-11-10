@@ -11,30 +11,17 @@ use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $categories = Category::where('user_id', Auth::id())->get();
-        return response()->json($categories);
+        return response()->json(['categories' => $categories], Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:250',
             'color_code' => 'required|string|regex:/^#([A-Fa-f0-9]{6})$/',
         ]);
 
@@ -43,16 +30,16 @@ class CategoryController extends Controller
         $category->user_id = $user->id;
         $category->name = $request->name;
         $category->color_code = $request->color_code;
+        $category->icon_name = $request->icon_name;
         $category->save();
-        return response()->json($category);
+
+        return response()->json(['message' => 'Category created successfully', 'category:' => $category], Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $category = Category::find($id);
+
         if (!$category) {
             return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
         }
@@ -61,27 +48,52 @@ class CategoryController extends Controller
         if ($authResponse->denied()) {
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
-        return response()->json($category);
+
+        return response()->json(['category' => $category], Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    public function update(Request $request, string $id)
     {
-        //
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $authResponse = Gate::inspect('update', $category);
+        if ($authResponse->denied()) {
+            return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
+        }
+
+        $request->validate([
+            'name' => 'string|max:250',
+            'color_code' => 'string|regex:/^#([A-Fa-f0-9]{6})$/',
+        ]);
+
+        $category->name = $request->name;
+        $category->color_code = $request->color_code;
+        $category->icon_name = $request->icon_name;
+        $category->save();
+
+        return response()->json(['message' => 'Category updated successfully', 'category:' => $category], Response::HTTP_OK);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id) {}
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $authResponse = Gate::inspect('delete', $category);
+        if ($authResponse->denied()) {
+            return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
+        }
+
+        $category->delete();
+
+        return response()->json(['message' => 'Category deleted successfully'], Response::HTTP_OK);
     }
 }

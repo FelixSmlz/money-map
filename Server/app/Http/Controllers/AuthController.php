@@ -56,9 +56,9 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $credentials = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required'
+            'name' => 'required|string|max:250|',
+            'email' => 'required|email|unique:users|max:250',
+            'password' => 'required|string|min:6|max:250|regex:/[0-9]/'
         ]);
 
         if (User::where('email', $credentials['email'])->exists()) {

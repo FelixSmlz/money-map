@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Expense;
+use App\Models\Transaction;
 
 class UserController extends Controller
 {
@@ -80,7 +80,7 @@ class UserController extends Controller
 
     public function getByExpenseId(string $id)
     {
-        $user = Expense::find($id)->user;
+        $user = Transaction::find($id)->user;
         return response()->json($user);
     }
 }

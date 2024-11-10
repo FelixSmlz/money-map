@@ -1,21 +1,22 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\UserDetailsController;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('web', 'auth:sanctum')->controller(ExpenseController::class)->group(function () {
-    Route::get('expenses', 'index');
-    Route::get('expenses/{id}', 'show');
-    Route::post('expenses', 'store');
-    Route::put('expenses/{id}', 'update');
-    Route::delete('expenses/{id}', 'destroy');
+Route::middleware('web', 'auth:sanctum')->controller(TransactionController::class)->group(function () {
+    Route::get('transactions', 'index');
+    Route::get('transactions/{id}', 'show');
+    Route::post('transactions', 'store');
+    Route::put('transactions/{id}', 'update');
+    Route::delete('transactions/{id}', 'destroy');
 });
 
 // Route::controller(UserController::class)->group(function () {
@@ -26,6 +27,14 @@ Route::middleware('web', 'auth:sanctum')->controller(ExpenseController::class)->
 //     Route::put('user/update/{id}', 'update');
 //     Route::delete('user/delete/{id}', 'destroy');
 // });
+
+Route::middleware(['web', 'auth:sanctum'])->controller(UserDetailsController::class)->group(function () {
+    Route::get('user-details', 'index');
+    Route::get('user-details/{id}', 'show');
+    Route::post('user-details', 'store');
+    Route::put('user-details/{id}', 'update');
+    Route::delete('user-details/{id}', 'destroy');
+});
 
 Route::middleware(['web', 'auth:sanctum'])->controller(BudgetController::class)->group(function () {
     Route::get('budgets', 'index');

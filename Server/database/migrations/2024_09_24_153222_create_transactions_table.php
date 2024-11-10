@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('name', 250)->nullable(false);
-            $table->float('amount', 6, 2)->unsigned()->nullable(false);
+            $table->float('amount', 6, 2)->nullable(false);
+            $table->enum('type', ['income', 'expense'])->nullable(false);
             $table->date('date')->nullable(false);
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->index('user_id');
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenses');
+        Schema::dropIfExists('transactions');
     }
 };
