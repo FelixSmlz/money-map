@@ -9,11 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserDetailsController extends Controller
 {
+
+    // Get user details
+
     public function index(Request $request)
     {
         $userDetails = UserDetails::where('user_id', Auth::id())->first();
         return response()->json(['user_details' => $userDetails], Response::HTTP_OK);
     }
+
+    // Create user details
 
     public function store(Request $request)
     {
@@ -58,6 +63,8 @@ class UserDetailsController extends Controller
         return response()->json(['user_details' => $userDetails], Response::HTTP_CREATED);
     }
 
+    // Update user details
+
     public function update(Request $request)
     {
         $request->validate([
@@ -99,6 +106,8 @@ class UserDetailsController extends Controller
 
         return response()->json(['user_details' => $userDetails], Response::HTTP_OK);
     }
+
+    // Delete user details
 
     public function destroy(Request $request)
     {

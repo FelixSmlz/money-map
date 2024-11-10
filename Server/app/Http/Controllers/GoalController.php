@@ -10,11 +10,16 @@ use Illuminate\Support\Facades\Gate;
 
 class GoalController extends Controller
 {
+
+    // Get all goals
+
     public function index()
     {
         $goals = Goal::where('user_id', Auth::id())->get();
         return response()->json(['goals' => $goals], Response::HTTP_OK);
     }
+
+    // Create goal
 
     public function store(Request $request)
     {
@@ -41,6 +46,8 @@ class GoalController extends Controller
         return response()->json(['message' => 'Goal created successfully', 'goal:' => $goal], Response::HTTP_CREATED);
     }
 
+    // Get goal by id
+
     public function show(string $id)
     {
         $goal = Goal::find($id);
@@ -56,6 +63,8 @@ class GoalController extends Controller
 
         return response()->json(['goal' => $goal], Response::HTTP_OK);
     }
+
+    // Update goal
 
     public function update(Request $request, string $id)
     {
@@ -92,6 +101,8 @@ class GoalController extends Controller
 
         return response()->json(['message' => 'Goal updated successfully', 'goal:' => $goal], Response::HTTP_OK);
     }
+
+    // Delete goal
 
     public function destroy(string $id)
     {

@@ -19,6 +19,8 @@ class Budget extends Model
         'custom_period'
     ];
 
+    // Update the current amount spent in the budget
+
     public function updateSpentAmount()
     {
         $startDate = match ($this->period) {

@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Gate;
 
 class TransactionController extends Controller
 {
+
+    // Get all transactions
+
     public function index(Request $request)
     {
         $query = Transaction::where('user_id', Auth::id());
@@ -41,6 +44,8 @@ class TransactionController extends Controller
 
         return response()->json(['transactions' => $transactions], Response::HTTP_OK);
     }
+
+    // Create transaction
 
     public function store(Request $request)
     {
@@ -78,6 +83,8 @@ class TransactionController extends Controller
         return response()->json(['message' => 'Transaction created successfully', 'transaction:' => $transaction], Response::HTTP_CREATED);
     }
 
+    // Get transaction by id
+
     public function show(string $id)
     {
         $transaction = Transaction::find($id);
@@ -94,6 +101,8 @@ class TransactionController extends Controller
 
         return response()->json(['transaction' => $transaction], Response::HTTP_OK);
     }
+
+    // Update transaction
 
     public function update(Request $request, string $id)
     {
@@ -141,6 +150,8 @@ class TransactionController extends Controller
 
         return response()->json(['message' => 'Transaction updated successfully', 'transaction:' => $transaction], Response::HTTP_OK);
     }
+
+    // Delete transaction
 
     public function destroy(string $id)
     {

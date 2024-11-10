@@ -11,6 +11,8 @@ use App\Models\User;
 class AuthController extends Controller
 {
 
+    // Logout user
+
     public function logout(Request $request)
     {
 
@@ -23,6 +25,8 @@ class AuthController extends Controller
             'user' => Auth::user()
         ], Response::HTTP_OK);
     }
+
+    // Login user
 
     public function login(Request $request)
     {
@@ -53,6 +57,8 @@ class AuthController extends Controller
         ], Response::HTTP_UNAUTHORIZED);
     }
 
+    // Register user
+
     public function register(Request $request)
     {
         $credentials = $request->validate([
@@ -77,12 +83,16 @@ class AuthController extends Controller
         ], Response::HTTP_CREATED);
     }
 
+    // Get current user
+
     public function currentUser()
     {
         return response()->json([
             'user' => Auth::user()
         ], Response::HTTP_OK);
     }
+
+    // Delete account
 
     public function deleteAccount()
     {
@@ -100,6 +110,8 @@ class AuthController extends Controller
             'message' => 'Account deleted'
         ], Response::HTTP_OK);
     }
+
+    // Check if user is admin
 
     public static function isAdmin(User $user): bool
     {

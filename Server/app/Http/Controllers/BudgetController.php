@@ -14,11 +14,15 @@ use Illuminate\Support\Facades\Gate;
 class BudgetController extends Controller
 {
 
+    // Get all budgets
+
     public function index()
     {
         $budgets = Budget::where('user_id', Auth::id())->get();
         return response()->json(['budgets' => $budgets], Response::HTTP_OK);
     }
+
+    // Create budget
 
     public function store(Request $request)
     {
@@ -46,6 +50,8 @@ class BudgetController extends Controller
         return response()->json(['message' => 'Budget created successfully', 'budget:' => $budget], Response::HTTP_CREATED);
     }
 
+    // Get budget by id
+
     public function show(string $id)
     {
         $budget = Budget::find($id);
@@ -61,6 +67,8 @@ class BudgetController extends Controller
 
         return response()->json(['budget' => $budget], Response::HTTP_OK);
     }
+
+    // Update budget
 
     public function update(Request $request, string $id)
     {
@@ -97,6 +105,8 @@ class BudgetController extends Controller
 
         return response()->json(['message' => 'Budget updated successfully', 'budget:' => $budget], Response::HTTP_OK);
     }
+
+    // Delete budget
 
     public function destroy(string $id)
     {

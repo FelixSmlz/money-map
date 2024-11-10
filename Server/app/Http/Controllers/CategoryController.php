@@ -12,11 +12,15 @@ use Illuminate\Support\Facades\Gate;
 class CategoryController extends Controller
 {
 
+    // Get all categories
+
     public function index()
     {
         $categories = Category::where('user_id', Auth::id())->get();
         return response()->json(['categories' => $categories], Response::HTTP_OK);
     }
+
+    // Create category
 
     public function store(Request $request)
     {
@@ -36,6 +40,8 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Category created successfully', 'category:' => $category], Response::HTTP_CREATED);
     }
 
+    // Get category by id
+
     public function show(string $id)
     {
         $category = Category::find($id);
@@ -52,6 +58,7 @@ class CategoryController extends Controller
         return response()->json(['category' => $category], Response::HTTP_OK);
     }
 
+    // Update category
 
     public function update(Request $request, string $id)
     {
@@ -78,6 +85,8 @@ class CategoryController extends Controller
 
         return response()->json(['message' => 'Category updated successfully', 'category:' => $category], Response::HTTP_OK);
     }
+
+    // Delete category
 
     public function destroy(string $id)
     {

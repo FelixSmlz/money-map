@@ -10,26 +10,17 @@ use App\Models\Transaction;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    // Get all users
+
     public function index()
     {
         $users = User::all();
         return response()->json($users);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    // Create user
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $user = new User();
@@ -40,26 +31,16 @@ class UserController extends Controller
         return response()->json($user, Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Get user by id
+
     public function show(string $id)
     {
         $user = User::find($id);
         return response()->json($user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    // Update user 
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
@@ -68,9 +49,8 @@ class UserController extends Controller
         return response()->json($user, Response::HTTP_OK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Delete user
+
     public function destroy(string $id)
     {
         $user = User::find($id);

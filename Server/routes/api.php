@@ -11,6 +11,8 @@ use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Endpoints for transactions
+
 Route::middleware('web', 'auth:sanctum')->controller(TransactionController::class)->group(function () {
     Route::get('transactions', 'index');
     Route::get('transactions/{id}', 'show');
@@ -19,12 +21,16 @@ Route::middleware('web', 'auth:sanctum')->controller(TransactionController::clas
     Route::delete('transactions/{id}', 'destroy');
 });
 
+// Endpoints for user details
+
 Route::middleware(['web', 'auth:sanctum'])->controller(UserDetailsController::class)->group(function () {
     Route::get('user-details', 'index');
     Route::post('user-details', 'store');
     Route::put('user-details/{id}', 'update');
     Route::delete('user-details/{id}', 'destroy');
 });
+
+// Endpoints for budgets
 
 Route::middleware(['web', 'auth:sanctum'])->controller(BudgetController::class)->group(function () {
     Route::get('budgets', 'index');
@@ -34,6 +40,8 @@ Route::middleware(['web', 'auth:sanctum'])->controller(BudgetController::class)-
     Route::delete('budgets/{id}', 'destroy');
 });
 
+// Endpoints for budgets
+
 Route::middleware(['web', 'auth:sanctum'])->controller(GoalController::class)->group(function () {
     Route::get('goals', 'index');
     Route::get('goals/{id}', 'show');
@@ -42,6 +50,8 @@ Route::middleware(['web', 'auth:sanctum'])->controller(GoalController::class)->g
     Route::delete('goals/{id}', 'destroy');
 });
 
+// Endpoints for categories
+
 Route::middleware(['web', 'auth:sanctum'])->controller(CategoryController::class)->group(function () {
     Route::get('categories', 'index');
     Route::get('categories/{id}', 'show');
@@ -49,6 +59,8 @@ Route::middleware(['web', 'auth:sanctum'])->controller(CategoryController::class
     Route::put('categories/{id}', 'update');
     Route::delete('categories/{id}', 'destroy');
 });
+
+// Endpoints for authentification
 
 Route::middleware('web')->controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
