@@ -14,7 +14,7 @@ class BudgetController extends Controller
 
     // Get all budgets
 
-    public function index()
+    public function index(): JsonResponse
     {
         $budgets = Budget::where('user_id', Auth::id())->get();
         return response()->json(['budgets' => $budgets], Response::HTTP_OK);
@@ -22,7 +22,7 @@ class BudgetController extends Controller
 
     // Create budget
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|max:250',
@@ -50,7 +50,7 @@ class BudgetController extends Controller
 
     // Get budget by id
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $budget = Budget::find($id);
 
@@ -68,7 +68,7 @@ class BudgetController extends Controller
 
     // Update budget
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
         $budget = Budget::find($id);
 
@@ -106,7 +106,7 @@ class BudgetController extends Controller
 
     // Delete budget
 
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $budget = Budget::find($id);
 

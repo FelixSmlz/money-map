@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\UserDetails;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\JsonResponse;
 
 class UserDetailsController extends Controller
 {
 
     // Get user details
 
-    public function index(Request $request)
+    public function index(): JsonResponse
     {
         $userDetails = UserDetails::where('user_id', Auth::id())->first();
         return response()->json(['user_details' => $userDetails], Response::HTTP_OK);
@@ -20,7 +21,7 @@ class UserDetailsController extends Controller
 
     // Create user details
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'first_name' => 'required|string|max:50',
@@ -65,7 +66,7 @@ class UserDetailsController extends Controller
 
     // Update user details
 
-    public function update(Request $request)
+    public function update(Request $request): JsonResponse
     {
         $request->validate([
             'first_name' => 'required|string|max:50',
@@ -109,7 +110,7 @@ class UserDetailsController extends Controller
 
     // Delete user details
 
-    public function destroy(Request $request)
+    public function destroy(Request $request): JsonResponse
     {
         $user = Auth::user();
 

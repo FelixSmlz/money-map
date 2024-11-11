@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\JsonResponse;
 
 class CategoryController extends Controller
 {
 
     // Get all categories
 
-    public function index()
+    public function index(): JsonResponse
     {
         $categories = Category::where('user_id', Auth::id())->get();
         return response()->json(['categories' => $categories], Response::HTTP_OK);
@@ -21,7 +23,7 @@ class CategoryController extends Controller
 
     // Create category
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|max:250',
@@ -41,7 +43,7 @@ class CategoryController extends Controller
 
     // Get category by id
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $category = Category::find($id);
 
@@ -59,7 +61,7 @@ class CategoryController extends Controller
 
     // Update category
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
         $category = Category::find($id);
 
@@ -87,7 +89,7 @@ class CategoryController extends Controller
 
     // Delete category
 
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $category = Category::find($id);
 

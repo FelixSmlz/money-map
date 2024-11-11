@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
 use App\Models\Goal;
 use App\Models\Budget;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\JsonResponse;
 
 class TransactionController extends Controller
 {
 
     // Get all transactions
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $query = Transaction::where('user_id', Auth::id());
 
@@ -47,7 +47,7 @@ class TransactionController extends Controller
 
     // Create transaction
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|max:250',
@@ -85,7 +85,7 @@ class TransactionController extends Controller
 
     // Get transaction by id
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $transaction = Transaction::find($id);
 
@@ -104,7 +104,7 @@ class TransactionController extends Controller
 
     // Update transaction
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
 
         $transaction = Transaction::find($id);
@@ -153,7 +153,7 @@ class TransactionController extends Controller
 
     // Delete transaction
 
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $transaction = Transaction::find($id);
 

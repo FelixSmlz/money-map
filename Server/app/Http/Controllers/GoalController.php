@@ -7,13 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\JsonResponse;
 
 class GoalController extends Controller
 {
 
     // Get all goals
 
-    public function index()
+    public function index(): JsonResponse
     {
         $goals = Goal::where('user_id', Auth::id())->get();
         return response()->json(['goals' => $goals], Response::HTTP_OK);
@@ -21,7 +22,7 @@ class GoalController extends Controller
 
     // Create goal
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|max:250',
@@ -48,7 +49,7 @@ class GoalController extends Controller
 
     // Get goal by id
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $goal = Goal::find($id);
 
@@ -66,7 +67,7 @@ class GoalController extends Controller
 
     // Update goal
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
         $request->validate([
             'name' => 'string|max:250',
@@ -104,7 +105,7 @@ class GoalController extends Controller
 
     // Delete goal
 
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $goal = Goal::find($id);
 
