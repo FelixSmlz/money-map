@@ -2,13 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\UserDetailsController;
-use Illuminate\Container\Attributes\Auth;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Endpoints for transactions
