@@ -6,6 +6,7 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\UserDetailsController;
+use App\Http\Controllers\PlaidController;
 use Illuminate\Support\Facades\Route;
 
 // Endpoints for transactions
@@ -55,6 +56,10 @@ Route::middleware(['web', 'auth:sanctum'])->controller(CategoryController::class
     Route::post('categories', 'store');
     Route::put('categories/{id}', 'update');
     Route::delete('categories/{id}', 'destroy');
+});
+
+Route::middleware(['web', 'auth:sanctum'])->group(function () {
+    Route::post('/plaid/exchange-token', [PlaidController::class, 'exchangePublicToken']);
 });
 
 // Endpoints for authentification

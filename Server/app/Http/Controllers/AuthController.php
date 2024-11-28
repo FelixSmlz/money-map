@@ -64,7 +64,7 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'name' => 'required|string|max:250|',
             'email' => 'required|email|unique:users|max:250',
-            'password' => 'required|confirmed|string|min:6|max:250|regex:/[0-9]/'
+            'password' => 'required|string|min:6|max:250|regex:/[0-9]/'
         ]);
 
         if (User::where('email', $credentials['email'])->exists()) {
