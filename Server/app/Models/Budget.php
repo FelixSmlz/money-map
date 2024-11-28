@@ -31,7 +31,7 @@ class Budget extends Model
         };
 
         if ($startDate === null) {
-            return response()->json(['error' => 'Ungültiger Budgetzeitraum'], 400);
+            return response()->json(['error' => 'Invalid budget period'], 400);
         }
 
 
@@ -43,11 +43,6 @@ class Budget extends Model
 
         $this->current_amount = $spentAmount;
         $this->save();
-
-        return response()->json([
-            'message' => 'Budgetausgaben aktualisiert',
-            'current_amount' => $this->current_amount
-        ], 200);
     }
 
     public function user()

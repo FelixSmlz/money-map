@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Budget;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\JsonResponse;
 
 
 class BudgetController extends Controller
