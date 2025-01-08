@@ -1,5 +1,5 @@
 import Background from "../components/Background";
-import Nav from "../components/Nav";
+import Input from "../components/Input";
 import NavMember from "../components/NavMember";
 
 function Login() {
@@ -10,24 +10,8 @@ function Login() {
         <form action="" className="flex flex-col gap-8">
           <h1 className="text-bg_black font-medium text-lg">Login</h1>
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-              <input
-                type="email"
-                id="email"
-                placeholder="email"
-                className="w-full focus:border-bg_black p-4 border border-light_gray rounded-[15px]"
-              />
-              <small className="text-red hidden">Error message example!</small>
-            </div>
-            <div className="flex flex-col gap-3">
-              <input
-                type="password"
-                id="password"
-                placeholder="password"
-                className="w-full focus:border-bg_black p-4 border border-light_gray rounded-[15px]"
-              />
-              <small className="text-red hidden">Error message example!</small>
-            </div>
+            <Input type="email" id="email" placeholder="email" />
+            <Input type="password" id="password" placeholder="password" />
           </div>
           <button
             type="submit"

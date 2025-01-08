@@ -8,9 +8,9 @@ function Settings() {
   return (
     <div className="px-5 py-10 position-relative">
       <Background />
-      <header className="flex justify-between items-center text-bg_black">
+      <header className="flex justify-between items-center mb-8 text-bg_black">
         <div className="flex items-center space-x-4">
-          <a href="/Settings" className="text-lg text-bg_black font-semibold">
+          <a href="/settings" className="text-lg text-bg_black font-semibold">
             Settings
           </a>
         </div>
