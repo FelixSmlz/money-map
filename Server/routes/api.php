@@ -6,8 +6,11 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\UserDetailsController;
-use App\Http\Controllers\PlaidController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VerificationController;
+use Illuminate\Http\Request;
+
+
 
 // Endpoints for transactions
 
@@ -21,7 +24,7 @@ Route::middleware('web', 'auth:sanctum')->controller(TransactionController::clas
 
 // Endpoints for user details
 
-Route::middleware(['web', 'auth:sanctum'])->controller(UserDetailsController::class)->group(function () {
+Route::middleware(['verified', 'web', 'auth:sanctum'])->controller(UserDetailsController::class)->group(function () {
     Route::get('user-details', 'index');
     Route::post('user-details', 'store');
     Route::put('user-details/{id}', 'update');
@@ -58,9 +61,22 @@ Route::middleware(['web', 'auth:sanctum'])->controller(CategoryController::class
     Route::delete('categories/{id}', 'destroy');
 });
 
-Route::middleware(['web', 'auth:sanctum'])->group(function () {
-    Route::post('/plaid/exchange-token', [PlaidController::class, 'exchangePublicToken']);
-});
+Route::get('/email/verify', function () {
+    return response()->json(['message' => 'You first need to verify your email address'], 403);
+})->middleware('web')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->name('verification.verify');
+
+Route::post('/email/resend', [VerificationController::class, 'resend'])
+    ->middleware(['auth:sanctum'])
+    ->name('verification.resend');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return response()->json(['message' => 'Verification email resent.'], 200);
+})->middleware('web', 'auth:sanctum')->name('verification.notice');
+
 
 // Endpoints for authentification
 

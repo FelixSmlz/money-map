@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -77,8 +78,12 @@ class AuthController extends Controller
 
         $user = User::create($credentials);
 
+        event(new Registered($user));
+
+        $user->sendEmailVerificationNotification();
+
         return response()->json([
-            'message' => 'Registration successful',
+            'message' => 'Registration successful. Please check your email for verification link.',
             'user' => $user
         ], Response::HTTP_CREATED);
     }
