@@ -1,5 +1,4 @@
 import Background from "../components/Background";
-import Switch from "../components/Switch";
 import NavMember from "../components/NavMember";
 import AddMenu from "../components/AddMenu";
 

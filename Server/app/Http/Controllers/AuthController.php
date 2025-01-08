@@ -78,9 +78,9 @@ class AuthController extends Controller
 
         $user = User::create($credentials);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
-        $user->sendEmailVerificationNotification();
+        // $user->sendEmailVerificationNotification();
 
         return response()->json([
             'message' => 'Registration successful. Please check your email for verification link.',

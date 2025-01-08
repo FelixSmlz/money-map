@@ -43,7 +43,7 @@ function Nav() {
                 d="M6 1.66669V4.66669"
                 stroke="#1A1B1C"
                 stroke-width="1.75"
-                stroke-miterlimit="10"
+                strokeMiterlimit="10"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
@@ -51,7 +51,7 @@ function Nav() {
                 d="M14 1.66669V4.66669"
                 stroke="#1A1B1C"
                 stroke-width="1.75"
-                stroke-miterlimit="10"
+                strokeMiterlimit="10"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
@@ -61,7 +61,7 @@ function Nav() {
                 fill="none"
                 stroke="#1A1B1C"
                 stroke-width="1.75"
-                stroke-miterlimit="10"
+                strokeMiterlimit="10"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
@@ -70,7 +70,7 @@ function Nav() {
                 d="M0.974609 8.75677H19.0263"
                 stroke="#1A1B1C"
                 stroke-width="1.75"
-                stroke-miterlimit="10"
+                strokeMiterlimit="10"
                 stroke-linecap="square"
                 stroke-linejoin="round"
               />
