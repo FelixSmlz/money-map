@@ -157,7 +157,7 @@ function History() {
         }
       />
       {/* <FilterableHistoryTable dataType={dataType} data={data} /> */}
-      <Nav />
+
       <AddMenu />
     </div>
   );

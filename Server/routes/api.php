@@ -85,6 +85,7 @@ Route::middleware('web')->controller(AuthController::class)->group(function () {
     Route::post('login', 'login')->name('login');
     Route::post('logout', 'logout')->middleware('auth:sanctum')->name('logout');
     Route::get('current-user', 'currentUser');
+    Route::get('login/status', 'loginStatus')->middleware('auth:sanctum');
     Route::delete('delete-account', 'deleteAccount')->middleware('auth:sanctum');
 });
 

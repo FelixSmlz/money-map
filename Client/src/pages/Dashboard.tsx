@@ -17,7 +17,7 @@ function Dashboard() {
       </div>
       <Analytics />
       <Recent />
-      <NavMember />
+
       <AddMenu />
     </div>
   );

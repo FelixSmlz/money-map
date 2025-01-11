@@ -18,7 +18,6 @@ function EmailVerification() {
           Resend Email
         </button>
       </div>
-      <NavMember />
     </div>
   );
 }

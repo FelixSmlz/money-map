@@ -55,7 +55,7 @@ function Profile() {
           <p className="text-bg_black text-base h-fit mr-auto">John Doe</p>
         </a>
       </div>
-      <NavMember />
+
       <AddMenu />
     </div>
   );

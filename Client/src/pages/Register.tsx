@@ -1,39 +1,68 @@
-import { useState } from "react";
-import axios from "axios";
+import { useId } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { ActionFunctionArgs, redirect, useFetcher } from "react-router";
 import Background from "../components/Background";
-import NavMember from "../components/NavMember";
 import Input from "../components/Input";
+import { register } from "../utils/api";
 
-function Register() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-  });
+type FieldValues = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
-  const [validationErrors, setValidationErrors] = useState<{
-    [key: string]: string[];
-  }>({});
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+export const action = async ({ request }: ActionFunctionArgs) => {
+  console.log(request);
+  const formData = await request.formData();
+  try {
+    await register(formData);
+    return redirect("/login");
+  } catch (error) {
+    console.log("error", error);
+    return redirect("/register");
   }
+};
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/register",
-        formData
-      );
-      window.location.href = "/verify-email";
-    } catch (error: any) {
-      if (error.response && error.response.data) {
-        setValidationErrors(error.response.data.errors);
-      }
-    }
-  }
+const Register = () => {
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   email: "",
+  //   password: "",
+  //   confirmPassword: "",
+  // });
+
+  // const [validationErrors, setValidationErrors] = useState<{
+  //   [key: string]: string[];
+  // }>({});
+
+  // function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  //   setFormData({ ...formData, [e.target.id]: e.target.value });
+  // }
+
+  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
+  // }
+  const nameId = useId();
+  const emailId = useId();
+  const passwordId = useId();
+  const confirmPasswordId = useId();
+
+  const {
+    watch,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>();
+
+  const fetcher = useFetcher<typeof action>();
+
+  const onValid: SubmitHandler<FieldValues> = (_, event) => {
+    fetcher.submit(event?.target, {
+      method: "POST",
+      action: "/register",
+    });
+  };
 
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
@@ -42,43 +71,107 @@ function Register() {
         <form
           noValidate
           action="POST"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onValid)}
           className="flex flex-col gap-8"
         >
           <h1 className="text-bg_black font-medium text-lg">Register</h1>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
             <Input
               type="text"
-              id="name"
+              id={nameId}
               placeholder="name"
-              myOnChange={handleChange}
-              errorMsg={validationErrors.name ?? ""}
+              handler={register("name", {
+                required: { value: true, message: "Name is required" },
+                maxLength: {
+                  value: 250,
+                  message: "Name is too long (max. 250 characters)",
+                },
+              })}
+              errorMsg={errors.name?.message}
             />
             <Input
               type="email"
-              id="email"
+              id={emailId}
+              placeholder="email"
+              handler={register("email", {
+                required: { value: true, message: "Email is required" },
+                maxLength: {
+                  value: 250,
+                  message: "Email is too long (max. 250 characters)",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+                  message: "Email is invalid",
+                },
+              })}
+              errorMsg={errors.email?.message}
+            />
+            <Input
+              type="password"
+              id={passwordId}
+              placeholder="password"
+              handler={register("password", {
+                required: { value: true, message: "Password is required" },
+                minLength: {
+                  value: 6,
+                  message: "Password is too short (min. 6 characters)",
+                },
+                maxLength: {
+                  value: 250,
+                  message: "Password is too long (max. 250 characters)",
+                },
+              })}
+              errorMsg={errors.password?.message}
+            />
+            <Input
+              type="password"
+              id={confirmPasswordId}
+              handler={register("confirmPassword", {
+                required: {
+                  value: true,
+                  message: "Confirming your password is required",
+                },
+                validate: (value) =>
+                  value === watch("password") || "Passwords do not match",
+              })}
+              errorMsg={errors.confirmPassword?.message}
+              placeholder="confirm password"
+            />
+            {/* <Input
+              type="text"
+              id={nameId}
+              placeholder="name"
+              handler={...register("name", { required: "Name is required" })}
+              errorMsg={errors.name ?? ""}
+            />
+            <Input
+              type="email"
+              id={emailId}
               placeholder="email"
               myOnChange={handleChange}
-              errorMsg={validationErrors.email ?? ""}
+              errorMsg={errors.email ?? ""}
             />
             <Input
               type="password"
-              id="password"
+              id={passwordId}
               placeholder="password"
               myOnChange={handleChange}
-              errorMsg={validationErrors.password ?? ""}
-            />
-            <Input
+              errorMsg={errors.password ?? ""}
+            /> */}
+            {/* <Input
               type="password"
-              id="confirm_password"
+              id={confirmPasswordId}
               placeholder="confirm password"
-              myOnChange={handleChange}
-              errorMsg={validationErrors.confirm_password ?? ""}
-            />
+              {...register("confirmPassword", {
+                validate: (value) =>
+                  value === formData.password || "Passwords do not match",
+              })}
+              errorMsg={errors.confirmPassword ?? ""}
+            /> */}
           </div>
           <button
             type="submit"
-            className="bg-bg_black hover:bg-white hover:text-bg_black text-white rounded-[15px] p-3 w-full"
+            className="bg-bg_black hover:bg-white border-2 border-bg_black hover:text-bg_black text-white rounded-[15px] p-3 w-full"
           >
             Register
           </button>
@@ -90,9 +183,8 @@ function Register() {
           </a>
         </form>
       </div>
-      <NavMember />
     </div>
   );
-}
+};
 
 export default Register;

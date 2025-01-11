@@ -58,12 +58,12 @@ class AuthController extends Controller
         ], Response::HTTP_UNAUTHORIZED);
     }
 
-    // Register user
+    // Register users
 
     public function register(Request $request): JsonResponse
     {
         $credentials = $request->validate([
-            'name' => 'required|string|max:250|',
+            'name' => 'required|string|max:250',
             'email' => 'required|email|unique:users|max:250',
             'password' => 'required|string|min:6|max:250|regex:/[0-9]/'
         ]);
@@ -94,6 +94,15 @@ class AuthController extends Controller
     {
         return response()->json([
             'user' => Auth::user()
+        ], Response::HTTP_OK);
+    }
+
+    // Get isLoggedIn
+
+    public function isLoggedIn(): JsonResponse
+    {
+        return response()->json([
+            'isLoggedIn' => Auth::check()
         ], Response::HTTP_OK);
     }
 

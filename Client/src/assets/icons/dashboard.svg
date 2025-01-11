@@ -1,0 +1,24 @@
+<svg
+                width="24"
+                height="24"
+                viewBox="0 0 26 26"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  className=" group-hover:fill-bg_black group-hover:stroke-bg_black"
+                  d="M9.77163 3.07668L3.93246 7.62668C2.95746 8.38501 2.16663 9.99918 2.16663 11.2233V19.2508C2.16663 21.7642 4.21413 23.8225 6.72746 23.8225H19.2725C21.7858 23.8225 23.8333 21.7642 23.8333 19.2617V11.375C23.8333 10.0642 22.9558 8.38501 21.8833 7.63751L15.1883 2.94668C13.6716 1.88501 11.2341 1.93918 9.77163 3.07668Z"
+                  stroke="#1A1B1C"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  className=" group-hover:fill-bg_black group-hover:stroke-white"
+                  d="M13 19.4891V16.2391"
+                  stroke="#1A1B1C"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
