@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Groceries",
+    "amount": 100,
+    "type": "expense",
+    "date": "2025-01-10",
+    "categoryId": 1
+  },
+  {
+    "name": "Salary",
+    "amount": 1000,
+    "type": "income",
+    "date": "2025-01-10",
+    "categoryId": 2
+  },
+  {
+    "name": "Rent",
+    "amount": 500,
+    "type": "expense",
+    "date": "2025-01-10",
+    "categoryId": 3
+  },
+  {
+    "name": "Salary",
+    "amount": 1000,
+    "type": "income",
+    "date": "2025-01-09",
+    "categoryId": 2
+  },
+  {
+    "name": "Groceries",
+    "amount": 100,
+    "type": "expense",
+    "date": "2025-01-09",
+    "categoryId": 1
+  },
+  {
+    "name": "Salary",
+    "amount": 1000,
+    "type": "income",
+    "date": "2025-01-08",
+    "categoryId": 2
+  },
+  {
+    "name": "Rent",
+    "amount": 500,
+    "type": "expense",
+    "date": "2025-01-08",
+    "categoryId": 3
+  },
+  {
+    "name": "Salary",
+    "amount": 1000,
+    "type": "income",
+    "date": "2025-01-08",
+    "categoryId": 2
+  }
+]

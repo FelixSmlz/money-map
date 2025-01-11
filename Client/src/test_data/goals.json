@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Car",
+    "target_amount": 10000,
+    "start_date": "2021-01-01",
+    "end_date": "2021-12-31",
+    "category_id": 1
+  },
+  {
+    "name": "House",
+    "target_amount": 50000,
+    "start_date": "2021-01-01",
+    "end_date": "2021-12-31",
+    "category_id": 2
+  },
+  {
+    "name": "Holiday",
+    "target_amount": 5000,
+    "start_date": "2021-01-01",
+    "end_date": "2021-12-31",
+    "category_id": 3
+  }
+]

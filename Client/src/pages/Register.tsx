@@ -27,7 +27,7 @@ function Register() {
         "http://localhost:8000/api/register",
         formData
       );
-      console.log(response.data);
+      window.location.href = "/verify-email";
     } catch (error: any) {
       if (error.response && error.response.data) {
         setValidationErrors(error.response.data.errors);
@@ -36,9 +36,9 @@ function Register() {
   }
 
   return (
-    <div className="flex items-center px-5 py-10 position-relative">
+    <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full mt-[15%] rounded-[15px] shadow-card p-10">
+      <div className="bg-white w-full rounded-[15px] shadow-card p-10">
         <form
           noValidate
           action="POST"
@@ -52,21 +52,21 @@ function Register() {
               id="name"
               placeholder="name"
               myOnChange={handleChange}
-              errorMsg={validationErrors.confirm_password ?? ""}
+              errorMsg={validationErrors.name ?? ""}
             />
             <Input
               type="email"
               id="email"
               placeholder="email"
               myOnChange={handleChange}
-              errorMsg={validationErrors.confirm_password ?? ""}
+              errorMsg={validationErrors.email ?? ""}
             />
             <Input
               type="password"
               id="password"
               placeholder="password"
               myOnChange={handleChange}
-              errorMsg={validationErrors.confirm_password ?? ""}
+              errorMsg={validationErrors.password ?? ""}
             />
             <Input
               type="password"

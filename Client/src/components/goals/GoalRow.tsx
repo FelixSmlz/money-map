@@ -1,8 +1,24 @@
-function Transaction() {
+import GoalIndicator from "./GoalIndicator";
+
+type Props = {
+  name: string;
+  targetAmount: number;
+  startDate: string;
+  endDate: string;
+  categoryId: number;
+};
+
+const GoalRow = ({
+  name,
+  targetAmount,
+  startDate,
+  endDate,
+  categoryId,
+}: Props) => {
   return (
     <a
       href="/transaction"
-      className="group flex w-full items-center bg-white hover:bg-bg_black rounded-[15px] p-4 gap-5"
+      className="group flex items-center w-full bg-white hover:bg-bg_black rounded-[15px] p-4 gap-5"
     >
       <div className="bg-[rgba(231,231,231,0.3)] h-fit p-4 rounded-[15px]">
         <svg
@@ -53,23 +69,18 @@ function Transaction() {
       <div className="flex justify-between w-full items-center">
         <div className="flex flex-col gap-2">
           <h3 className="text-bg_black group-hover:text-white text-base">
-            Groceries
+            {name}
           </h3>
           <p className="text-light_gray group-hover:text-white text-xs">
-            One-off
+            Weekly
           </p>
         </div>
-        <div className="flex flex-col gap-2">
-          <h3 className="text-red group-hover:text-white text-base text-right">
-            <span>- </span>20,00 €
-          </h3>
-          <p className="text-light_gray group-hover:text-white text-xs text-right">
-            Today
-          </p>
+        <div className="flex flex-col gap-2 ">
+          <GoalIndicator currentAmount={10} targetAmount={30} />
         </div>
       </div>
     </a>
   );
-}
+};
 
-export default Transaction;
+export default GoalRow;

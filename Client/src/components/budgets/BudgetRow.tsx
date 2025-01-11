@@ -1,4 +1,4 @@
-import BudgetIndicator from "./budgets/BudgetIndicator";
+import BudgetIndicator from "./BudgetIndicator";
 
 type Props = {
   name: string;
@@ -9,7 +9,7 @@ type Props = {
   categoryId: number;
 };
 
-const Budget = ({
+const BudgetRow = ({
   name,
   limit,
   period,
@@ -83,4 +83,4 @@ const Budget = ({
   );
 };
 
-export default Budget;
+export default BudgetRow;

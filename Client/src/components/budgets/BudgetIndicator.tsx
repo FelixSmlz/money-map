@@ -21,7 +21,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       style={{ width: width, maxWidth: "80px" }}
     >
       <div className="text-base text-center text-bg_black">
-        {currentAmount}$ / {limit}$
+        {currentAmount}€ / {limit}€
       </div>
       <div
         style={{

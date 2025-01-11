@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import History from "./pages/History";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
+import EmailVerification from "./pages/EmailVerification";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/verify-email",
+        element: <EmailVerification />,
       },
     ],
   },

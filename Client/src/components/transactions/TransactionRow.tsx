@@ -1,10 +1,22 @@
-import GoalIndicator from "./GoalIndicator";
+export type Transaction = {
+  name: string;
+  amount: number;
+  type: string;
+  date: string;
+  categoryId: number;
+};
 
-function Goal() {
+const TransactionRow = ({
+  name,
+  amount,
+  type,
+  date,
+  categoryId,
+}: Transaction) => {
   return (
     <a
       href="/transaction"
-      className="group flex items-center w-full bg-white hover:bg-bg_black rounded-[15px] p-4 gap-5"
+      className="group flex w-full items-center bg-white hover:bg-bg_black rounded-[15px] p-4 gap-5"
     >
       <div className="bg-[rgba(231,231,231,0.3)] h-fit p-4 rounded-[15px]">
         <svg
@@ -54,19 +66,30 @@ function Goal() {
       </div>
       <div className="flex justify-between w-full items-center">
         <div className="flex flex-col gap-2">
-          <h3 className="text-bg_black group-hover:text-white text-base">
-            Coffee
-          </h3>
+          <p className="text-bg_black group-hover:text-white text-base">
+            {name}
+          </p>
           <p className="text-light_gray group-hover:text-white text-xs">
-            Weekly
+            One-off
           </p>
         </div>
-        <div className="flex flex-col gap-2 ">
-          <GoalIndicator currentAmount={10} targetAmount={30} />
+        <div className="flex flex-col gap-2">
+          {type === "income" ? (
+            <p className="text-bg_black group-hover:text-white text-right">
+              {amount}€
+            </p>
+          ) : (
+            <p className="text-red group-hover:text-white text-right">
+              -{amount}€
+            </p>
+          )}
+          <p className="text-light_gray group-hover:text-white text-xs text-right">
+            {date}
+          </p>
         </div>
       </div>
     </a>
   );
-}
+};
 
-export default Goal;
+export default TransactionRow;

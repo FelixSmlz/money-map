@@ -1,12 +1,48 @@
 import Background from "../components/Background";
 import Nav from "../components/Nav";
-import NavMember from "../components/NavMember";
-import Transaction from "../components/Transaction";
-import Goal from "../components/Goal";
-import Budget from "../components/Budget";
 import AddMenu from "../components/AddMenu";
+import transactions from "../test_data/transactions.json";
+import budgets from "../test_data/budgets.json";
+import goals from "../test_data/goals.json";
+import axios from "axios";
+import FilterableHistoryTable from "../components/FilterableHistoryTable";
+import { DataType } from "../components/HistoryTable";
+import { useState, useEffect } from "react";
 
 function History() {
+  const [dataType, setDataType] = useState<DataType>("transactions");
+  // const [data, setData] = useState<any[]>([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       let response;
+  //       switch (dataType) {
+  //         case "transactions":
+  //           response = await axios.get("/api/transactions");
+  //           break;
+  //         case "budgets":
+  //           response = await axios.get("/api/budgets");
+  //           break;
+  //         case "goals":
+  //           response = await axios.get("/api/goals");
+  //           break;
+  //         case "categories":
+  //           response = await axios.get("/api/categories");
+  //           break;
+  //         default:
+  //           return;
+  //       }
+  //       setData(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       setData([]);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [dataType]);
+
   return (
     <div className="px-5 py-10 position-relative">
       <Background />
@@ -18,6 +54,7 @@ function History() {
             id="data_type"
             style={{ width: "100%" }}
             onChange={(e) => {
+              setDataType(e.target.value as DataType);
               e.target.style.width = e.target.value.length + "ch";
             }}
           >
@@ -106,31 +143,20 @@ function History() {
           </a>
         </div>
       </header>
-      <div className="flex flex-col gap-4 mt-10">
-        <div className="flex flex-col gap-4">
-          <p className="text-sm text-bg_black font-medium">Today</p>
-          <div className="flex flex-col gap-2 w-full">
-            <Goal />
-            <Goal />
-            <Budget />
-            <Budget />
-            <Transaction />
-            <Transaction />
-            <Transaction />
-            <Transaction />
-          </div>
-        </div>
-        <div className="flex flex-col gap-4">
-          <p className="text-sm text-bg_black font-medium">Today</p>
-          <div className="flex flex-col gap-2 w-full">
-            <Transaction />
-            <Transaction />
-            <Transaction />
-            <Transaction />
-            <Transaction />
-          </div>
-        </div>
-      </div>
+      {/* <FilterableTransactionTable transactions={transactions} /> */}
+      <FilterableHistoryTable
+        dataType={dataType}
+        data={
+          dataType === "transactions"
+            ? transactions
+            : dataType === "budgets"
+            ? budgets
+            : dataType === "goals"
+            ? goals
+            : []
+        }
+      />
+      {/* <FilterableHistoryTable dataType={dataType} data={data} /> */}
       <Nav />
       <AddMenu />
     </div>
