@@ -17,6 +17,7 @@ import {
 import GuestLayout from "./layouts/GuestLayout";
 import { loader as guestLoader } from "./layouts/GuestLayout";
 import NotFound from "./pages/NotFound";
+import Loading from "./pages/Loading";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
     element: <DefaultLayout />,
     errorElement: <NotFound />,
     loader: defaultLoader,
-    hydrateFallbackElement: <p>Loading...</p>,
+    hydrateFallbackElement: <Loading />,
     children: [
       {
         path: "",
