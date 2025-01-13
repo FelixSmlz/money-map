@@ -1,5 +1,4 @@
 import Background from "../components/Background";
-import Header from "../components/Header";
 import Analytics from "../components/Analytics";
 import Recent from "../components/Recent";
 import AddMenu from "../components/AddMenu";
