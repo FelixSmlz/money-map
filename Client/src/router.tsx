@@ -30,10 +30,6 @@ const router = createBrowserRouter([
     hydrateFallbackElement: <Loading />,
     children: [
       {
-        path: "",
-        element: <Navigate to="dashboard" />,
-      },
-      {
         path: "dashboard",
         element: <Dashboard />,
         loader: dashboardLoader,
@@ -59,17 +55,18 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "auth",
+    path: "guest",
     element: <GuestLayout />,
     loader: guestLoader,
+    hydrateFallbackElement: <Loading />,
     children: [
       {
-        path: "auth/register",
+        path: "register",
         element: <Register />,
         action: registerAction,
       },
       {
-        path: "auth/login",
+        path: "login",
         element: <Login />,
         action: loginAction,
       },

@@ -11,8 +11,9 @@ import { isLoggedIn } from "../utils/api";
 export const loader = async () => {
   const { isLoggedIn: loggedIn } = await isLoggedIn();
   if (!loggedIn) {
-    return redirect("/auth/login");
+    return redirect("/guest/login");
   }
+  return null;
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -22,7 +23,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     try {
       const response = await logout();
       if (response.status === 200) {
-        return redirect("/auth/login");
+        return redirect("/guest/login");
       } else {
         return response.data.message;
       }
