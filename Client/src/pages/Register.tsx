@@ -4,6 +4,7 @@ import { ActionFunctionArgs, redirect, useFetcher } from "react-router";
 import Background from "../components/Background";
 import Input from "../components/Input";
 import { register } from "../utils/api";
+import { NavLink } from "react-router-dom";
 
 type FieldValues = {
   name: string;
@@ -18,13 +19,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     const response = await register(formData);
     if (response.status === 200) {
-      return redirect("/verify-email");
+      return redirect("../login");
     } else {
       return response.data.message;
     }
   } catch (error) {
     console.log("error", error);
-    return redirect("/register");
+    return { error: "An error occurred during login" };
   }
 };
 
@@ -52,7 +53,7 @@ const Register = () => {
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full rounded-[15px] shadow-card p-10">
+      <div className="bg-white w-full rounded-[15px] shadow-md p-10">
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}
@@ -131,12 +132,12 @@ const Register = () => {
           >
             Register
           </button>
-          <a
-            href="/login"
+          <NavLink
             className="text-bg_black font-medium hover:text-gray text-sm underline"
+            to="../login"
           >
             Already registered?
-          </a>
+          </NavLink>
         </form>
       </div>
     </div>

@@ -2,7 +2,12 @@ import { useId } from "react";
 import Background from "../components/Background";
 import Input from "../components/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ActionFunctionArgs, useFetcher, redirect } from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  useFetcher,
+  redirect,
+  NavLink,
+} from "react-router-dom";
 import { login } from "../utils/api";
 
 type FieldValues = {
@@ -11,7 +16,6 @@ type FieldValues = {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  console.log(request);
   const formData = await request.formData();
   try {
     const response = await login(formData);
@@ -45,7 +49,7 @@ function Login() {
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full rounded-[15px] shadow-sm p-10">
+      <div className="bg-white w-full rounded-[15px] shadow-md p-10">
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}
@@ -89,12 +93,12 @@ function Login() {
           >
             Login
           </button>
-          <a
-            href="/register"
+          <NavLink
             className="text-bg_black font-medium hover:text-gray text-sm underline"
+            to="../register"
           >
             Not registered yet?
-          </a>
+          </NavLink>
         </form>
       </div>
     </div>
