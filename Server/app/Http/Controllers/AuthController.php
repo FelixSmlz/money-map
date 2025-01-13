@@ -105,7 +105,8 @@ class AuthController extends Controller
     public function isLoggedIn(): JsonResponse
     {
         return response()->json([
-            'isLoggedIn' => Auth::check()
+            'isLoggedIn' => Auth::check(),
+            'user' => Auth::user()
         ], Response::HTTP_OK);
     }
 

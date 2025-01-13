@@ -9,11 +9,10 @@ import Nav from "../components/Nav";
 import { isLoggedIn } from "../utils/api";
 
 export const loader = async () => {
-  const loggedIn = await isLoggedIn();
+  const { isLoggedIn: loggedIn } = await isLoggedIn();
   if (!loggedIn) {
     return redirect("/login");
   }
-  return null;
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {

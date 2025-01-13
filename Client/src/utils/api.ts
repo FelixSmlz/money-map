@@ -29,9 +29,10 @@ export const isLoggedIn = async () => {
     const response = await axios.get(API_URL + "/login/status", {
       withCredentials: true,
     });
-    return response.data.isLoggedIn;
+    console.log(response.data);
+    return response.data;
   } catch (error: any) {
-    return error.response;
+    return { isLoggedIn: false, user: null };
   }
 };
 

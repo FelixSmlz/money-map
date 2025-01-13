@@ -4,6 +4,7 @@ import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 import DefaultLayout from "./layouts/DefaultLayout";
 import Dashboard from "./pages/Dashboard";
+import { loader as dashboardLoader } from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import History from "./pages/History";
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard />,
+        loader: dashboardLoader,
       },
       {
         path: "history",
