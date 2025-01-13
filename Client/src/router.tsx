@@ -16,11 +16,13 @@ import {
 } from "./layouts/DefaultLayout";
 import GuestLayout from "./layouts/GuestLayout";
 import { loader as guestLoader } from "./layouts/GuestLayout";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "",
     element: <DefaultLayout />,
+    errorElement: <NotFound />,
     loader: defaultLoader,
     hydrateFallbackElement: <p>Loading...</p>,
     children: [
