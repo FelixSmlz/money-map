@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 import DefaultLayout from "./layouts/DefaultLayout";
