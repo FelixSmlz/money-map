@@ -16,8 +16,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   console.log(request);
   const formData = await request.formData();
   try {
-    await register(formData);
-    return redirect("/login");
+    const response = await register(formData);
+    if (response.status === 200) {
+      return redirect("/verify-email");
+    } else {
+      return response.data.message;
+    }
   } catch (error) {
     console.log("error", error);
     return redirect("/register");
@@ -25,24 +29,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 const Register = () => {
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   email: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
-
-  // const [validationErrors, setValidationErrors] = useState<{
-  //   [key: string]: string[];
-  // }>({});
-
-  // function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-  //   setFormData({ ...formData, [e.target.id]: e.target.value });
-  // }
-
-  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  // }
   const nameId = useId();
   const emailId = useId();
   const passwordId = useId();
@@ -60,7 +46,6 @@ const Register = () => {
   const onValid: SubmitHandler<FieldValues> = (_, event) => {
     fetcher.submit(event?.target, {
       method: "POST",
-      action: "/register",
     });
   };
 
@@ -70,11 +55,13 @@ const Register = () => {
       <div className="bg-white w-full rounded-[15px] shadow-card p-10">
         <form
           noValidate
-          action="POST"
           onSubmit={handleSubmit(onValid)}
-          className="flex flex-col gap-8"
+          className="flex flex-col gap-6"
         >
           <h1 className="text-bg_black font-medium text-lg">Register</h1>
+          {fetcher.data && typeof fetcher.data === "string" ? (
+            <h3 className="text-center text-red">{fetcher.data}</h3>
+          ) : null}
           <div className="flex flex-col gap-4">
             <Input
               type="text"
@@ -129,7 +116,7 @@ const Register = () => {
               handler={register("confirmPassword", {
                 required: {
                   value: true,
-                  message: "Confirming your password is required",
+                  message: "Confirm your password",
                 },
                 validate: (value) =>
                   value === watch("password") || "Passwords do not match",
@@ -137,37 +124,6 @@ const Register = () => {
               errorMsg={errors.confirmPassword?.message}
               placeholder="confirm password"
             />
-            {/* <Input
-              type="text"
-              id={nameId}
-              placeholder="name"
-              handler={...register("name", { required: "Name is required" })}
-              errorMsg={errors.name ?? ""}
-            />
-            <Input
-              type="email"
-              id={emailId}
-              placeholder="email"
-              myOnChange={handleChange}
-              errorMsg={errors.email ?? ""}
-            />
-            <Input
-              type="password"
-              id={passwordId}
-              placeholder="password"
-              myOnChange={handleChange}
-              errorMsg={errors.password ?? ""}
-            /> */}
-            {/* <Input
-              type="password"
-              id={confirmPasswordId}
-              placeholder="confirm password"
-              {...register("confirmPassword", {
-                validate: (value) =>
-                  value === formData.password || "Passwords do not match",
-              })}
-              errorMsg={errors.confirmPassword ?? ""}
-            /> */}
           </div>
           <button
             type="submit"

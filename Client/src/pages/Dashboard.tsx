@@ -1,10 +1,19 @@
 import Background from "../components/Background";
 import Header from "../components/Header";
-import Nav from "../components/Nav";
 import Analytics from "../components/Analytics";
 import Recent from "../components/Recent";
 import AddMenu from "../components/AddMenu";
-import NavMember from "../components/NavMember";
+import Nav from "../components/Nav";
+import { isLoggedIn } from "../utils/api";
+import { redirect } from "react-router-dom";
+
+export const loader = async () => {
+  const loggedIn = await isLoggedIn();
+  if (!loggedIn) {
+    return redirect("/login");
+  }
+  return null;
+};
 
 function Dashboard() {
   return (
@@ -17,7 +26,7 @@ function Dashboard() {
       </div>
       <Analytics />
       <Recent />
-
+      <Nav />
       <AddMenu />
     </div>
   );

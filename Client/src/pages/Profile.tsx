@@ -1,5 +1,5 @@
 import Background from "../components/Background";
-import NavMember from "../components/NavMember";
+import Nav from "../components/Nav";
 import AddMenu from "../components/AddMenu";
 
 function Profile() {
@@ -55,7 +55,7 @@ function Profile() {
           <p className="text-bg_black text-base h-fit mr-auto">John Doe</p>
         </a>
       </div>
-
+      <Nav />
       <AddMenu />
     </div>
   );

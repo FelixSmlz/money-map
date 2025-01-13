@@ -2,23 +2,25 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8000/api";
 
+axios.defaults.withCredentials = true;
+
 export const register = async (formData: FormData) => {
   try {
     const response = await axios.post(API_URL + "/register", formData);
     return response;
   } catch (error: any) {
-    return error;
+    return error.response;
   }
 };
 
-export const login = async (formData: any) => {
+export const login = async (formData: FormData) => {
   try {
     const response = await axios.post(API_URL + "/login", formData, {
       withCredentials: true,
     });
     return response;
   } catch (error: any) {
-    return error;
+    return error.response;
   }
 };
 
@@ -27,9 +29,19 @@ export const isLoggedIn = async () => {
     const response = await axios.get(API_URL + "/login/status", {
       withCredentials: true,
     });
-    const { loggedIn }: { loggedIn: boolean } = response.data;
-    return loggedIn;
+    return response.data.isLoggedIn;
   } catch (error: any) {
-    return error;
+    return error.response;
+  }
+};
+
+export const logout = async () => {
+  try {
+    const response = await axios.post(API_URL + "/logout", {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
   }
 };

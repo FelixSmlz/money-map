@@ -3,6 +3,7 @@ import EditBtn from "../components/EditBtn";
 import Switch from "../components/Switch";
 import AddMenu from "../components/AddMenu";
 import LogoutBtn from "../components/LogoutBtn";
+import Nav from "../components/Nav";
 
 function Settings() {
   return (
@@ -192,7 +193,7 @@ function Settings() {
         </a>
         <LogoutBtn />
       </div>
-
+      <Nav />
       <AddMenu />
     </div>
   );

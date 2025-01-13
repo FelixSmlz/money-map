@@ -1,14 +1,40 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  Outlet,
+  useLoaderData,
+  redirect,
+} from "react-router-dom";
+import { logout } from "../utils/api";
 import Nav from "../components/Nav";
 import { isLoggedIn } from "../utils/api";
 
 export const loader = async () => {
   const loggedIn = await isLoggedIn();
-  return loggedIn;
+  if (!loggedIn) {
+    return redirect("/login");
+  }
+  return null;
+};
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const intent = formData.get("intent");
+  if (intent === "logout") {
+    try {
+      const response = await logout();
+      if (response.status === 200) {
+        return redirect("/login");
+      } else {
+        return response.data.message;
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 };
 
 function DefaultLayout() {
-  const isLoggedIn = useLoaderData<typeof loader>();
+  useLoaderData<typeof loader>();
   return (
     <>
       <Outlet />

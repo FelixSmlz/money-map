@@ -14,43 +14,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   console.log(request);
   const formData = await request.formData();
   try {
-    await login(formData);
-    return redirect("/");
+    const response = await login(formData);
+    if (response.status === 200) {
+      return redirect("/dashboard");
+    } else {
+      return response.data.message;
+    }
   } catch (error) {
     console.log("error", error);
-    return redirect("/login");
+    return { error: "An error occurred during login" };
   }
 };
 
 function Login() {
-  // const [formData, setFormData] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-
-  // const [validationErrors, setValidationErrors] = useState<{
-  //   [key: string]: string[];
-  // }>({});
-
-  // function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-  //   setFormData({ ...formData, [e.target.id]: e.target.value });
-  // }
-
-  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8000/api/login",
-  //       formData
-  //     );
-  //     window.location.href = "/";
-  //   } catch (error: any) {
-  //     if (error.response && error.response.data) {
-  //       setValidationErrors(error.response.data.errors);
-  //     }
-  //   }
-  // }
-
   const emailId = useId();
   const passwordId = useId();
 
@@ -60,7 +36,7 @@ function Login() {
     formState: { errors },
   } = useForm<FieldValues>();
 
-  const fetcher = useFetcher();
+  const fetcher = useFetcher<typeof action>();
 
   const onValid: SubmitHandler<FieldValues> = (_, event) => {
     fetcher.submit(event?.target, { method: "POST" });
@@ -73,9 +49,12 @@ function Login() {
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}
-          className="flex flex-col gap-8"
+          className="flex flex-col gap-6"
         >
           <h1 className="text-bg_black font-medium text-lg">Login</h1>
+          {fetcher.data && typeof fetcher.data === "string" ? (
+            <h3 className="text-center text-red">{fetcher.data}</h3>
+          ) : null}
           <div className="flex flex-col gap-4">
             <Input
               type="email"

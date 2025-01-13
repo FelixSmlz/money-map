@@ -1,5 +1,4 @@
 import Background from "../components/Background";
-import NavMember from "../components/NavMember";
 
 function EmailVerification() {
   return (

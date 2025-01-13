@@ -10,17 +10,23 @@ import History from "./pages/History";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import EmailVerification from "./pages/EmailVerification";
-import { loader as defaultLoader } from "./layouts/DefaultLayout";
+import {
+  loader as defaultLoader,
+  action as defaultAction,
+} from "./layouts/DefaultLayout";
+import GuestLayout from "./layouts/GuestLayout";
+import { loader as guestLoader } from "./layouts/GuestLayout";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <DefaultLayout />,
     loader: defaultLoader,
+    hydrateFallbackElement: <p>Loading...</p>,
     children: [
       {
         path: "",
-        element: <Navigate to="/dashboard" />,
+        element: <Navigate to="dashboard" />,
       },
       {
         path: "dashboard",
@@ -33,6 +39,7 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <Settings />,
+        action: defaultAction,
       },
       {
         path: "profile",
@@ -45,14 +52,21 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "register",
-    element: <Register />,
-    action: registerAction,
-  },
-  {
-    path: "login",
-    element: <Login />,
-    action: loginAction,
+    path: "",
+    element: <GuestLayout />,
+    loader: guestLoader,
+    children: [
+      {
+        path: "register",
+        element: <Register />,
+        action: registerAction,
+      },
+      {
+        path: "login",
+        element: <Login />,
+        action: loginAction,
+      },
+    ],
   },
 ]);
 

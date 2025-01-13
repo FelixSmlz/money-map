@@ -17,9 +17,14 @@ class AuthController extends Controller
     public function logout(Request $request): JsonResponse
     {
 
-        $request->session()->invalidate();
+        if (!Auth::check()) {
+            return response()->json([
+                'message' => 'User not logged in'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
 
-        $request->session()->regenerateToken();
+
+        session()->invalidate();
 
         return response()->json([
             'message' => 'Logout successful',
@@ -45,8 +50,6 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
 
-            $request->session()->regenerate();
-
             return response()->json([
                 'message' => 'Login successful',
                 'user' => Auth::user()
@@ -55,7 +58,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Invalid login credentials'
-        ], Response::HTTP_UNAUTHORIZED);
+        ], Response::HTTP_BAD_REQUEST);
     }
 
     // Register users
@@ -85,7 +88,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Registration successful. Please check your email for verification link.',
             'user' => $user
-        ], Response::HTTP_CREATED);
+        ], Response::HTTP_OK);
     }
 
     // Get current user

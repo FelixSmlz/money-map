@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 // Endpoints for transactions
 
-Route::middleware('web', 'auth:sanctum')->controller(TransactionController::class)->group(function () {
+Route::middleware('auth:sanctum')->controller(TransactionController::class)->group(function () {
     Route::get('transactions', 'index');
     Route::get('transactions/{id}', 'show');
     Route::post('transactions', 'store');
@@ -24,7 +24,7 @@ Route::middleware('web', 'auth:sanctum')->controller(TransactionController::clas
 
 // Endpoints for user details
 
-Route::middleware(['verified', 'web', 'auth:sanctum'])->controller(UserDetailsController::class)->group(function () {
+Route::middleware(['verified', 'auth:sanctum'])->controller(UserDetailsController::class)->group(function () {
     Route::get('user-details', 'index');
     Route::post('user-details', 'store');
     Route::put('user-details/{id}', 'update');
@@ -33,7 +33,7 @@ Route::middleware(['verified', 'web', 'auth:sanctum'])->controller(UserDetailsCo
 
 // Endpoints for budgets
 
-Route::middleware(['web', 'auth:sanctum'])->controller(BudgetController::class)->group(function () {
+Route::middleware('auth:sanctum')->controller(BudgetController::class)->group(function () {
     Route::get('budgets', 'index');
     Route::get('budgets/{id}', 'show');
     Route::post('budgets', 'store');
@@ -43,7 +43,7 @@ Route::middleware(['web', 'auth:sanctum'])->controller(BudgetController::class)-
 
 // Endpoints for budgets
 
-Route::middleware(['web', 'auth:sanctum'])->controller(GoalController::class)->group(function () {
+Route::middleware('auth:sanctum')->controller(GoalController::class)->group(function () {
     Route::get('goals', 'index');
     Route::get('goals/{id}', 'show');
     Route::post('goals', 'store');
@@ -53,7 +53,7 @@ Route::middleware(['web', 'auth:sanctum'])->controller(GoalController::class)->g
 
 // Endpoints for categories
 
-Route::middleware(['web', 'auth:sanctum'])->controller(CategoryController::class)->group(function () {
+Route::middleware('auth:sanctum')->controller(CategoryController::class)->group(function () {
     Route::get('categories', 'index');
     Route::get('categories/{id}', 'show');
     Route::post('categories', 'store');
@@ -80,12 +80,12 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 // Endpoints for authentification
 
-Route::middleware('web')->controller(AuthController::class)->group(function () {
+Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('login', 'login')->name('login');
     Route::post('logout', 'logout')->middleware('auth:sanctum')->name('logout');
     Route::get('current-user', 'currentUser');
-    Route::get('login/status', 'loginStatus')->middleware('auth:sanctum');
+    Route::get('login/status', 'isLoggedIn');
     Route::delete('delete-account', 'deleteAccount')->middleware('auth:sanctum');
 });
 

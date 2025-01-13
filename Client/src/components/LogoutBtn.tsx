@@ -1,6 +1,16 @@
+import { redirect, useFetcher } from "react-router-dom";
+
 const LogoutBtn = () => {
+  const fetcher = useFetcher();
+  const handleLogout = () => {
+    fetcher.submit({ intent: "logout" }, { method: "POST" });
+  };
+
   return (
-    <button className="flex items-center gap-4 mx-4 py-4">
+    <div
+      onClick={handleLogout}
+      className="flex items-center gap-4 mx-4 py-4 cursor-pointer"
+    >
       <div className="bg-[#FAEBEB] w-fit p-2 rounded-[15px]">
         <svg
           width="25"
@@ -33,7 +43,7 @@ const LogoutBtn = () => {
         </svg>
       </div>
       <p className="text-red text-base h-fit mr-auto">Logout</p>
-    </button>
+    </div>
   );
 };
 
