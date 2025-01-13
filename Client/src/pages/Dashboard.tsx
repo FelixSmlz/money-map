@@ -4,7 +4,7 @@ import Recent from "../components/Recent";
 import AddMenu from "../components/AddMenu";
 import Nav from "../components/Nav";
 import { isLoggedIn } from "../utils/api";
-import { redirect, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 export const loader = async () => {
   const { user } = await isLoggedIn();

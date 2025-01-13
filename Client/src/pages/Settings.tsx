@@ -4,8 +4,19 @@ import Switch from "../components/Switch";
 import AddMenu from "../components/AddMenu";
 import LogoutBtn from "../components/LogoutBtn";
 import Nav from "../components/Nav";
+import { isLoggedIn } from "../utils/api";
+import { useLoaderData } from "react-router-dom";
+
+export const loader = async () => {
+  const { user } = await isLoggedIn();
+  if (user) {
+    return { user };
+  }
+};
 
 function Settings() {
+  const data = useLoaderData<typeof loader>();
+  const user = data?.user;
   return (
     <div className="px-5 py-10 position-relative">
       <Background />
@@ -53,9 +64,9 @@ function Settings() {
           alt="Profile picture"
         />
         <div>
-          <p className="text-center">John Doe</p>
+          <p className="text-center">{user?.name}</p>
           <small className="text-center text-xs text-gray font-light">
-            john.doe@example.com
+            {user?.email}
           </small>
         </div>
         <EditBtn />

@@ -19,6 +19,7 @@ import GuestLayout from "./layouts/GuestLayout";
 import { loader as guestLoader } from "./layouts/GuestLayout";
 import NotFound from "./pages/NotFound";
 import Loading from "./pages/Loading";
+import { loader as settingsLoader } from "./pages/Settings";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
         path: "settings",
         element: <Settings />,
         action: defaultAction,
+        loader: settingsLoader,
       },
       {
         path: "profile",
