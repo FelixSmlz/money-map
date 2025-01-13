@@ -59,17 +59,17 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "",
+    path: "auth",
     element: <GuestLayout />,
     loader: guestLoader,
     children: [
       {
-        path: "register",
+        path: "auth/register",
         element: <Register />,
         action: registerAction,
       },
       {
-        path: "login",
+        path: "auth/login",
         element: <Login />,
         action: loginAction,
       },
