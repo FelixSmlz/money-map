@@ -4,44 +4,44 @@ import AddMenu from "../components/AddMenu";
 import transactions from "../test_data/transactions.json";
 import budgets from "../test_data/budgets.json";
 import goals from "../test_data/goals.json";
-import axios from "axios";
+import {
+  getTransactions,
+  getBudgets,
+  getGoals,
+  getCategories,
+} from "../utils/api";
 import FilterableHistoryTable from "../components/FilterableHistoryTable";
 import { DataType } from "../components/HistoryTable";
 import { useState, useEffect } from "react";
 
 function History() {
   const [dataType, setDataType] = useState<DataType>("transactions");
-  // const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<any[]>([]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       let response;
-  //       switch (dataType) {
-  //         case "transactions":
-  //           response = await axios.get("/api/transactions");
-  //           break;
-  //         case "budgets":
-  //           response = await axios.get("/api/budgets");
-  //           break;
-  //         case "goals":
-  //           response = await axios.get("/api/goals");
-  //           break;
-  //         case "categories":
-  //           response = await axios.get("/api/categories");
-  //           break;
-  //         default:
-  //           return;
-  //       }
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //       setData([]);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      let response;
+      switch (dataType) {
+        case "transactions":
+          response = await getTransactions();
+          break;
+        case "budgets":
+          response = await getBudgets();
+          break;
+        case "goals":
+          response = await getGoals();
+          break;
+        case "categories":
+          response = await getCategories();
+          break;
+        default:
+          response = { data: [] };
+      }
+      setData(response.data || []);
+    };
 
-  //   fetchData();
-  // }, [dataType]);
+    fetchData();
+  }, [dataType]);
 
   return (
     <div className="px-5 py-10 position-relative">
@@ -143,20 +143,7 @@ function History() {
           </a>
         </div>
       </header>
-      {/* <FilterableTransactionTable transactions={transactions} /> */}
-      <FilterableHistoryTable
-        dataType={dataType}
-        data={
-          dataType === "transactions"
-            ? transactions
-            : dataType === "budgets"
-            ? budgets
-            : dataType === "goals"
-            ? goals
-            : []
-        }
-      />
-      {/* <FilterableHistoryTable dataType={dataType} data={data} /> */}
+      <FilterableHistoryTable dataType={dataType} data={data} />
       <Nav />
       <AddMenu />
     </div>

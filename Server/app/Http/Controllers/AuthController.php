@@ -24,11 +24,12 @@ class AuthController extends Controller
         }
 
 
-        session()->invalidate();
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return response()->json([
-            'message' => 'Logout successful',
-            'user' => Auth::user()
+            'message' => 'Logout successful'
         ], Response::HTTP_OK);
     }
 
@@ -54,6 +55,12 @@ class AuthController extends Controller
                 'message' => 'Login successful',
                 'user' => Auth::user()
             ], Response::HTTP_OK);
+        }
+
+        if (User::where('email', $credentials['email'])->doesntExist()) {
+            return response()->json([
+                'message' => 'Email is not registered'
+            ], Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([

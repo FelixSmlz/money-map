@@ -1,4 +1,4 @@
-import { redirect, useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router-dom";
 
 const LogoutBtn = () => {
   const fetcher = useFetcher();

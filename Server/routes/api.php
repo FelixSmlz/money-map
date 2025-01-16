@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->controller(BudgetController::class)->group(fu
     Route::delete('budgets/{id}', 'destroy');
 });
 
-// Endpoints for budgets
+// Endpoints for goals
 
 Route::middleware('auth:sanctum')->controller(GoalController::class)->group(function () {
     Route::get('goals', 'index');
@@ -86,7 +86,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout')->middleware('auth:sanctum')->name('logout');
     Route::get('current-user', 'currentUser');
     Route::get('login/status', 'isLoggedIn');
-    Route::delete('delete-account', 'deleteAccount')->middleware('auth:sanctum');
+    Route::delete('profile', 'deleteAccount')->middleware('auth:sanctum');
 });
 
 Route::post('/cors', function () {

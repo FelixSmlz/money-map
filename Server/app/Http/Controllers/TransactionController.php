@@ -40,7 +40,7 @@ class TransactionController extends Controller
             $query->where('date', '<=', $request->query('date_to'));
         }
 
-        $transactions = $query->paginate(10);
+        $transactions = $query->get();
 
         return response()->json(['transactions' => $transactions], Response::HTTP_OK);
     }

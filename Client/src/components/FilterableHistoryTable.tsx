@@ -18,7 +18,7 @@ const FilterableHistoryTable = ({ data, dataType }: Props) => {
       />
       <HistoryTable
         dataType={dataType}
-        data={data}
+        data={Array.isArray(data) ? data : []}
         searchFilter={searchFilter}
       />
     </div>
