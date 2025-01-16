@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import History from "./pages/History";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
+import { loader as profileLoader } from "./pages/Profile";
 import EmailVerification from "./pages/EmailVerification";
 import {
   loader as defaultLoader,
@@ -19,6 +20,7 @@ import { loader as guestLoader } from "./layouts/GuestLayout";
 import NotFound from "./pages/NotFound";
 import Loading from "./pages/Loading";
 import { loader as settingsLoader } from "./pages/Settings";
+import Transaction from "./pages/Transaction";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,11 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+        loader: profileLoader,
+      },
+      {
+        path: "transactions",
+        element: <Transaction />,
       },
       {
         path: "verify-email",

@@ -1,8 +1,53 @@
 import Background from "../components/Background";
 import Nav from "../components/Nav";
 import AddMenu from "../components/AddMenu";
+import Input from "../components/Input";
+import { useId } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { ActionFunctionArgs, redirect, useFetcher } from "react-router";
+import { useLoaderData } from "react-router-dom";
+import { isLoggedIn, updateProfile } from "../utils/api";
+
+type FieldValues = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export const loader = async () => {
+  const { user } = await isLoggedIn();
+  if (user) {
+    return { user };
+  }
+};
 
 function Profile() {
+  const nameId = useId();
+  const emailId = useId();
+  const passwordId = useId();
+
+  const data = useLoaderData<typeof loader>();
+  const user = data?.user;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      name: user.name,
+      email: user.email,
+    },
+  });
+
+  const fetcher = useFetcher<typeof action>();
+
+  const onValid: SubmitHandler<FieldValues> = (_, event) => {
+    fetcher.submit(event?.target, {
+      method: "PUT",
+    });
+  };
+
   return (
     <div className="px-5 py-10 position-relative">
       <Background />
@@ -50,11 +95,53 @@ function Profile() {
           alt="Profile picture"
         />
       </div>
-      <div className="flex mt-6 flex-col bg-white rounded-[15px] shadow-card w-full">
-        <a href="#" className="flex items-center gap-4 mx-4 py-4">
-          <p className="text-bg_black text-base h-fit mr-auto">John Doe</p>
-        </a>
-      </div>
+      <form
+        noValidate
+        onSubmit={handleSubmit(onValid)}
+        className="flex flex-col gap-4 bg-white w-full px-2 py-4 rounded-[15px] shadow-sm"
+      >
+        <Input
+          value={user?.name}
+          type="text"
+          id={nameId}
+          placeholder="name"
+          className="border-none"
+          handler={register("name", {
+            required: { value: true, message: "Name is required" },
+            maxLength: {
+              value: 250,
+              message: "Name is too long (max. 250 characters)",
+            },
+          })}
+          errorMsg={errors.name?.message}
+        />
+        <Input
+          value={user?.email}
+          type="email"
+          id={emailId}
+          placeholder="email"
+          className="border-none"
+          handler={register("email", {
+            required: { value: true, message: "Email is required" },
+            maxLength: {
+              value: 250,
+              message: "Email is too long (max. 250 characters)",
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+              message: "Email is invalid",
+            },
+          })}
+          errorMsg={errors.email?.message}
+        />
+
+        <button
+          type="submit"
+          className="bg-bg_black hover:bg-white border-2 border-bg_black hover:text-bg_black text-white rounded-[15px] p-3 w-full"
+        >
+          Save changes
+        </button>
+      </form>
       <Nav />
       <AddMenu />
     </div>

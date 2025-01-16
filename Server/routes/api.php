@@ -5,12 +5,31 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Http\Request;
 
+// Endpoints for authentification
 
+Route::controller(AuthController::class)->group(function () {
+    Route::post('register', 'register');
+    Route::post('login', 'login')->name('login');
+    Route::post('logout', 'logout')->middleware('auth:sanctum')->name('logout');
+    Route::get('current-user', 'currentUser');
+    Route::get('login/status', 'isLoggedIn');
+    Route::delete('profile', 'deleteAccount')->middleware('auth:sanctum');
+});
+
+// Endpoints for user
+
+Route::middleware('auth:sanctum')->controller(UserController::class)->group(function () {
+    Route::get('user', 'index');
+    Route::post('user', 'store');
+    Route::put('user/{id}', 'update');
+    Route::delete('user/{id}', 'destroy');
+});
 
 // Endpoints for transactions
 
@@ -78,16 +97,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware('web', 'auth:sanctum')->name('verification.notice');
 
 
-// Endpoints for authentification
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('register', 'register');
-    Route::post('login', 'login')->name('login');
-    Route::post('logout', 'logout')->middleware('auth:sanctum')->name('logout');
-    Route::get('current-user', 'currentUser');
-    Route::get('login/status', 'isLoggedIn');
-    Route::delete('profile', 'deleteAccount')->middleware('auth:sanctum');
-});
 
 Route::post('/cors', function () {
     return response()->json(['message' => 'Access allowed'], 200);

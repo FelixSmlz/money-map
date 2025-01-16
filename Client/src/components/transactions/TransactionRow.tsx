@@ -80,7 +80,7 @@ const TransactionRow = ({
             </p>
           ) : (
             <p className="text-red group-hover:text-white text-right">
-              -{amount}€
+              - {amount}€
             </p>
           )}
           <p className="text-light_gray group-hover:text-white text-xs text-right">

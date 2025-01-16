@@ -1,9 +1,6 @@
 import Background from "../components/Background";
 import Nav from "../components/Nav";
 import AddMenu from "../components/AddMenu";
-import transactions from "../test_data/transactions.json";
-import budgets from "../test_data/budgets.json";
-import goals from "../test_data/goals.json";
 import {
   getTransactions,
   getBudgets,
@@ -35,9 +32,9 @@ function History() {
           response = await getCategories();
           break;
         default:
-          response = { data: [] };
+          response = [];
       }
-      setData(response.data || []);
+      setData(response || []);
     };
 
     fetchData();

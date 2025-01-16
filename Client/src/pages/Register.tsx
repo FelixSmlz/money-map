@@ -25,7 +25,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
   } catch (error) {
     console.log("error", error);
-    return { error: "An error occurred during login" };
+    return { error: "An error occurred" };
   }
 };
 
