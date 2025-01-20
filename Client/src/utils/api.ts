@@ -191,6 +191,42 @@ export const getGoals = async () => {
   }
 };
 
+export const getGoal = async (id: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/goals/${id}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const updateGoal = async (id: string, formData: FormData) => {
+  try {
+    const response = await axios.put(`${API_URL}/goals/${id}`, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const deleteGoal = async (id: string) => {
+  try {
+    const response = await axios.delete(`${API_URL}/goals/${id}`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
 // Categories
 
 export const getCategories = async () => {

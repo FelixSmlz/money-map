@@ -26,6 +26,9 @@ import { action as transactionAction } from "./pages/Transaction";
 import Budget from "./pages/Budget";
 import { loader as budgetLoader } from "./pages/Budget";
 import { action as budgetAction } from "./pages/Budget";
+import Goal from "./pages/Goal";
+import { loader as goalLoader } from "./pages/Goal";
+import { action as goalAction } from "./pages/Goal";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +74,12 @@ const router = createBrowserRouter([
         element: <Budget />,
         loader: budgetLoader,
         action: budgetAction,
+      },
+      {
+        path: "goals/:id",
+        element: <Goal />,
+        loader: goalLoader,
+        action: goalAction,
       },
       {
         path: "verify-email",

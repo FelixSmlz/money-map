@@ -34,7 +34,7 @@ const BudgetPeriodSelect = ({ initialPeriod, onChange }: Props) => {
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="2"
+            strokeWidth="3"
             d="M6 9l6 6 6-6"
           />
         </svg>

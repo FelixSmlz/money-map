@@ -8,6 +8,8 @@ use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\JsonResponse;
+use App\Models\Transaction;
+use Illuminate\Database\Eloquent\Casts\Json;
 
 class GoalController extends Controller
 {
@@ -57,7 +59,7 @@ class GoalController extends Controller
             return response()->json(['message' => 'Goal not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $authResponse = Gate::inspect('view', $goal);
+        $authResponse = Gate::inspect('show', $goal);
         if ($authResponse->denied()) {
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }

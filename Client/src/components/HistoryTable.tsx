@@ -68,12 +68,13 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
         case "goals":
           jsx.push(
             <GoalRow
+              id={item.id}
               key={item.id}
               name={item.name}
-              targetAmount={item.targetAmount}
-              startDate={item.startDate}
-              endDate={item.endDate}
-              categoryId={item.categoryId}
+              target_amount={item.target_amount}
+              start_date={item.start_date}
+              end_date={item.end_date}
+              category_id={item.category_id}
             />
           );
           break;

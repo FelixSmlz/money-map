@@ -63,8 +63,22 @@ const Transaction = () => {
     <div className="px-5 py-10 position-relative">
       <Background />
       <header className="flex justify-between items-center mb-8 text-bg_black">
-        <div className="flex items-center space-x-4">
-          <p className="text-lg text-bg_black font-semibold">Transaction</p>
+        <div onClick={() => navigate(-1)}>
+          <svg
+            fill="none"
+            stroke="black"
+            strokeWidth="1"
+            height="35"
+            viewBox="0 0 24 24"
+            width="35"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clipRule="evenodd"
+              d="m10.7071 12 4.6464-4.64645c.1953-.19526.1953-.51184 0-.7071s-.5118-.19529-.7071 0l-5.3536 5.35355c-.1953.19526-.1953.51184 0 .7071l5.3536 5.3536c.1953.1953.5118.1953.7071 0s.1953-.5118 0-.7071l-4.6464-4.6464h12.2929c.2828 0 .5-.2239.5-.5s-.2232-.5-.5-.5z"
+              fillRule="evenodd"
+            />
+          </svg>
         </div>
         <a
           className="group bg-white hover:bg-bg_black p-2 rounded-full"
@@ -97,7 +111,7 @@ const Transaction = () => {
           </svg>
         </a>
       </header>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col items-center gap-6">
         {currentTransaction.type === "income" ? (
           <p className="text-bg_black text-xl text-center">
             {currentTransaction.amount}€
@@ -107,7 +121,7 @@ const Transaction = () => {
             - {currentTransaction.amount}€
           </p>
         )}
-        <div className="flex justify-between w-full items-center">
+        <div className="flex gap-3 items-center">
           <CategoryIcon />
           <TransactionTypeSwitch
             onChange={handleTypeSwitch}

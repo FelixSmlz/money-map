@@ -4,25 +4,32 @@ interface ProgressBarProps {
   currentAmount: number;
   limit: number;
   width?: string;
+  maxWidth?: string;
   strokeWidth?: number;
+  withText?: boolean;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   currentAmount,
   limit,
   width = "100%",
+  maxWidth = "80px",
   strokeWidth = 9,
+  withText = true,
 }) => {
   const progress = Math.min((currentAmount / limit) * 100, 100);
+  const barColor = progress >= 90 ? "bg-red" : "bg-turkois";
 
   return (
     <div
       className="flex flex-col gap-2"
-      style={{ width: width, maxWidth: "80px" }}
+      style={{ width: width, maxWidth: maxWidth }}
     >
-      <div className="text-base text-center text-bg_black">
-        {currentAmount}€ / {limit}€
-      </div>
+      {withText && (
+        <div className="text-base text-center text-bg_black">
+          {currentAmount}€ / {limit}€
+        </div>
+      )}
       <div
         style={{
           height: `${strokeWidth}px`,
@@ -33,7 +40,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         }}
       >
         <div
-          className="bg-turkois"
+          className={barColor}
           style={{
             width: `${progress}%`,
             height: "100%",

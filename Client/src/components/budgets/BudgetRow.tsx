@@ -7,9 +7,10 @@ const BudgetRow = ({
   name,
   limit,
   period,
-  startDate,
-  customPeriod,
-  categoryId,
+  custom_period,
+  current_amount,
+  start_date,
+  category_id,
 }: BudgetType) => {
   return (
     <Link
@@ -71,7 +72,7 @@ const BudgetRow = ({
             {period}
           </p>
         </div>
-        <BudgetIndicator currentAmount={10} limit={limit} />
+        <BudgetIndicator currentAmount={current_amount} limit={limit} />
       </div>
     </Link>
   );

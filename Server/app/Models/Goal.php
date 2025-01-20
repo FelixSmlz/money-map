@@ -17,20 +17,7 @@ class Goal extends Model
         'category_id',
     ];
 
-    // Update the current amount saved in the goal
 
-    public function updateSavedAmount()
-    {
-        $savedAmount = Transaction::where('category_id', $this->category_id)
-            ->where('user_id', $this->user_id)
-            ->where('type', 'income')
-            ->where('date', '>=', $this->start_date)
-            ->where('date', '<=', $this->end_date)
-            ->sum('amount');
-
-        $this->current_amount = $savedAmount;
-        $this->save();
-    }
 
     public function user()
     {

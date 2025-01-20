@@ -68,17 +68,7 @@ class TransactionController extends Controller
         $transaction->user_id = $user->id;
         $transaction->save();
 
-        if ($transaction->type === 'expense') {
-            $budget = Budget::where('category_id', $transaction->category_id)->where('user_id', $user->id)->first();
-            if ($budget) {
-                $budget->updateSpentAmount($budget);
-            }
-        } else {
-            $goal = Goal::where('category_id', $transaction->category_id)->where('user_id', $user->id)->first();
-            if ($goal) {
-                $goal->updateSavedAmount();
-            }
-        }
+        $this->updateGoalsCurrentAmount($transaction);
 
         return response()->json(['message' => 'Transaction created successfully', 'transaction:' => $transaction], Response::HTTP_CREATED);
     }
@@ -167,7 +157,6 @@ class TransactionController extends Controller
         if ($transaction->type === 'expense') {
             $budget = Budget::where('category_id', $transaction->category_id)->where('user_id', $transaction->user_id)->first();
             if ($budget) {
-                $budget->updateSpentAmount();
             }
         } elseif ($transaction->type === 'income') {
             $goal = Goal::where('category_id', $transaction->category_id)->where('user_id', $transaction->user_id)->first();
@@ -179,5 +168,21 @@ class TransactionController extends Controller
         }
 
         return response()->json(['message' => 'Transaction deleted successfully'], Response::HTTP_OK);
+    }
+
+    private function updateGoalsCurrentAmount(Transaction $transaction): void
+    {
+        if ($transaction->type === 'income') {
+            $goals = Goal::where('category_id', $transaction->category_id)
+                ->where('user_id', $transaction->user_id)
+                ->where('start_date', '<=', $transaction->date)
+                ->where('end_date', '>=', $transaction->date)
+                ->get();
+
+            foreach ($goals as $goal) {
+                $goal->current_amount += $transaction->amount;
+                $goal->save();
+            }
+        }
     }
 }

@@ -1,23 +1,18 @@
+import { Link } from "react-router-dom";
 import GoalIndicator from "./GoalIndicator";
-
-type Props = {
-  name: string;
-  targetAmount: number;
-  startDate: string;
-  endDate: string;
-  categoryId: number;
-};
+import { GoalType } from "../../pages/Goal";
 
 const GoalRow = ({
+  id,
   name,
-  targetAmount,
-  startDate,
-  endDate,
-  categoryId,
-}: Props) => {
+  target_amount,
+  current_amount,
+  start_date,
+  category_id,
+}: GoalType) => {
   return (
-    <a
-      href="/transaction"
+    <Link
+      to={`/goals/${id}`}
       className="group flex items-center w-full bg-white hover:bg-bg_black rounded-[15px] p-4 gap-5"
     >
       <div className="bg-[rgba(231,231,231,0.3)] h-fit p-4 rounded-[15px]">
@@ -72,14 +67,17 @@ const GoalRow = ({
             {name}
           </h3>
           <p className="text-light_gray group-hover:text-white text-xs">
-            Weekly
+            {start_date}
           </p>
         </div>
         <div className="flex flex-col gap-2 ">
-          <GoalIndicator currentAmount={10} targetAmount={30} />
+          <GoalIndicator
+            currentAmount={current_amount}
+            targetAmount={target_amount}
+          />
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 

@@ -1,65 +1,50 @@
-import { getBudget, updateBudget } from "../utils/api";
-import Background from "../components/Background";
-import { ActionFunctionArgs, useNavigate } from "react-router";
+import { getGoal, updateGoal, deleteGoal } from "../utils/api";
+import {
+  ActionFunctionArgs,
+  useNavigate,
+  useFetcher,
+  useLoaderData,
+} from "react-router";
 import { useState } from "react";
-import { useLoaderData, useFetcher, Link } from "react-router-dom";
 import DataRow from "../components/DataRow";
 import CategoryIcon from "../components/CategoryIcon";
 import DeleteBtn from "../components/DeleteBtn";
-import { deleteBudget } from "../utils/api";
-import BudgetPeriodSelect from "../components/BudgetPeriodSelect";
-import BudgetIndicator from "../components/budgets/BudgetIndicator";
+import Background from "../components/Background";
+import GoalIndicator from "../components/goals/GoalIndicator";
 
-export type BudgetType = {
+export type GoalType = {
   id: string;
-  period: "daily" | "weekly" | "monthly" | "custom";
-  limit: number;
-  current_amount: number;
   name: string;
+  target_amount: number;
+  current_amount: number;
   start_date: string;
-  custom_period?: number | null;
-  category_id: string;
+  category_id: number;
 };
 
 export const loader = async ({ params }: any) => {
-  const budget = await getBudget(params.id);
-  return budget;
+  const goal = await getGoal(params.id);
+  return goal;
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const response = await updateBudget(params.id as string, formData);
+  const response = await updateGoal(params.id as string, formData);
   if (!response || !response.data) {
-    return { error: "Failed to update budget" };
+    return { error: "Failed to update goal" };
   }
-  return { budget: response.data.budget };
+  return { goal: response.data.goal };
 };
 
-const Budget = () => {
+const Goal = () => {
   const navigate = useNavigate();
   const fetcher = useFetcher<typeof action>();
-  const { budget } = useLoaderData() as { budget: BudgetType };
-  const [currentBudget, setCurrentBudget] = useState(budget);
+  const { goal } = useLoaderData() as { goal: GoalType };
 
   const handleDelete = async () => {
-    const response = await deleteBudget(budget.id);
+    const response = await deleteGoal(goal.id);
     if (response.status === 200) {
       navigate("/history");
     }
-  };
-
-  const handlePeriodChange = (newPeriod: BudgetType["period"]) => {
-    const formData = new FormData();
-    formData.append("period", newPeriod);
-
-    setCurrentBudget((prev) => ({
-      ...prev,
-      period: newPeriod,
-    }));
-
-    fetcher.submit(formData, {
-      method: "PUT",
-    });
   };
 
   return (
@@ -114,43 +99,27 @@ const Budget = () => {
           </svg>
         </a>
       </header>
-      <div className="flex flex-col items-center gap-6">
-        <p className="text-bg_black text-xl text-center">{budget.limit}€</p>
-        <BudgetIndicator
-          withText={false}
-          currentAmount={budget.current_amount}
-          maxWidth="250px"
+      <div className="flex flex-col items-center gap-6 relative">
+        <GoalIndicator
+          targetAmount={goal.target_amount}
+          currentAmount={goal.current_amount}
+          size={125}
           strokeWidth={15}
-          limit={budget.limit}
         />
         <div className="flex gap-3 items-center">
           <CategoryIcon />
-          <BudgetPeriodSelect
-            initialPeriod={currentBudget.period}
-            onChange={handlePeriodChange}
-          />
           <DeleteBtn onDelete={handleDelete} />
         </div>
         <div className="flex flex-col gap-6 bg-white w-full p-4 rounded-[15px] shadow-sm">
-          <DataRow label="name" value={budget.name} />
-          <DataRow
-            label={
-              budget.period === "custom" ? "limit" : `${budget.period} limit`
-            }
-            value={budget.limit}
-          />
-          {budget.period === "custom" && (
-            <DataRow
-              label="custom period (days)"
-              value={budget.custom_period ? budget.custom_period : "-"}
-            />
-          )}
-          <DataRow label="start date" value={budget.start_date} />
-          <DataRow label="category" value={budget.category_id} />
+          <DataRow label="name" value={goal.name} />
+          <DataRow label="current amount" value={goal.current_amount} />
+          <DataRow label="target amount" value={goal.target_amount} />
+          <DataRow label="start date" value={goal.start_date} />
+          <DataRow label="category" value={goal.category_id} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Budget;
+export default Goal;
