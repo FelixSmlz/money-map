@@ -7,6 +7,7 @@ import DataRow from "../components/DataRow";
 import CategoryIcon from "../components/CategoryIcon";
 import DeleteBtn from "../components/DeleteBtn";
 import { deleteBudget } from "../utils/api";
+import BudgetPeriodSelect from "../components/BudgetPeriodSelect";
 
 export type BudgetType = {
   id: string;
@@ -14,13 +15,12 @@ export type BudgetType = {
   limit: number;
   name: string;
   start_date: string;
-  customPeriod?: string;
+  custom_period?: number | null;
   category_id: string;
 };
 
 export const loader = async ({ params }: any) => {
   const budget = await getBudget(params.id);
-  console.log(budget);
   return budget;
 };
 
@@ -44,6 +44,20 @@ const Budget = () => {
     if (response.status === 200) {
       navigate("/history");
     }
+  };
+
+  const handlePeriodChange = (newPeriod: BudgetType["period"]) => {
+    const formData = new FormData();
+    formData.append("period", newPeriod);
+
+    setCurrentBudget((prev) => ({
+      ...prev,
+      period: newPeriod,
+    }));
+
+    fetcher.submit(formData, {
+      method: "PUT",
+    });
   };
 
   return (
@@ -85,14 +99,29 @@ const Budget = () => {
         </a>
       </header>
       <div className="flex flex-col gap-6">
-        <p className="text-bg_black text-xl text-center">50€</p>
+        <p className="text-bg_black text-xl text-center">{budget.limit}</p>
         <div className="flex justify-between w-full items-center">
           <CategoryIcon />
+          <BudgetPeriodSelect
+            initialPeriod={currentBudget.period}
+            onChange={handlePeriodChange}
+          />
           <DeleteBtn onDelete={handleDelete} />
         </div>
         <div className="flex flex-col gap-6 bg-white w-full p-4 rounded-[15px] shadow-sm">
           <DataRow label="name" value={budget.name} />
-          <DataRow label="amount" value={budget.limit} />
+          <DataRow
+            label={
+              budget.period === "custom" ? "limit" : `${budget.period} limit`
+            }
+            value={budget.limit}
+          />
+          {budget.period === "custom" && (
+            <DataRow
+              label="custom period"
+              value={budget.custom_period ? budget.custom_period : ""}
+            />
+          )}
           <DataRow label="start date" value={budget.start_date} />
           <DataRow label="category" value={budget.category_id} />
         </div>

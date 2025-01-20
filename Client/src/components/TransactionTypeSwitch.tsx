@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 type Props = {
   onChange: (type: "income" | "expense") => void;

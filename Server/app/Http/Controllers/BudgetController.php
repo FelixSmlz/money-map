@@ -82,7 +82,7 @@ class BudgetController extends Controller
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
 
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'string|max:250',
             'limit' => 'numeric|min:0|max:999999',
             'period' => 'string|in:daily,weekly,monthly,custom',
@@ -91,15 +91,8 @@ class BudgetController extends Controller
             'custom_period' => 'integer|min:1|max:365|nullable'
         ]);
 
-        $user = Auth::user();
 
-        $budget->user_id = $user->id;
-        $budget->name = $request->name;
-        $budget->limit = $request->limit;
-        $budget->period = $request->period;
-        $budget->start_date = $request->start_date;
-        $budget->category_id = $request->category_id;
-        $budget->custom_period = $request->custom_period;
+        $budget->fill($validatedData);
         $budget->save();
 
         return response()->json(['message' => 'Budget updated successfully', 'budget:' => $budget], Response::HTTP_OK);

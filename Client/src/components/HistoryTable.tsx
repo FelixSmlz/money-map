@@ -47,7 +47,7 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
               amount={item.amount}
               type={item.type}
               date={item.date}
-              categoryId={item.categoryId}
+              category_id={item.categoryId}
             />
           );
           break;
@@ -58,10 +58,10 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
               id={item.id}
               name={item.name}
               limit={item.limit}
-              period={item.period}
-              startDate={item.startDate}
-              customPeriod={item.customPeriod}
-              categoryId={item.categoryId}
+              period={item.custom_period ? item.custom_period : item.period}
+              start_date={item.start_date}
+              custom_period={item.custom_period}
+              category_id={item.category_id}
             />
           );
           break;
