@@ -1,59 +1,46 @@
+import { getBudget, updateBudget } from "../utils/api";
 import Background from "../components/Background";
-import { getTransaction, getTransactions } from "../utils/api";
-import { useLoaderData, useFetcher, useNavigate } from "react-router-dom";
-import { useId, useState, useEffect } from "react";
-import DeleteBtn from "../components/DeleteBtn";
-import TransactionTypeSwitch from "../components/TransactionTypeSwitch";
-import CategoryIcon from "../components/CategoryIcon";
-import { ActionFunctionArgs } from "react-router";
-import { updateTransaction, deleteTransaction } from "../utils/api";
+import { ActionFunctionArgs, useNavigate } from "react-router";
+import { useState } from "react";
+import { useLoaderData, useFetcher } from "react-router-dom";
 import DataRow from "../components/DataRow";
+import CategoryIcon from "../components/CategoryIcon";
+import DeleteBtn from "../components/DeleteBtn";
+import { deleteBudget } from "../utils/api";
 
-export type TransactionType = {
+export type BudgetType = {
   id: string;
-  type: "income" | "expense";
-  amount: number;
+  period: "daily" | "weekly" | "monthly" | "custom";
+  limit: number;
   name: string;
-  date: string;
+  start_date: string;
+  customPeriod?: string;
   category_id: string;
 };
 
 export const loader = async ({ params }: any) => {
-  const transaction = await getTransaction(params.id);
-  return transaction;
+  const budget = await getBudget(params.id);
+  console.log(budget);
+  return budget;
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const response = await updateTransaction(params.id as string, formData);
+  const response = await updateBudget(params.id as string, formData);
   if (!response || !response.data) {
-    return { error: "Failed to update transaction" };
+    return { error: "Failed to update budget" };
   }
-  return { transaction: response.data.transaction };
+  return { budget: response.data.budget };
 };
 
-const Transaction = () => {
+const Budget = () => {
   const navigate = useNavigate();
   const fetcher = useFetcher<typeof action>();
-  const { transaction } = useLoaderData() as { transaction: TransactionType };
-  const [currentTransaction, setCurrentTransaction] = useState(transaction);
-
-  const handleTypeSwitch = (newType: "income" | "expense") => {
-    const formData = new FormData();
-    formData.append("type", newType);
-
-    setCurrentTransaction((prev: any) => ({
-      ...prev,
-      type: newType,
-    }));
-
-    fetcher.submit(formData, {
-      method: "PUT",
-    });
-  };
+  const { budget } = useLoaderData() as { budget: BudgetType };
+  const [currentBudget, setCurrentBudget] = useState(budget);
 
   const handleDelete = async () => {
-    const response = await deleteTransaction(transaction.id);
+    const response = await deleteBudget(budget.id);
     if (response.status === 200) {
       navigate("/history");
     }
@@ -98,32 +85,20 @@ const Transaction = () => {
         </a>
       </header>
       <div className="flex flex-col gap-6">
-        {currentTransaction.type === "income" ? (
-          <p className="text-bg_black text-xl text-center">
-            {currentTransaction.amount}€
-          </p>
-        ) : (
-          <p className="text-bg_black text-xl text-center">
-            - {currentTransaction.amount}€
-          </p>
-        )}
+        <p className="text-bg_black text-xl text-center">50€</p>
         <div className="flex justify-between w-full items-center">
           <CategoryIcon />
-          <TransactionTypeSwitch
-            onChange={handleTypeSwitch}
-            initialType={currentTransaction.type}
-          />
           <DeleteBtn onDelete={handleDelete} />
         </div>
         <div className="flex flex-col gap-6 bg-white w-full p-4 rounded-[15px] shadow-sm">
-          <DataRow label="name" value={transaction.name} />
-          <DataRow label="amount" value={transaction.amount} />
-          <DataRow label="date" value={transaction.date} />
-          <DataRow label="category" value={transaction.category_id} />
+          <DataRow label="name" value={budget.name} />
+          <DataRow label="amount" value={budget.limit} />
+          <DataRow label="start date" value={budget.start_date} />
+          <DataRow label="category" value={budget.category_id} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Transaction;
+export default Budget;

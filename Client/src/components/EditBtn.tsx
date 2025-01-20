@@ -1,7 +1,7 @@
 function EditBtn() {
   return (
     <a
-      className="group hover:text-white hover:bg-bg_black bg-white rounded-[15px] flex items-center gap-2 p-4 shadow-card"
+      className="group hover:text-white hover:bg-bg_black bg-white rounded-[15px] flex items-center gap-2 py-3 px-6 shadow-card"
       href="/profile"
     >
       Edit

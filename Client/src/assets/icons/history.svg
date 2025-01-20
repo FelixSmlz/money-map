@@ -1,67 +1,9 @@
-<svg
-                width="20"
-                height="23"
-                viewBox="0 0 20 23"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 1.66669V4.66669"
-                  stroke="#1A1B1C"
-                  stroke-width="1.75"
-                  strokeMiterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M14 1.66669V4.66669"
-                  stroke="#1A1B1C"
-                  stroke-width="1.75"
-                  strokeMiterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  className="group-hover:fill-bg_black "
-                  d="M19 8.16668V16.6667C19 19.6667 17.5 21.6667 14 21.6667H6C2.5 21.6667 1 19.6667 1 16.6667V8.16668C1 5.16668 2.5 3.16669 6 3.16669H14C17.5 3.16669 19 5.16668 19 8.16668Z"
-                  fill="none"
-                  stroke="#1A1B1C"
-                  stroke-width="1.75"
-                  strokeMiterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  className="group-hover:stroke-white"
-                  d="M0.974609 8.75677H19.0263"
-                  stroke="#1A1B1C"
-                  stroke-width="1.75"
-                  strokeMiterlimit="10"
-                  stroke-linecap="square"
-                  stroke-linejoin="round"
-                />
-                <path
-                  className="group-hover:stroke-white"
-                  d="M9.99512 13.3667H10.0048"
-                  stroke="#1A1B1C"
-                  stroke-width="1.75"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  className="group-hover:stroke-white"
-                  d="M6.29395 13.3667H6.30368"
-                  stroke="#1A1B1C"
-                  stroke-width="1.75"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  className="group-hover:stroke-white"
-                  d="M6.29395 16.3667H6.30368"
-                  stroke="#1A1B1C"
-                  stroke-width="1.75"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+<svg width="26" height="26" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.55566 1V4" stroke="#1A1B1C" stroke-width="1.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.4443 1V4" stroke="#1A1B1C" stroke-width="1.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.55566 8.09009H20.4446" stroke="#1A1B1C" stroke-width="1.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21 7.49999V16C21 19 19.3333 21 15.4444 21H6.55556C2.66667 21 1 19 1 16V7.49999C1 4.49999 2.66667 2.5 6.55556 2.5H15.4444C19.3333 2.5 21 4.49999 21 7.49999Z" stroke="#1A1B1C" stroke-width="1.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.9941 12.7H11.0049" stroke="#1A1B1C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.88184 12.7H6.89265" stroke="#1A1B1C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6.88184 15.7H6.89265" stroke="#1A1B1C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

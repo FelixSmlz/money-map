@@ -11,7 +11,7 @@ const NotFound = () => {
           <p className="text-lg text-center mt-[-1rem]">Page was not found</p>
         </div>
         <NavLink
-          to=""
+          to="/dashboard"
           className="bg-bg_black text-white hover:bg-white hover:text-bg_black border-bg_black border-2 p-3 w-full rounded-[15px] text-center"
         >
           Back to Home

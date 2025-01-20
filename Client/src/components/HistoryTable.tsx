@@ -2,19 +2,19 @@ import HistoryTableHeading from "./HistoryTableHeading";
 import TransactionRow from "./transactions/TransactionRow";
 import GoalRow from "./goals/GoalRow";
 import BudgetRow from "./budgets/BudgetRow";
+import { useContext } from "react";
+import { TransactionContext, DataType } from "../pages/History";
 
-export type DataType = "transactions" | "categories" | "budgets" | "goals";
 type Props = {
-  data: any[];
-  dataType: DataType;
   searchFilter: string;
 };
 
-const HistoryTable = ({
-  data,
-  dataType,
-  searchFilter,
-}: Props): React.ReactElement => {
+const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
+  const { data, dataType } = useContext(TransactionContext) as {
+    data: any[];
+    dataType: DataType;
+  };
+
   const generateHistoryTable = () => {
     const jsx: React.ReactElement[] = [];
 
@@ -33,10 +33,6 @@ const HistoryTable = ({
       const prevItemDate =
         orgData[index - 1]?.date || orgData[index - 1]?.start_date;
 
-      console.log(
-        `DataType: ${dataType}, ItemDate: ${itemDate}, PrevItemDate: ${prevItemDate}`
-      );
-
       if (index === 0 || itemDate !== prevItemDate) {
         jsx.push(<HistoryTableHeading key={index} date={itemDate} />);
       }
@@ -46,6 +42,7 @@ const HistoryTable = ({
           jsx.push(
             <TransactionRow
               key={item.id}
+              id={item.id}
               name={item.name}
               amount={item.amount}
               type={item.type}
@@ -58,6 +55,7 @@ const HistoryTable = ({
           jsx.push(
             <BudgetRow
               key={item.id}
+              id={item.id}
               name={item.name}
               limit={item.limit}
               period={item.period}
@@ -95,7 +93,7 @@ const HistoryTable = ({
     return jsx;
   };
 
-  return <div className="flex flex-col gap-2">{generateHistoryTable()}</div>;
+  return <div className="flex flex-col gap-3">{generateHistoryTable()}</div>;
 };
 
 export default HistoryTable;

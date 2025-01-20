@@ -40,7 +40,10 @@ export const logout = async () => {
 
 // User Profile
 
-export const updateProfile = async (formData: FormData, id: string) => {
+export const updateProfile = async (
+  formData: FormData,
+  id: FormDataEntryValue
+) => {
   try {
     const response = await axios.put(`${API_URL}/user/${id}`, formData, {
       withCredentials: true,
@@ -86,6 +89,46 @@ export const getTransactions = async () => {
   }
 };
 
+export const getTransaction = async (id: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/transactions/${id}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const updateTransaction = async (id: string, formData: FormData) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/transactions/${id}`,
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const deleteTransaction = async (id: string) => {
+  try {
+    const response = await axios.delete(`${API_URL}/transactions/${id}`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
 // Budgets
 
 export const getBudgets = async () => {
@@ -94,6 +137,42 @@ export const getBudgets = async () => {
       withCredentials: true,
     });
     return response.data.budgets;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const getBudget = async (id: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/budgets/${id}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const updateBudget = async (id: string, formData: FormData) => {
+  try {
+    const response = await axios.put(`${API_URL}/budgets/${id}`, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const deleteBudget = async (id: string) => {
+  try {
+    const response = await axios.delete(`${API_URL}/budgets/${id}`, {
+      withCredentials: true,
+    });
+    return response;
   } catch (error: any) {
     return error.response;
   }

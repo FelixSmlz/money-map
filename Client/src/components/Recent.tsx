@@ -1,4 +1,5 @@
 import Transaction from "./transactions/TransactionRow";
+import { Link } from "react-router-dom";
 
 function Recent() {
   return (
@@ -7,9 +8,9 @@ function Recent() {
         <h3 className="text-base font-semibold text-black">
           Recent Transaction
         </h3>
-        <a
-          className="flex font-semibold text-sm hover:text-gray text-black gap-0.5 justify-center items-center "
-          href="/history"
+        <Link
+          to="/history"
+          className="flex font-semibold text-sm hover:text-gray text-black gap-0.5 justify-center items-center"
         >
           See All
           <svg
@@ -22,13 +23,13 @@ function Recent() {
             <path
               d="M3.71252 8.29995L6.42919 5.58328C6.75002 5.26245 6.75002 4.73745 6.42919 4.41662L3.71252 1.69995"
               stroke="#7E7E7E"
-              stroke-width="1"
+              strokeWidth="1"
               strokeMiterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
-        </a>
+        </Link>
       </div>
       <div className="flex flex-col gap-2 w-full">
         <Transaction />

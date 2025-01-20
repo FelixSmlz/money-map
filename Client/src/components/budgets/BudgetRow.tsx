@@ -1,25 +1,19 @@
 import BudgetIndicator from "./BudgetIndicator";
-
-type Props = {
-  name: string;
-  limit: number;
-  period: string;
-  startDate: string;
-  customPeriod?: string;
-  categoryId: number;
-};
+import { BudgetType } from "../../pages/Budget";
+import { Link } from "react-router-dom";
 
 const BudgetRow = ({
+  id,
   name,
   limit,
   period,
   startDate,
   customPeriod,
   categoryId,
-}: Props) => {
+}: BudgetType) => {
   return (
-    <a
-      href="/transaction"
+    <Link
+      to={`/budgets/${id}`}
       className="group flex w-full items-center bg-white hover:bg-bg_black rounded-[15px] p-4 gap-5"
     >
       <div className="bg-[rgba(231,231,231,0.3)] h-fit p-4 rounded-[15px]">
@@ -79,7 +73,7 @@ const BudgetRow = ({
         </div>
         <BudgetIndicator currentAmount={10} limit={limit} />
       </div>
-    </a>
+    </Link>
   );
 };
 

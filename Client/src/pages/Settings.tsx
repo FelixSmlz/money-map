@@ -7,6 +7,7 @@ import LogoutBtn from "../components/LogoutBtn";
 import Nav from "../components/Nav";
 import { isLoggedIn } from "../utils/api";
 import { useLoaderData } from "react-router-dom";
+import ConfirmWindow from "../components/ConfirmWindow";
 
 export const loader = async () => {
   const { user } = await isLoggedIn();
@@ -162,7 +163,6 @@ function Settings() {
         <DeleteProfileBtn />
         <LogoutBtn />
       </div>
-      <Nav />
       <AddMenu />
     </div>
   );

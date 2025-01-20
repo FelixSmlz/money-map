@@ -24,29 +24,17 @@ export const loader = async () => {
 function Profile() {
   const nameId = useId();
   const emailId = useId();
-  const passwordId = useId();
 
+  const fetcher = useFetcher<typeof action>();
   const data = useLoaderData<typeof loader>();
   const user = data?.user;
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      name: user.name,
-      email: user.email,
-    },
-  });
+  } = useForm<FieldValues>({});
 
-  const fetcher = useFetcher<typeof action>();
-
-  const onValid: SubmitHandler<FieldValues> = (_, event) => {
-    fetcher.submit(event?.target, {
-      method: "PUT",
-    });
-  };
+  const onValid: SubmitHandler<FieldValues> = async (data) => {};
 
   return (
     <div className="px-5 py-10 position-relative">

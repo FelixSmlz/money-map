@@ -21,6 +21,11 @@ import NotFound from "./pages/NotFound";
 import Loading from "./pages/Loading";
 import { loader as settingsLoader } from "./pages/Settings";
 import Transaction from "./pages/Transaction";
+import { loader as transactionLoader } from "./pages/Transaction";
+import { action as transactionAction } from "./pages/Transaction";
+import Budget from "./pages/Budget";
+import { loader as budgetLoader } from "./pages/Budget";
+import { action as budgetAction } from "./pages/Budget";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +35,11 @@ const router = createBrowserRouter([
     loader: defaultLoader,
     hydrateFallbackElement: <Loading />,
     children: [
+      {
+        path: "",
+        element: <Dashboard />,
+        loader: dashboardLoader,
+      },
       {
         path: "dashboard",
         element: <Dashboard />,
@@ -51,8 +61,16 @@ const router = createBrowserRouter([
         loader: profileLoader,
       },
       {
-        path: "transactions",
+        path: "transactions/:id",
         element: <Transaction />,
+        loader: transactionLoader,
+        action: transactionAction,
+      },
+      {
+        path: "budgets/:id",
+        element: <Budget />,
+        loader: budgetLoader,
+        action: budgetAction,
       },
       {
         path: "verify-email",

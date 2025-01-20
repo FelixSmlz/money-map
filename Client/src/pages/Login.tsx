@@ -63,6 +63,7 @@ function Login() {
             <Input
               type="email"
               id={emailId}
+              value=""
               placeholder="email"
               handler={register("email", {
                 required: { value: true, message: "Email is required" },
@@ -80,6 +81,7 @@ function Login() {
             <Input
               type="password"
               id={passwordId}
+              value=""
               placeholder="password"
               handler={register("password", {
                 required: { value: true, message: "Password is required" },

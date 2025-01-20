@@ -31,16 +31,16 @@ function Analytics() {
             <path
               d="M9 6.375V10.875"
               stroke="#1A1B1C"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M6.75 9.375L9 11.625L11.25 9.375"
               stroke="#1A1B1C"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>

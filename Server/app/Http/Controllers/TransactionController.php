@@ -118,22 +118,18 @@ class TransactionController extends Controller
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
 
-        $request->validate([
-            'name' => 'string|max:250',
-            'amount' => 'numeric|min:0|max:999999',
-            'type' => 'string|in:expense,income',
-            'date' => 'date|date_format:Y-m-d',
-            'category_id' => 'exists:categories,id'
+        $validatedData = $request->validate([
+            'name' => 'sometimes|string|max:250',
+            'amount' => 'sometimes|numeric|min:0|max:999999',
+            'type' => 'sometimes|string|in:expense,income',
+            'date' => 'sometimes|date|date_format:Y-m-d',
+            'category_id' => 'sometimes|exists:categories,id'
         ]);
+
 
         $user = Auth::user();
 
-        $transaction->name = $request->name ?? $transaction->name;
-        $transaction->amount = $request->amount ?? $transaction->amount;
-        $transaction->type = $request->type ?? $transaction->type;
-        $transaction->date = $request->date ?? $transaction->date;
-        $transaction->category_id = $request->category_id ?? $transaction->category_id;
-        $transaction->user_id = $user->id;
+        $transaction->fill($validatedData);
         $transaction->save();
 
         if ($transaction->type === 'expense') {
