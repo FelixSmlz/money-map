@@ -60,6 +60,7 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
               limit={item.limit}
               period={item.custom_period ? item.custom_period : item.period}
               start_date={item.start_date}
+              current_amount={item.current_amount}
               custom_period={item.custom_period}
               category_id={item.category_id}
             />
@@ -72,8 +73,8 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
               key={item.id}
               name={item.name}
               target_amount={item.target_amount}
+              current_amount={item.current_amount}
               start_date={item.start_date}
-              end_date={item.end_date}
               category_id={item.category_id}
             />
           );

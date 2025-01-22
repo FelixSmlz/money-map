@@ -14,7 +14,6 @@ type FieldValues = {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  console.log(request);
   const formData = await request.formData();
   try {
     const response = await register(formData);

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('limit', 6, 2)->unsigned()->nullable(false);
             $table->float('current_amount', 6, 2)->unsigned()->nullable(true)->default(0);
             $table->date('start_date')->nullable(false)->default(now());
+            $table->integer('days_left')->nullable(true);
             $table->enum('period', ['daily', 'weekly', 'monthly', 'custom'])->nullable(false);
             $table->integer('custom_period')->nullable(true);
             $table->foreignId('category_id')->constrained('categories');

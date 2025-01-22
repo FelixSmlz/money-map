@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Events\Registered;
+use Laravolt\Avatar\Avatar;
 
 class AuthController extends Controller
 {
@@ -86,7 +87,15 @@ class AuthController extends Controller
 
         $credentials['password'] = bcrypt($credentials['password']);
 
+
         $user = User::create($credentials);
+
+        $avatar = new Avatar();
+        $avatarPath = 'avatar-' . $user->id . '.png';
+        $avatar->create($user->name)->save(storage_path('app/public/' . $avatarPath), 100);
+
+        $user->avatar = $avatarPath;
+        $user->save();
 
         // event(new Registered($user));
 
