@@ -5,6 +5,7 @@ import AddMenu from "../components/AddMenu";
 import Nav from "../components/Nav";
 import { isLoggedIn } from "../utils/api";
 import { useLoaderData } from "react-router-dom";
+import Avatar from "../components/Avatar";
 
 export const loader = async () => {
   const { user } = await isLoggedIn();
@@ -21,11 +22,7 @@ function Dashboard() {
       <Background />
       <header className="flex justify-between items-center text-bg_black">
         <div className="flex items-center space-x-4">
-          <img
-            className="w-[50px] object-cover h-[50px] rounded-full"
-            src="/images/profile_picture.jpeg"
-            alt="Profile picture"
-          />
+          <Avatar name={user?.name} size="md" />
           <a href="/dashboard" className="text-lg text-bg_black font-semibold">
             Hi, {user?.name}
           </a>

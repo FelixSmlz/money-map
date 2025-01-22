@@ -4,10 +4,9 @@ import Switch from "../components/Switch";
 import AddMenu from "../components/AddMenu";
 import DeleteProfileBtn from "../components/DeleteProfileBtn";
 import LogoutBtn from "../components/LogoutBtn";
-import Nav from "../components/Nav";
 import { isLoggedIn } from "../utils/api";
 import { useLoaderData } from "react-router-dom";
-import ConfirmWindow from "../components/ConfirmWindow";
+import Avatar from "../components/Avatar";
 
 export const loader = async () => {
   const { user } = await isLoggedIn();
@@ -60,16 +59,14 @@ function Settings() {
         </a>
       </header>
       <div className="flex flex-col gap-5 items-center">
-        <img
-          className="rounded-full w-[125px] h-[125px] object-cover shadow-card"
-          src="/images/profile_picture.jpeg"
-          alt="Profile picture"
-        />
-        <div>
-          <p className="text-center">{user?.name}</p>
-          <small className="text-center text-xs text-gray font-light">
-            {user?.email}
-          </small>
+        <div className="flex items-center gap-5">
+          <Avatar name={user?.name} size="lg" />
+          <div className="flex flex-col gap-2">
+            <p className="text-lg">{user?.name}</p>
+            <small className="text-sm text-gray font-light">
+              {user?.email}
+            </small>
+          </div>
         </div>
         <EditBtn />
       </div>
