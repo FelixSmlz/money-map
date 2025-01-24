@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
+
 function EditBtn() {
   return (
-    <a
+    <Link
       className="group hover:text-white hover:bg-bg_black bg-white rounded-[15px] flex items-center gap-2 py-3 px-6 shadow-card"
-      href="/profile"
+      to="/profile"
     >
-      Edit
+      Edit Profile
       <svg
         width="22"
         height="21"
@@ -39,7 +41,7 @@ function EditBtn() {
           className="group-hover:stroke-white"
         />
       </svg>
-    </a>
+    </Link>
   );
 }
 

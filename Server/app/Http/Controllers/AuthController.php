@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Auth\Events\Registered;
-use Laravolt\Avatar\Avatar;
 
 class AuthController extends Controller
 {
@@ -89,17 +87,6 @@ class AuthController extends Controller
 
 
         $user = User::create($credentials);
-
-        $avatar = new Avatar();
-        $avatarPath = 'avatar-' . $user->id . '.png';
-        $avatar->create($user->name)->save(storage_path('app/public/' . $avatarPath), 100);
-
-        $user->avatar = $avatarPath;
-        $user->save();
-
-        // event(new Registered($user));
-
-        // $user->sendEmailVerificationNotification();
 
         return response()->json([
             'message' => 'Registration successful. Please check your email for verification link.',

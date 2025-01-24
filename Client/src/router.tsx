@@ -29,6 +29,7 @@ import { action as budgetAction } from "./pages/Budget";
 import Goal from "./pages/Goal";
 import { loader as goalLoader } from "./pages/Goal";
 import { action as goalAction } from "./pages/Goal";
+import Welcome from "./pages/Welcome";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
     loader: guestLoader,
     hydrateFallbackElement: <Loading />,
     children: [
+      {
+        path: "welcome",
+        element: <Welcome />,
+      },
       {
         path: "register",
         element: <Register />,

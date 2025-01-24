@@ -63,13 +63,14 @@ function Settings() {
           <Avatar name={user?.name} size="lg" />
           <div className="flex flex-col gap-2">
             <p className="text-lg">{user?.name}</p>
-            <small className="text-sm text-gray font-light">
+            <small className="text-base text-gray font-light">
               {user?.email}
             </small>
           </div>
         </div>
         <EditBtn />
       </div>
+
       <div className="flex mt-6 flex-col bg-white rounded-[15px] shadow-card w-full">
         <div className="flex items-center gap-4 mx-4 py-4 border-b border-light_gray">
           <div className="bg-[#F2F2F2] w-fit p-2 rounded-[15px]">

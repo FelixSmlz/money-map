@@ -11,7 +11,7 @@ import { isLoggedIn } from "../utils/api";
 export const loader = async () => {
   const { isLoggedIn: loggedIn } = await isLoggedIn();
   if (!loggedIn) {
-    return redirect("/guest/login");
+    return redirect("/guest/welcome");
   }
   return null;
 };

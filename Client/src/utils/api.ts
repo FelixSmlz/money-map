@@ -3,12 +3,14 @@ import axios from "axios";
 const API_URL = "http://localhost:8000/api";
 
 axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 axios.defaults.headers.post["Accept"] = "application/json";
 
 // Authentication
 
 export const register = async (formData: FormData) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.post(API_URL + "/register", formData);
     return response;
   } catch (error: any) {
@@ -18,6 +20,7 @@ export const register = async (formData: FormData) => {
 
 export const login = async (formData: FormData) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.post(API_URL + "/login", formData, {
       withCredentials: true,
     });
@@ -29,6 +32,7 @@ export const login = async (formData: FormData) => {
 
 export const logout = async () => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.post(API_URL + "/logout", {
       withCredentials: true,
     });
@@ -102,6 +106,7 @@ export const getTransaction = async (id: string) => {
 
 export const updateTransaction = async (id: string, formData: FormData) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.put(
       `${API_URL}/transactions/${id}`,
       formData,
@@ -120,6 +125,7 @@ export const updateTransaction = async (id: string, formData: FormData) => {
 
 export const deleteTransaction = async (id: string) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.delete(`${API_URL}/transactions/${id}`, {
       withCredentials: true,
     });
@@ -155,6 +161,7 @@ export const getBudget = async (id: string) => {
 
 export const updateBudget = async (id: string, formData: FormData) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.put(`${API_URL}/budgets/${id}`, formData, {
       withCredentials: true,
       headers: {
@@ -169,6 +176,7 @@ export const updateBudget = async (id: string, formData: FormData) => {
 
 export const deleteBudget = async (id: string) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.delete(`${API_URL}/budgets/${id}`, {
       withCredentials: true,
     });
@@ -204,6 +212,7 @@ export const getGoal = async (id: string) => {
 
 export const updateGoal = async (id: string, formData: FormData) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.put(`${API_URL}/goals/${id}`, formData, {
       withCredentials: true,
       headers: {
@@ -218,6 +227,7 @@ export const updateGoal = async (id: string, formData: FormData) => {
 
 export const deleteGoal = async (id: string) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.delete(`${API_URL}/goals/${id}`, {
       withCredentials: true,
     });

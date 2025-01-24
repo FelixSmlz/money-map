@@ -17,6 +17,7 @@ export const loader = async () => {
 function Dashboard() {
   const data = useLoaderData<typeof loader>();
   const user = data?.user;
+  const userFirstName = user?.name.split(" ")[0];
   return (
     <div className="px-5 py-10 position-relative">
       <Background />
@@ -24,7 +25,7 @@ function Dashboard() {
         <div className="flex items-center space-x-4">
           <Avatar name={user?.name} size="md" />
           <a href="/dashboard" className="text-lg text-bg_black font-semibold">
-            Hi, {user?.name}
+            Hi, {userFirstName}
           </a>
         </div>
         <a

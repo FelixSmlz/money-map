@@ -25,7 +25,6 @@ function Profile() {
   const nameId = useId();
   const emailId = useId();
 
-  const fetcher = useFetcher<typeof action>();
   const data = useLoaderData<typeof loader>();
   const user = data?.user;
 
@@ -85,7 +84,6 @@ function Profile() {
       </div>
       <form
         noValidate
-        onSubmit={handleSubmit(onValid)}
         className="flex flex-col gap-4 bg-white w-full px-2 py-4 rounded-[15px] shadow-sm"
       >
         <Input
