@@ -8,23 +8,9 @@ use Carbon\Carbon;
 
 class ResetBudgets extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'budgets:reset';
+    protected $description = 'Reset budget amounts and update days left';
 
-    /**
-     * The console command description.b
-     *
-     * @var string
-     */
-    protected $description = 'Resets budget amounts when the period ends';
-
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $budgets = Budget::all();
@@ -38,22 +24,34 @@ class ResetBudgets extends Command
                 default => null,
             };
 
-            if ($endDate !== null && Carbon::now()->greaterThanOrEqualTo($endDate)) {
-                $budget->current_amount = 0;
+            if ($endDate) {
+                $budget->days_left = now()->startOfDay()->diffInDays($endDate, false);
 
-                // Update the start_date to the new period's start date
-                $budget->start_date = match ($budget->period) {
-                    'daily' => Carbon::now()->startOfDay(),
-                    'weekly' => Carbon::now()->startOfWeek(),
-                    'monthly' => Carbon::now()->startOfMonth(),
-                    'custom' => Carbon::now(),
-                    default => $budget->start_date,
-                };
+                if ($budget->days_left <= 0) {
+                    $budget->current_amount = 0;
+                    $budget->start_date = match ($budget->period) {
+                        'daily' => Carbon::now()->startOfDay(),
+                        'weekly' => Carbon::now()->startOfWeek(),
+                        'monthly' => Carbon::now()->startOfMonth(),
+                        'custom' => Carbon::now(),
+                        default => $budget->start_date,
+                    };
+
+                    $newEndDate = match ($budget->period) {
+                        'daily' => Carbon::parse($budget->start_date)->endOfDay(),
+                        'weekly' => Carbon::parse($budget->start_date)->endOfWeek(),
+                        'monthly' => Carbon::parse($budget->start_date)->endOfMonth(),
+                        'custom' => Carbon::parse($budget->start_date)->addDays($budget->custom_period),
+                        default => null,
+                    };
+
+                    $budget->days_left = $newEndDate ? now()->startOfDay()->diffInDays($newEndDate, false) : null;
+                }
 
                 $budget->save();
             }
         }
 
-        $this->info('Budget amounts have been reset.');
+        $this->info('Budgets updated successfully.');
     }
 }

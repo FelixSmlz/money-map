@@ -118,22 +118,11 @@ class TransactionController extends Controller
         ]);
 
 
-        $user = Auth::user();
 
         $transaction->fill($validatedData);
         $transaction->save();
 
-        if ($transaction->type === 'expense') {
-            $budget = Budget::where('category_id', $transaction->category_id)->where('user_id', $user->id)->first();
-            if ($budget) {
-                $budget->updateSpentAmount();
-            }
-        } else {
-            $goal = Goal::where('category_id', $transaction->category_id)->where('user_id', $user->id)->first();
-            if ($goal) {
-                $goal->updateSavedAmount();
-            }
-        }
+        $this->updateGoalsCurrentAmount($transaction);
 
         return response()->json(['message' => 'Transaction updated successfully', 'transaction:' => $transaction], Response::HTTP_OK);
     }
@@ -183,6 +172,25 @@ class TransactionController extends Controller
             foreach ($goals as $goal) {
                 $goal->current_amount += $transaction->amount;
                 $goal->save();
+                $goal->checkAndNotify();
+            }
+        }
+    }
+
+    private function updateBudgetsCurrentAmount(Transaction $transaction): void
+    {
+
+        if ($transaction->type === 'expense') {
+            $budgets = Budget::where('category_id', $transaction->category_id)
+                ->where('user_id', $transaction->user_id)
+                ->where('start_date', '<=', $transaction->date)
+                ->where('end_date', '>=', $transaction->date)
+                ->get();
+
+            foreach ($budgets as $budget) {
+                $budget->current_amount += $transaction->amount;
+                $budget->save();
+                $budget->checkAndNotify();
             }
         }
     }

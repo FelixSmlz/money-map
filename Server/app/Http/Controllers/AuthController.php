@@ -67,6 +67,7 @@ class AuthController extends Controller
         ], Response::HTTP_BAD_REQUEST);
     }
 
+
     // Register users
 
     public function register(Request $request): JsonResponse
@@ -89,7 +90,7 @@ class AuthController extends Controller
         $user = User::create($credentials);
 
         return response()->json([
-            'message' => 'Registration successful. Please check your email for verification link.',
+            'message' => 'Registration successful. Please login',
             'user' => $user
         ], Response::HTTP_OK);
     }

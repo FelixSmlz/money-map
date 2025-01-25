@@ -71,13 +71,7 @@ class GoalController extends Controller
 
     public function update(Request $request, string $id): JsonResponse
     {
-        $request->validate([
-            'name' => 'string|max:250',
-            'target_amount' => 'numeric|min:0|max:999999',
-            'start_date' => 'date|date_format:Y-m-d|after_or_equal:today',
-            'end_date' => 'date|date_format:Y-m-d|after:start_date',
-            'category_id' => 'exists:categories,id'
-        ]);
+
 
         $goal = Goal::find($id);
 
@@ -90,17 +84,17 @@ class GoalController extends Controller
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
 
-        $user = Auth::user();
+        $validatedData = $request->validate([
+            'name' => 'string|max:250',
+            'target_amount' => 'numeric|min:0|max:999999',
+            'start_date' => 'date|date_format:Y-m-d|after_or_equal:today',
+            'end_date' => 'date|date_format:Y-m-d|after:start_date',
+            'category_id' => 'exists:categories,id'
+        ]);
 
-        $goal->user_id = $user->id;
-        $goal->name = $request->name;
-        $goal->target_amount = $request->target_amount;
-        $goal->current_amount = $request->current_amount;
-        $goal->start_date = $request->start_date;
-        $goal->end_date = $request->end_date;
-        $goal->category_id = $request->category_id;
+        $goal->fill($validatedData);
         $goal->save();
-
+        $goal->checkAndNotify();
 
         return response()->json(['message' => 'Goal updated successfully', 'goal:' => $goal], Response::HTTP_OK);
     }

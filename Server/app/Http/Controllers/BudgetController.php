@@ -44,6 +44,13 @@ class BudgetController extends Controller
         $budget->limit = $request->limit;
         $budget->period = $request->period;
         $budget->start_date = $request->start_date;
+        $budget->days_left =
+            match ($request->period) {
+                'daily' => 1,
+                'weekly' => 7,
+                'monthly' => Carbon::parse($request->start_date)->daysInMonth,
+                'custom' => $request->custom_period,
+            };
         $budget->category_id = $request->category_id;
         $budget->custom_period = $request->custom_period;
         $budget->save();
@@ -96,6 +103,7 @@ class BudgetController extends Controller
 
         $budget->fill($validatedData);
         $budget->save();
+        $budget->checkAndNotify();
 
         return response()->json(['message' => 'Budget updated successfully', 'budget:' => $budget], Response::HTTP_OK);
     }

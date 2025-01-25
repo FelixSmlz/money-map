@@ -5,6 +5,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailsController;
 use Illuminate\Support\Facades\Route;
@@ -79,6 +80,11 @@ Route::middleware('auth:sanctum')->controller(CategoryController::class)->group(
     Route::post('categories', 'store');
     Route::put('categories/{id}', 'update');
     Route::delete('categories/{id}', 'destroy');
+});
+
+// Endpoints for notifications
+Route::middleware('auth:sanctum')->controller(NotificationController::class)->group(function () {
+    Route::get('notifications', 'index');
 });
 
 
