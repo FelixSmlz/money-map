@@ -70,6 +70,7 @@ class TransactionController extends Controller
         $transaction->save();
 
         $this->updateGoalsCurrentAmount($transaction);
+        $this->updateBudgetsCurrentAmount($transaction);
 
         return response()->json(['message' => 'Transaction created successfully', 'transaction:' => $transaction], Response::HTTP_CREATED);
     }
@@ -123,6 +124,7 @@ class TransactionController extends Controller
         $transaction->save();
 
         $this->updateGoalsCurrentAmount($transaction);
+        $this->updateBudgetsCurrentAmount($transaction);
 
         return response()->json(['message' => 'Transaction updated successfully', 'transaction:' => $transaction], Response::HTTP_OK);
     }
@@ -183,8 +185,12 @@ class TransactionController extends Controller
         if ($transaction->type === 'expense') {
             $budgets = Budget::where('category_id', $transaction->category_id)
                 ->where('user_id', $transaction->user_id)
-                ->where('start_date', '<=', $transaction->date)
-                ->where('end_date', '>=', $transaction->date)
+                ->where(function ($query) use ($transaction) {
+                    $query->where(function ($q) use ($transaction) {
+                        $q->where('start_date', '<=', $transaction->date)
+                            ->whereRaw('DATE_ADD(start_date, INTERVAL days_left DAY) >= ?', [$transaction->date]);
+                    });
+                })
                 ->get();
 
             foreach ($budgets as $budget) {
