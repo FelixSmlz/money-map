@@ -10,6 +10,7 @@ use App\Models\Budget;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\JsonResponse;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -184,5 +185,21 @@ class TransactionController extends Controller
                 $goal->save();
             }
         }
+    }
+
+    public function getMonthlySpending(): JsonResponse
+    {
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+
+        $monthlySpent = Transaction::where('user_id', Auth::id())
+            ->where('type', 'expense')
+            ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->sum('amount');
+
+        return response()->json([
+            'monthly_spent' => $monthlySpent,
+            'month' => $startOfMonth->format('F Y')
+        ], Response::HTTP_OK);
     }
 }

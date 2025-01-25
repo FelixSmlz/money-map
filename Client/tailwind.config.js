@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         bg_black: "#1A1B1C",
-        white: "#FFFFFF ",
+        white: "#FFFFFF",
         red: "#FF0051",
         purple: "#C56EFF",
         gray: "#7E7E7E",

@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->controller(UserController::class)->group(func
 // Endpoints for transactions
 
 Route::middleware('auth:sanctum')->controller(TransactionController::class)->group(function () {
+    Route::get('transactions/monthly-spending', 'getMonthlySpending');
     Route::get('transactions', 'index');
     Route::get('transactions/{id}', 'show');
     Route::post('transactions', 'store');
@@ -79,6 +80,7 @@ Route::middleware('auth:sanctum')->controller(CategoryController::class)->group(
     Route::put('categories/{id}', 'update');
     Route::delete('categories/{id}', 'destroy');
 });
+
 
 Route::get('/email/verify', function () {
     return response()->json(['message' => 'You first need to verify your email address'], 403);

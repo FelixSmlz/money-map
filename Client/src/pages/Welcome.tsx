@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import Background from "../components/Background";
+import Logo from "../components/Logo";
 
 const Welcome = () => {
   return (
@@ -7,12 +8,11 @@ const Welcome = () => {
       <Background />
       <div className="bg-white w-full rounded-[15px] shadow-sm p-10 flex flex-col items-center gap-8">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-3xl font-medium text-bg_black">MoneyMap</h1>
+          <Logo />
           <p className="text-gray text-center max-w-[25ch]">
             Track your expenses and achieve your financial goals
           </p>
         </div>
-
         <div className="flex flex-col gap-4 w-full">
           <NavLink
             to="/guest/login"

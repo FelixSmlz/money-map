@@ -1,7 +1,31 @@
-import Transaction from "./transactions/TransactionRow";
+import TransactionRow from "./transactions/TransactionRow";
+import { TransactionType } from "../pages/Transaction";
+import { getTransactions } from "../utils/api";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Recent() {
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      const response = await getTransactions();
+      if (response) {
+        const sortedTransactions = response
+          .sort(
+            (a: TransactionType, b: TransactionType) =>
+              new Date(b.date).getTime() - new Date(a.date).getTime()
+          )
+          .slice(0, 5);
+        setTransactions(sortedTransactions);
+      }
+      setIsLoading(false);
+    };
+
+    fetchTransactions();
+  }, []);
+
   return (
     <div className="py-8 flex flex-col justify-between items-center gap-7">
       <div className="flex justify-between w-full">
@@ -32,13 +56,13 @@ function Recent() {
         </Link>
       </div>
       <div className="flex flex-col gap-2 w-full">
-        <Transaction />
-        <Transaction />
-        <Transaction />
-        <Transaction />
-        <Transaction />
-        <Transaction />
-        <Transaction />
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          transactions.map((transaction) => (
+            <TransactionRow key={transaction.id} {...transaction} />
+          ))
+        )}
       </div>
     </div>
   );

@@ -135,6 +135,20 @@ export const deleteTransaction = async (id: string) => {
   }
 };
 
+export const getMonthlySpending = async () => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/transactions/monthly-spending`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
 // Budgets
 
 export const getBudgets = async () => {

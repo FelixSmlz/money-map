@@ -9,7 +9,7 @@ const TransactionRow = ({
   amount,
   type,
   date,
-  categoryId,
+  category_id,
 }: TransactionType) => {
   return (
     <Link

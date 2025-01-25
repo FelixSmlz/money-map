@@ -19,8 +19,6 @@ class Budget extends Model
         'custom_period'
     ];
 
-
-
     public function user()
     {
         return $this->belongsTo(User::class);
