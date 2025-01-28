@@ -18,4 +18,14 @@ class NotificationController extends Controller
         $notifications = Auth::user()->unreadNotifications;
         return response()->json(['notifications' => $notifications]);
     }
+
+    public function markAsRead($id): JsonResponse
+    {
+        $notification = Auth::user()->notifications->find($id);
+        if ($notification) {
+            $notification->markAsRead();
+            return response()->json(['message' => 'Notification marked as read']);
+        }
+        return response()->json(['message' => 'Notification not found'], 404);
+    }
 }

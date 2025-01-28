@@ -7,12 +7,7 @@ const DeleteProfileBtn = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const fetcher = useFetcher();
   const handleDeleteProfile = () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete your profile?"
-    );
-    if (confirmDelete) {
-      fetcher.submit({ intent: "deleteProfile" }, { method: "POST" });
-    }
+    fetcher.submit({ intent: "deleteProfile" }, { method: "POST" });
   };
   return (
     <>

@@ -51,7 +51,7 @@ class BudgetLimitReached extends Notification
     {
         return [
             'title' => 'Budget Limit Reached! ⚠️',
-            'message' => "Your budget {$this->budget->name} has reached its limit",
+            'message' => "Enough! You've reached the limit of your budget: {$this->budget->name}",
             'budget_id' => $this->budget->id,
             'type' => 'budget_limit_reached'
         ];

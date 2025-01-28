@@ -1,11 +1,12 @@
 import Background from "../components/Background";
+import { PulseLoader } from "react-spinners";
 
 const Loading = () => {
   return (
     <>
       <Background />
       <div className="flex items-center justify-center h-dvh">
-        <p className="text-lg font-medium">Loading...</p>
+        <PulseLoader color="#1A1B1C" size={20} margin={4} />
       </div>
     </>
   );

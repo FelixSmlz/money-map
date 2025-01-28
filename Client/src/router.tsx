@@ -11,15 +11,13 @@ import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import { loader as profileLoader } from "./pages/Profile";
 import EmailVerification from "./pages/EmailVerification";
-import {
-  loader as defaultLoader,
-  action as defaultAction,
-} from "./layouts/DefaultLayout";
+import { loader as defaultLoader } from "./layouts/DefaultLayout";
 import GuestLayout from "./layouts/GuestLayout";
 import { loader as guestLoader } from "./layouts/GuestLayout";
 import NotFound from "./pages/NotFound";
 import Loading from "./pages/Loading";
 import { loader as settingsLoader } from "./pages/Settings";
+import { action as settingsAction } from "./pages/Settings";
 import Transaction from "./pages/Transaction";
 import { loader as transactionLoader } from "./pages/Transaction";
 import { action as transactionAction } from "./pages/Transaction";
@@ -52,11 +50,12 @@ const router = createBrowserRouter([
       {
         path: "history",
         element: <History />,
+        loader: dashboardLoader,
       },
       {
         path: "settings",
         element: <Settings />,
-        action: defaultAction,
+        action: settingsAction,
         loader: settingsLoader,
       },
       {
@@ -81,10 +80,6 @@ const router = createBrowserRouter([
         element: <Goal />,
         loader: goalLoader,
         action: goalAction,
-      },
-      {
-        path: "verify-email",
-        element: <EmailVerification />,
       },
     ],
   },

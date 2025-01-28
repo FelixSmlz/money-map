@@ -8,7 +8,7 @@ type Props = {
 const SearchBar = ({ searchFilter, setSearchFilter }: Props) => {
   const searchId = useId();
   return (
-    <div className="relative w-full mt-6 mb-2">
+    <div className="relative w-full">
       <input
         autoComplete="off"
         className="w-full focus:outline-none p-2 shadow-sm rounded-[15px]"

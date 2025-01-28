@@ -30,12 +30,14 @@ Route::middleware('auth:sanctum')->controller(UserController::class)->group(func
     Route::post('user', 'store');
     Route::put('user/{id}', 'update');
     Route::delete('user/{id}', 'destroy');
+    Route::post("user/toggle-notifications", "toggleNotifications");
 });
 
 // Endpoints for transactions
 
 Route::middleware('auth:sanctum')->controller(TransactionController::class)->group(function () {
     Route::get('transactions/monthly-spending', 'getMonthlySpending');
+    Route::get('transactions/daily-balances', 'getDailyBalances');
     Route::get('transactions', 'index');
     Route::get('transactions/{id}', 'show');
     Route::post('transactions', 'store');
@@ -85,6 +87,8 @@ Route::middleware('auth:sanctum')->controller(CategoryController::class)->group(
 // Endpoints for notifications
 Route::middleware('auth:sanctum')->controller(NotificationController::class)->group(function () {
     Route::get('notifications', 'index');
+    Route::get('notifications/unread', 'unread');
+    Route::put('notifications/{id}', 'markAsRead');
 });
 
 

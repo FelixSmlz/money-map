@@ -8,18 +8,23 @@ use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\JsonResponse;
-use App\Models\Transaction;
-use Illuminate\Database\Eloquent\Casts\Json;
+use App\Traits\HasPagination;
 
 class GoalController extends Controller
 {
+    use HasPagination;
 
     // Get all goals
 
     public function index(): JsonResponse
     {
-        $goals = Goal::where('user_id', Auth::id())->get();
-        return response()->json(['goals' => $goals], Response::HTTP_OK);
+        $params = $this->getPaginationParams();
+
+        $goals = Goal::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate($params['per_page']);
+
+        return response()->json($this->paginationResponse($goals));
     }
 
     // Create goal

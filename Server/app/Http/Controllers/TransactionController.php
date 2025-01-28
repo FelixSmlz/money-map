@@ -11,39 +11,23 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
+use App\Traits\HasPagination;
 
 class TransactionController extends Controller
 {
+    use HasPagination;
 
     // Get all transactions
 
     public function index(Request $request): JsonResponse
     {
-        $query = Transaction::where('user_id', Auth::id());
+        $params = $this->getPaginationParams();
 
-        if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->query('search') . '%');
-        }
+        $transactions = Transaction::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate($params['per_page']);
 
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->query('category_id'));
-        }
-
-        if ($request->has('type')) {
-            $query->where('type', $request->query('type'));
-        }
-
-        if ($request->has('date_from')) {
-            $query->where('date', '>=', $request->query('date_from'));
-        }
-
-        if ($request->has('date_to')) {
-            $query->where('date', '<=', $request->query('date_to'));
-        }
-
-        $transactions = $query->get();
-
-        return response()->json(['transactions' => $transactions], Response::HTTP_OK);
+        return response()->json($this->paginationResponse($transactions));
     }
 
     // Create transaction
@@ -215,5 +199,31 @@ class TransactionController extends Controller
             'monthly_spent' => $monthlySpent,
             'month' => $startOfMonth->format('F Y')
         ], Response::HTTP_OK);
+    }
+
+    public function getDailyBalances(): JsonResponse
+    {
+        $last7Days = collect(range(6, 0))->map(function ($days) {
+            return Carbon::now()->subDays($days)->startOfDay();
+        });
+
+        $dailyBalances = $last7Days->map(function ($date) {
+            $dayTransactions = Transaction::where('user_id', Auth::id())
+                ->whereDate('date', $date)
+                ->get();
+
+            $balance = $dayTransactions->reduce(function ($sum, $transaction) {
+                return $transaction->type === 'expense'
+                    ? $sum - $transaction->amount
+                    : $sum + $transaction->amount;
+            }, 0);
+
+            return [
+                'day' => $date->format('D'),
+                'amount' => $balance
+            ];
+        });
+
+        return response()->json($dailyBalances);
     }
 }

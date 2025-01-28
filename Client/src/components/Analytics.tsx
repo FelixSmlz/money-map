@@ -3,18 +3,17 @@ import BarChartComponent from "./BarChart";
 function Analytics() {
   return (
     <div className="bg-bg_black w-full p-6 rounded-[15px]">
-      <div className="flex justify-between mb-4">
-        <h3 className="text-white text-[0.9rem]">Analytics</h3>
+      <div className="flex justify-between">
+        <h3 className="text-white text-[1.25rem]">Balance</h3>
         <div className="flex justify-between items-center">
-          <select
+          <p className="text-gray text-[0.75rem] font-medium">Last week</p>
+          {/* <select
             className="text-center appearance-none bg-transparent text-gray text-[0.75rem] font-medium rounded-full cursor-pointer focus:outline-none"
             name="cars"
             id="filter-by"
           >
-            <option value="day">Today</option>
-            <option value="week">This week</option>
-            <option value="month">This month</option>
-            <option value="year">This year</option>
+            <option value="week">Last week</option>
+            <option value="month">Month</option>
           </select>
           <svg
             className="w-4 h-4 text-blue-300"
@@ -42,7 +41,7 @@ function Analytics() {
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-          </svg>
+          </svg> */}
         </div>
       </div>
       <BarChartComponent />

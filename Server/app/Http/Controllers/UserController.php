@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -44,7 +44,7 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
-        $user->name = $request->name;
+        $user->fill($request->all());
         $user->save();
         return response()->json($user, Response::HTTP_OK);
     }
@@ -56,5 +56,16 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
         return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function toggleNotifications()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+        $user->notifications_enabled = !$user->notifications_enabled;
+        $user->save();
+        return response()->json($user, Response::HTTP_OK);
     }
 }

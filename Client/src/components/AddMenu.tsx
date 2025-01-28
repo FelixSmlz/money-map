@@ -1,58 +1,49 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function AddMenu() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const menuItems = [
+    { title: "Transaction", path: "/transactions/new", icon: "💸" },
+    { title: "Budget", path: "/budgets/new", icon: "💰" },
+    { title: "Goal", path: "/goals/new", icon: "🎯" },
+    { title: "Category", path: "/categories/new", icon: "📑" },
+  ];
 
   return (
-    <>
-      {isMenuOpen && (
-        <>
-          <div className="bg-bg_black opacity-40 fixed top-0 left-0 w-full h-full z-5"></div>
-          <div className="bg-white z-10 fixed bottom-[125px] right-[50px] shadow-md rounded-[15px]">
-            <ul className="flex flex-col">
-              <li>
-                <a
-                  className="px-5 py-3 block hover:text-white hover:bg-bg_black cursor-pointer first:rounded-t-[15px]"
-                  href=""
-                >
-                  Transaction
-                </a>
-              </li>
-              <li>
-                <a
-                  className="px-5 py-3 block hover:text-white hover:bg-bg_black cursor-pointer"
-                  href=""
-                >
-                  Budget
-                </a>
-              </li>
-              <li className="">
-                <a
-                  className="px-5 py-3 block hover:text-white hover:bg-bg_black cursor-pointer"
-                  href=""
-                >
-                  Goal
-                </a>
-              </li>
-              <li className=" ">
-                <a
-                  className="px-5 py-3 block hover:text-white hover:bg-bg_black cursor-pointer last:rounded-b-[15px]"
-                  href=""
-                >
-                  Category
-                </a>
-              </li>
-            </ul>
-          </div>
-        </>
+    <div ref={menuRef} className="fixed bottom-[6rem] right-0 mr-5 z-10">
+      {isOpen && (
+        <div className="absolute bottom-16 right-0 bg-white rounded-[15px] shadow-lg p-2 min-w-[200px]">
+          {menuItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className="flex items-center gap-3 p-3 hover:bg-gray/5 rounded-[15px] cursor-pointer"
+              onClick={() => setIsOpen(false)}
+            >
+              <span className="text-lg">{item.icon}</span>
+              <span className="text-bg_black">{item.title}</span>
+            </Link>
+          ))}
+        </div>
       )}
+
       <button
-        className="bg-bg_black shadow-card fixed bottom-[6rem] right-0 mr-5 p-4 flex justify-center items-center z-10 rounded-full text-white group hover:bg-white"
-        onClick={toggleMenu}
+        className="bg-bg_black shadow-card p-4 flex justify-center items-center rounded-full text-white group hover:bg-white"
+        onClick={() => setIsOpen(!isOpen)}
       >
         <svg
           fill="none"
@@ -73,7 +64,7 @@ function AddMenu() {
           </g>
         </svg>
       </button>
-    </>
+    </div>
   );
 }
 

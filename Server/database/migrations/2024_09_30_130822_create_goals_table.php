@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name', 250)->nullable(false);
             $table->float('target_amount')->nullable(false)->unsigned();
-            $table->float('current_amount')->default(0)->unsigned()->nullable(true);
+            $table->float('current_amount')->unsigned()->nullable(true)->default(0);
             $table->date('start_date')->nullable(false)->default(now());
             $table->date('end_date')->nullable(false);
             $table->foreignId('category_id')->constrained('categories');

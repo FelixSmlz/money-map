@@ -3,14 +3,14 @@ import TransactionRow from "./transactions/TransactionRow";
 import GoalRow from "./goals/GoalRow";
 import BudgetRow from "./budgets/BudgetRow";
 import { useContext } from "react";
-import { TransactionContext, DataType } from "../pages/History";
+import { DataContext, DataType } from "../pages/History";
 
 type Props = {
   searchFilter: string;
 };
 
 const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
-  const { data, dataType } = useContext(TransactionContext) as {
+  const { data, dataType } = useContext(DataContext) as {
     data: any[];
     dataType: DataType;
   };
@@ -41,7 +41,7 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
         case "transactions":
           jsx.push(
             <TransactionRow
-              key={item.id}
+              key={`transaction-${item.id}`}
               id={item.id}
               name={item.name}
               amount={item.amount}
@@ -54,7 +54,7 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
         case "budgets":
           jsx.push(
             <BudgetRow
-              key={item.id}
+              key={`budget-${item.id}`}
               id={item.id}
               name={item.name}
               limit={item.limit}
@@ -69,8 +69,8 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
         case "goals":
           jsx.push(
             <GoalRow
+              key={`goal-${item.id}`}
               id={item.id}
-              key={item.id}
               name={item.name}
               target_amount={item.target_amount}
               current_amount={item.current_amount}
@@ -82,7 +82,7 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
         // case "categories":
         //   jsx.push(
         //     <CategoryRow
-        //       key={item.id}
+        //       key={`category-${item.id}`}
         //       name={item.name}
         //       description={item.description}
         //     />

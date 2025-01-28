@@ -82,12 +82,12 @@ export const deleteProfile = async () => {
 
 // Transactions
 
-export const getTransactions = async () => {
+export const getTransactions = async (page = 1) => {
   try {
-    const response = await axios.get(API_URL + "/transactions", {
+    const response = await axios.get(`${API_URL}/transactions?page=${page}`, {
       withCredentials: true,
     });
-    return response.data.transactions;
+    return response.data.data;
   } catch (error: any) {
     return error.response;
   }
@@ -149,14 +149,25 @@ export const getMonthlySpending = async () => {
   }
 };
 
-// Budgets
-
-export const getBudgets = async () => {
+export const getDailyBalances = async () => {
   try {
-    const response = await axios.get(API_URL + "/budgets", {
+    const response = await axios.get(`${API_URL}/transactions/daily-balances`, {
       withCredentials: true,
     });
-    return response.data.budgets;
+    return response.data || [];
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+// Budgets
+
+export const getBudgets = async (page = 1) => {
+  try {
+    const response = await axios.get(`${API_URL}/budgets?page=${page}`, {
+      withCredentials: true,
+    });
+    return response.data.data;
   } catch (error: any) {
     return error.response;
   }
@@ -202,12 +213,12 @@ export const deleteBudget = async (id: string) => {
 
 // Goals
 
-export const getGoals = async () => {
+export const getGoals = async (page = 1) => {
   try {
-    const response = await axios.get(API_URL + "/goals", {
+    const response = await axios.get(`${API_URL}/goals?page=${page}`, {
       withCredentials: true,
     });
-    return response.data.goals;
+    return response.data.data;
   } catch (error: any) {
     return error.response;
   }
@@ -253,12 +264,62 @@ export const deleteGoal = async (id: string) => {
 
 // Categories
 
-export const getCategories = async () => {
+export const getCategories = async (page = 1) => {
   try {
-    const response = await axios.get(API_URL + "/categories", {
+    const response = await axios.get(`${API_URL}/categories?page=${page}`, {
       withCredentials: true,
     });
-    return response.data.categories;
+    return response.data.data;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+// Notifications
+
+export const getNotifications = async () => {
+  try {
+    const response = await axios.get(API_URL + "/notifications", {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const getUnreadNotifications = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/notifications/unread`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const markNotificationAsRead = async (id: string) => {
+  try {
+    const response = await axios.put(`${API_URL}/notifications/${id}`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const toggleNotifications = async () => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/user/toggle-notifications`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
   } catch (error: any) {
     return error.response;
   }

@@ -4,21 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-use Illuminate\Database\Eloquent\Casts\Json;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\JsonResponse;
+use App\Models\Goal;
+use App\Traits\HasPagination;
 
 class CategoryController extends Controller
 {
+
+    use HasPagination;
 
     // Get all categories
 
     public function index(): JsonResponse
     {
-        $categories = Category::where('user_id', Auth::id())->get();
-        return response()->json(['categories' => $categories], Response::HTTP_OK);
+        $params = $this->getPaginationParams();
+
+        $goals = Goal::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate($params['per_page']);
+
+        return response()->json($this->paginationResponse($goals));
     }
 
     // Create category

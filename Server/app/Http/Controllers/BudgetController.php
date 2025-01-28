@@ -9,18 +9,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
-use App\Models\Transaction;
+use App\Traits\HasPagination;
 
 
 class BudgetController extends Controller
 {
+    use HasPagination;
 
     // Get all budgets
 
     public function index(): JsonResponse
     {
-        $budgets = Budget::where('user_id', Auth::id())->get();
-        return response()->json(['budgets' => $budgets], Response::HTTP_OK);
+        $params = $this->getPaginationParams();
+
+        $budgets = Budget::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate($params['per_page']);
+
+        return response()->json($this->paginationResponse($budgets));
     }
 
     // Create budget
