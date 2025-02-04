@@ -11,6 +11,7 @@ import { ActionFunctionArgs, useFetcher } from "react-router";
 import { logout, deleteProfile } from "../utils/api";
 import { redirect } from "react-router-dom";
 import NotificationSwitch from "../components/NotificationSwitch";
+import ChangePasswordBtn from "../components/ChangePasswordBtn";
 import FeedbackBtn from "../components/FeedbackBtn";
 
 export const loader = async () => {
@@ -67,7 +68,7 @@ function Settings() {
         <NotificationMenu />
       </header>
       <div className="flex flex-col gap-5 items-center">
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 mb-6">
           <Avatar name={user?.name} size="lg" />
           <div className="flex flex-col gap-2">
             <p className="text-lg">{user?.name}</p>
@@ -76,9 +77,8 @@ function Settings() {
             </small>
           </div>
         </div>
-        <EditBtn />
       </div>
-      <div className="flex mt-6 flex-col bg-white rounded-[15px] shadow-card w-full">
+      <div className="flex mt-6 flex-col p-3 bg-white rounded-[15px] shadow-md w-full">
         <div className="flex items-center gap-4 mx-4 py-4 border-b border-light_gray">
           <div className="bg-[#F2F2F2] w-fit p-2 rounded-[15px]">
             <svg
@@ -106,6 +106,7 @@ function Settings() {
           <NotificationSwitch enabled={user?.notifications_enabled} />
         </div>
         <FeedbackBtn />
+        <ChangePasswordBtn />
         <DeleteProfileBtn />
         <LogoutBtn />
       </div>

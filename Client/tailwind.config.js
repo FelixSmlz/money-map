@@ -8,7 +8,7 @@ export default {
         white: "#FFFFFF",
         red: "#FF0051",
         purple: "#C56EFF",
-        gray: "#7E7E7E",
+        my_gray: "#7E7E7E",
         light_gray: "#7e7e7e6f",
         turkois: "#80D9FF",
       },

@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
+import { DataType } from "../pages/History";
 
 type DropdownProps = {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: DataType) => void;
 };
 
 function DataTypeMenu({ value, onChange }: DropdownProps) {
@@ -23,7 +24,7 @@ function DataTypeMenu({ value, onChange }: DropdownProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const options = [
+  const options: { value: DataType; label: string }[] = [
     { value: "transactions", label: "Transactions" },
     { value: "budgets", label: "Budgets" },
     { value: "goals", label: "Goals" },
@@ -56,11 +57,11 @@ function DataTypeMenu({ value, onChange }: DropdownProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full text-base left-0 mt-2 bg-white rounded-[15px] shadow-lg p-2 z-10 min-w-[150px]">
+        <div className="absolute top-full text-base left-0 mt-2 bg-white rounded-[15px] shadow-lg p-2 z-10 min-w-[150px] w-full">
           {options.map((option) => (
             <div
               key={option.value}
-              className={`p-3 rounded-[15px] cursor-pointer hover:bg-gray/5 ${
+              className={`p-3 rounded-[15px] cursor-pointer hover:bg-my_gray/5 ${
                 value === option.value ? "text-turkois" : "text-bg_black"
               }`}
               onClick={() => {

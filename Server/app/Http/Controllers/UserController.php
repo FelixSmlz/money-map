@@ -68,4 +68,22 @@ class UserController extends Controller
         $user->save();
         return response()->json($user, Response::HTTP_OK);
     }
+
+    public function changePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!Hash::check($request->oldPassword, $user->password)) {
+            return response()->json([
+                'error' => 'Current password is incorrect'
+            ], 401);
+        }
+
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password changed successfully'
+        ], 200);
+    }
 }

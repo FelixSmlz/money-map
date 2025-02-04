@@ -1,9 +1,38 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../pages/History";
+import crossIcon from "../assets/icons/cross.svg";
+import Input from "./Input";
+import Dropdown from "./Dropdown";
+import IconSelect from "./IconSelect";
+
+export type FilterState = {
+  dateFrom?: string;
+  dateTo?: string;
+  amountMin?: number;
+  amountMax?: number;
+  type?: "income" | "expense";
+  period?: "daily" | "weekly" | "monthly" | "custom";
+  icon_name?: string;
+};
 
 const FilterMenu = () => {
   const { dataType, filters, setFilters } = useContext(DataContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [tempFilters, setTempFilters] = useState(filters);
+
+  useEffect(() => {
+    setTempFilters(filters);
+  }, [isOpen]);
+
+  const handleApply = () => {
+    setFilters(tempFilters);
+    setIsOpen(false);
+  };
+
+  const handleReset = () => {
+    setTempFilters({});
+    setFilters({});
+  };
 
   const renderFilters = () => {
     switch (dataType) {
@@ -14,66 +43,65 @@ const FilterMenu = () => {
               <label className="block text-sm text-gray">Date Range</label>
               <input
                 type="date"
-                className="mt-2 w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                value={filters.dateFrom || ""}
+                className="mt-2 w-full focus:outline-bg_black p-3 rounded-[15px] border border-my_gray bg-transparent"
+                value={tempFilters.dateFrom || ""}
                 onChange={(e) =>
-                  setFilters({ ...filters, dateFrom: e.target.value })
+                  setTempFilters({ ...tempFilters, dateFrom: e.target.value })
                 }
               />
               <input
                 type="date"
-                className="mt-2 w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                value={filters.dateTo || ""}
+                className="mt-2 w-full p-3 focus:outline-bg_black rounded-[15px] border border-my_gray bg-transparent"
+                value={tempFilters.dateTo || ""}
                 onChange={(e) =>
-                  setFilters({ ...filters, dateTo: e.target.value })
+                  setTempFilters({ ...tempFilters, dateTo: e.target.value })
                 }
               />
             </div>
             <div>
-              <label className="block text-sm text-gray">Amount Range</label>
-              <div className="flex gap-2 mt-2">
-                <input
+              <label className="block mb-2 text-sm text-my_gray">Type</label>
+              <Dropdown
+                id="type"
+                value={tempFilters.type || ""}
+                onChange={(value) =>
+                  setTempFilters({
+                    ...tempFilters,
+                    type: value as "income" | "expense",
+                  })
+                }
+                options={[
+                  { label: "All", value: "" },
+                  { label: "Income", value: "income" },
+                  { label: "Expense", value: "expense" },
+                ]}
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-my_gray">Amount Range</label>
+              <div className="flex gap-3 mt-2">
+                <Input
+                  id="amountMin"
                   type="number"
                   placeholder="Min"
-                  className="w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                  value={filters.amountMin || ""}
                   onChange={(e) =>
-                    setFilters({
-                      ...filters,
+                    setTempFilters({
+                      ...tempFilters,
                       amountMin: Number(e.target.value),
                     })
                   }
                 />
-                <input
+                <Input
+                  id="amountMax"
                   type="number"
                   placeholder="Max"
-                  className="w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                  value={filters.amountMax || ""}
                   onChange={(e) =>
-                    setFilters({
-                      ...filters,
+                    setTempFilters({
+                      ...tempFilters,
                       amountMax: Number(e.target.value),
                     })
                   }
                 />
               </div>
-            </div>
-            <div>
-              <label className="block text-sm text-gray">Type</label>
-              <select
-                className="mt-2 w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                value={filters.type || ""}
-                onChange={(e) =>
-                  setFilters({
-                    ...filters,
-                    type: e.target.value as "income" | "expense",
-                  })
-                }
-              >
-                <option value="">All</option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
-              </select>
             </div>
           </div>
         );
@@ -82,42 +110,70 @@ const FilterMenu = () => {
         return (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-gray">Period</label>
-              <select
-                className="mt-2 w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                value={filters.period || ""}
-                onChange={(e) =>
-                  setFilters({ ...filters, period: e.target.value })
+              <label className="block mb-2 text-sm text-my_gray">Period</label>
+              <Dropdown
+                id="period"
+                value={tempFilters.period || ""}
+                onChange={(value) =>
+                  setTempFilters({
+                    ...tempFilters,
+                    period: value as
+                      | "daily"
+                      | "weekly"
+                      | "monthly"
+                      | "custom"
+                      | undefined,
+                  })
                 }
-              >
-                <option value="">All</option>
-                <option value="monthly">Monthly</option>
-                <option value="custom">Custom</option>
-              </select>
+                options={[
+                  { label: "All", value: "" },
+                  { label: "Daily", value: "daily" },
+                  { label: "Weekly", value: "weekly" },
+                  { label: "Monthly", value: "monthly" },
+                  { label: "Custom", value: "custom" },
+                ]}
+              />
             </div>
             <div>
-              <label className="block text-sm text-gray">Limit Range</label>
-              <div className="flex gap-2 mt-2">
-                <input
+              <label className="block text-sm text-my_gray">Date Range</label>
+              <input
+                type="date"
+                className="mt-2 w-full focus:outline-bg_black p-3 rounded-[15px] border border-my_gray bg-transparent"
+                value={tempFilters.dateFrom || ""}
+                onChange={(e) =>
+                  setTempFilters({ ...tempFilters, dateFrom: e.target.value })
+                }
+              />
+              <input
+                type="date"
+                className="mt-2 w-full p-3 focus:outline-bg_black rounded-[15px] border border-my_gray bg-transparent"
+                value={tempFilters.dateTo || ""}
+                onChange={(e) =>
+                  setTempFilters({ ...tempFilters, dateTo: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-my_gray">Limit Range</label>
+              <div className="flex gap-3 mt-2">
+                <Input
+                  id="amountMin"
                   type="number"
                   placeholder="Min"
-                  className="w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                  value={filters.amountMin || ""}
                   onChange={(e) =>
-                    setFilters({
-                      ...filters,
+                    setTempFilters({
+                      ...tempFilters,
                       amountMin: Number(e.target.value),
                     })
                   }
                 />
-                <input
+                <Input
+                  id="amountMax"
                   type="number"
                   placeholder="Max"
-                  className="w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                  value={filters.amountMax || ""}
                   onChange={(e) =>
-                    setFilters({
-                      ...filters,
+                    setTempFilters({
+                      ...tempFilters,
                       amountMax: Number(e.target.value),
                     })
                   }
@@ -131,33 +187,68 @@ const FilterMenu = () => {
         return (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-gray">Target Range</label>
-              <div className="flex gap-2 mt-2">
-                <input
+              <label className="block text-sm text-my_gray">Date Range</label>
+              <input
+                type="date"
+                className="mt-2 w-full focus:outline-bg_black p-3 rounded-[15px] border border-my_gray bg-transparent"
+                value={tempFilters.dateFrom || ""}
+                onChange={(e) =>
+                  setTempFilters({ ...tempFilters, dateFrom: e.target.value })
+                }
+              />
+              <input
+                type="date"
+                className="mt-2 w-full p-3 focus:outline-bg_black rounded-[15px] border border-my_gray bg-transparent"
+                value={tempFilters.dateTo || ""}
+                onChange={(e) =>
+                  setTempFilters({ ...tempFilters, dateTo: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-my_gray">Target Range</label>
+              <div className="flex gap-3 mt-2">
+                <Input
+                  id="amountMin"
                   type="number"
                   placeholder="Min"
-                  className="w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                  value={filters.amountMin || ""}
                   onChange={(e) =>
-                    setFilters({
-                      ...filters,
+                    setTempFilters({
+                      ...tempFilters,
                       amountMin: Number(e.target.value),
                     })
                   }
                 />
-                <input
+                <Input
+                  id="amountMax"
                   type="number"
                   placeholder="Max"
-                  className="w-full p-3 rounded-[15px] border border-gray bg-transparent"
-                  value={filters.amountMax || ""}
                   onChange={(e) =>
-                    setFilters({
-                      ...filters,
+                    setTempFilters({
+                      ...tempFilters,
                       amountMax: Number(e.target.value),
                     })
                   }
                 />
               </div>
+            </div>
+          </div>
+        );
+
+      case "categories":
+        return (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm mb-2 text-my_gray">
+                Icon Type
+              </label>
+              <IconSelect
+                id="icon_name"
+                value={tempFilters.icon_name || ""}
+                onChange={(value) =>
+                  setTempFilters({ ...tempFilters, icon_name: value })
+                }
+              />
             </div>
           </div>
         );
@@ -191,14 +282,14 @@ const FilterMenu = () => {
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div className="bg-white rounded-2xl shadow-xl w-80 max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray/10">
+            <div className="p-6 pb-0">
               <div className="flex justify-between items-center">
-                <h2 className="text-lg font-medium">Filter</h2>
+                <h2 className="text-lg text-bg_black font-medium">Filter</h2>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-2xl text-gray hover:text-bg_black"
+                  className="rounded-full p-1 group hover:bg-white"
                 >
-                  ×
+                  <img src={crossIcon} alt="Exit filters" />
                 </button>
               </div>
             </div>
@@ -206,19 +297,16 @@ const FilterMenu = () => {
             <div className="p-6">
               {renderFilters()}
 
-              <div className="mt-8 flex gap-2">
+              <div className="mt-8 flex gap-3">
                 <button
-                  onClick={() => {
-                    setFilters({});
-                    setIsOpen(false);
-                  }}
-                  className="w-1/2 p-3 text-center border border-gray rounded-[15px] hover:bg-gray/5"
+                  onClick={handleReset}
+                  className="w-1/2 p-3 text-center text-red border border-red rounded-[15px] hover:bg-red hover:text-white"
                 >
                   Reset
                 </button>
                 <button
-                  onClick={() => setIsOpen(false)}
-                  className="w-1/2 p-3 text-center bg-bg_black text-white rounded-[15px] hover:bg-opacity-90"
+                  onClick={handleApply}
+                  className="w-1/2 p-3 text-center bg-bg_black border border-bg_black text-white rounded-[15px] hover:text-bg_black hover:bg-white"
                 >
                   Apply
                 </button>

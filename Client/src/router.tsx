@@ -10,7 +10,6 @@ import History from "./pages/History";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import { loader as profileLoader } from "./pages/Profile";
-import EmailVerification from "./pages/EmailVerification";
 import { loader as defaultLoader } from "./layouts/DefaultLayout";
 import GuestLayout from "./layouts/GuestLayout";
 import { loader as guestLoader } from "./layouts/GuestLayout";
@@ -28,6 +27,10 @@ import Goal from "./pages/Goal";
 import { loader as goalLoader } from "./pages/Goal";
 import { action as goalAction } from "./pages/Goal";
 import Welcome from "./pages/Welcome";
+import Category from "./pages/Category";
+import { loader as categoryLoader } from "./pages/Category";
+import ChangePassword from "./pages/ChangePassword";
+import { action as changePasswordAction } from "./pages/ChangePassword";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +83,16 @@ const router = createBrowserRouter([
         element: <Goal />,
         loader: goalLoader,
         action: goalAction,
+      },
+      {
+        path: "categories/:id",
+        element: <Category />,
+        loader: categoryLoader,
+      },
+      {
+        path: "change-password",
+        element: <ChangePassword />,
+        action: changePasswordAction,
       },
     ],
   },

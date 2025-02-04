@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 
-function EditBtn() {
+export type EditBtnType = {
+  title: string;
+};
+
+function EditBtn({ title }: EditBtnType) {
   return (
     <Link
       className="group hover:text-white hover:bg-bg_black bg-white rounded-[15px] flex items-center gap-2 py-3 px-6 shadow-card"
       to="/profile"
     >
-      Edit Profile
+      {title}
       <svg
         width="22"
         height="21"

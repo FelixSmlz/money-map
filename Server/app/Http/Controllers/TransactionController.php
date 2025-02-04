@@ -185,19 +185,25 @@ class TransactionController extends Controller
         }
     }
 
+
     public function getMonthlySpending(): JsonResponse
     {
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
 
-        $monthlySpent = Transaction::where('user_id', Auth::id())
+        $query = Transaction::where('user_id', Auth::id())
             ->where('type', 'expense')
-            ->whereBetween('date', [$startOfMonth, $endOfMonth])
-            ->sum('amount');
+            ->whereBetween('date', [$startOfMonth, $endOfMonth]);
+
+        $monthlySpent = $query->sum('amount');
 
         return response()->json([
             'monthly_spent' => $monthlySpent,
-            'month' => $startOfMonth->format('F Y')
+            'month' => $startOfMonth->format('F Y'),
+            'debug' => [
+                'start_date' => $startOfMonth->toDateTimeString(),
+                'end_date' => $endOfMonth->toDateTimeString()
+            ]
         ], Response::HTTP_OK);
     }
 
@@ -220,7 +226,7 @@ class TransactionController extends Controller
 
             return [
                 'day' => $date->format('D'),
-                'amount' => $balance
+                'amount' => number_format($balance, 2)
             ];
         });
 

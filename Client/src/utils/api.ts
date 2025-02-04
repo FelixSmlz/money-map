@@ -80,6 +80,28 @@ export const deleteProfile = async () => {
   }
 };
 
+export const changePassword = async (formData: FormData) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/user/change-password`,
+      {
+        oldPassword: formData.get("oldPassword"),
+        newPassword: formData.get("newPassword"),
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    return response;
+  } catch (error: any) {
+    console.error("Change password error:", error.response);
+    throw error;
+  }
+};
 // Transactions
 
 export const getTransactions = async (page = 1) => {
@@ -98,7 +120,7 @@ export const getTransaction = async (id: string) => {
     const response = await axios.get(`${API_URL}/transactions/${id}`, {
       withCredentials: true,
     });
-    return response.data;
+    return response.data.transaction;
   } catch (error: any) {
     return error.response;
   }
@@ -117,6 +139,54 @@ export const updateTransaction = async (id: string, formData: FormData) => {
         },
       }
     );
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const createTransaction = async (formData: FormData) => {
+  try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
+    const response = await axios.post(`${API_URL}/transactions`, formData, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const createBudget = async (formData: FormData) => {
+  try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
+    const response = await axios.post(`${API_URL}/budgets`, formData, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const createCategory = async (formData: FormData) => {
+  try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
+    const response = await axios.post(`${API_URL}/categories`, formData, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const createGoal = async (formData: FormData) => {
+  try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
+    const response = await axios.post(`${API_URL}/goals`, formData, {
+      withCredentials: true,
+    });
     return response;
   } catch (error: any) {
     return error.response;
@@ -270,6 +340,44 @@ export const getCategories = async (page = 1) => {
       withCredentials: true,
     });
     return response.data.data;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const getCategory = async (id: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/categories/${id}`, {
+      withCredentials: true,
+    });
+    return response.data.category;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const updateCategory = async (id: string, formData: FormData) => {
+  try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
+    const response = await axios.put(`${API_URL}/categories/${id}`, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const deleteCategory = async (id: string) => {
+  try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
+    const response = await axios.delete(`${API_URL}/categories/${id}`, {
+      withCredentials: true,
+    });
+    return response;
   } catch (error: any) {
     return error.response;
   }

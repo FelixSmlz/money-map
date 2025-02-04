@@ -1,9 +1,16 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import AddModal from "./AddModal";
+import transactionIcon from "../assets/icons/transaction.svg";
+import budgetIcon from "../assets/icons/budget.svg";
+import goalIcon from "../assets/icons/goal.svg";
+import categoryIcon from "../assets/icons/category.svg";
+
+type FormType = "transaction" | "budget" | "goal" | "category";
 
 function AddMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [formType, setFormType] = useState<FormType | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -17,10 +24,10 @@ function AddMenu() {
   }, []);
 
   const menuItems = [
-    { title: "Transaction", path: "/transactions/new", icon: "💸" },
-    { title: "Budget", path: "/budgets/new", icon: "💰" },
-    { title: "Goal", path: "/goals/new", icon: "🎯" },
-    { title: "Category", path: "/categories/new", icon: "📑" },
+    { title: "Transaction", path: "/transactions/new", icon: transactionIcon },
+    { title: "Budget", path: "/budgets/new", icon: budgetIcon },
+    { title: "Goal", path: "/goals/new", icon: goalIcon },
+    { title: "Category", path: "/categories/new", icon: categoryIcon },
   ];
 
   return (
@@ -28,18 +35,26 @@ function AddMenu() {
       {isOpen && (
         <div className="absolute bottom-16 right-0 bg-white rounded-[15px] shadow-lg p-2 min-w-[200px]">
           {menuItems.map((item) => (
-            <Link
+            <button
               key={item.path}
-              to={item.path}
-              className="flex items-center gap-3 p-3 hover:bg-gray/5 rounded-[15px] cursor-pointer"
-              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 p-3 hover:bg-my_gray/5 rounded-[15px] cursor-pointer w-full text-left"
+              onClick={() => {
+                setFormType(item.title.toLowerCase() as FormType);
+                setIsOpen(false);
+              }}
             >
-              <span className="text-lg">{item.icon}</span>
+              <img src={item.icon} alt={item.title} />
               <span className="text-bg_black">{item.title}</span>
-            </Link>
+            </button>
           ))}
         </div>
       )}
+      <AddModal
+        isOpen={!!formType}
+        key={formType}
+        onClose={() => setFormType(null)}
+        type={formType as FormType}
+      />
 
       <button
         className="bg-bg_black shadow-card p-4 flex justify-center items-center rounded-full text-white group hover:bg-white"

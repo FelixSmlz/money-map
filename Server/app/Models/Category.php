@@ -22,16 +22,16 @@ class Category extends Model
 
     public function goals()
     {
-        return $this->hasMany(Goal::class);
+        return $this->hasMany(Goal::class)->nullOnDelete();
     }
 
     public function budgets()
     {
-        return $this->hasMany(Budget::class);
+        return $this->hasMany(Budget::class)->nullOnDelete();
     }
 
-    public function expenses()
+    public function transactions()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class)->nullOnDelete();
     }
 }

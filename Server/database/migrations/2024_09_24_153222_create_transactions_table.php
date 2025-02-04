@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name', 250)->nullable(false);
-            $table->float('amount', 6, 2)->nullable(false);
+            $table->decimal('amount', 8, 2)->nullable(false);
             $table->enum('type', ['income', 'expense'])->nullable(false);
             $table->date('date')->nullable(false);
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();

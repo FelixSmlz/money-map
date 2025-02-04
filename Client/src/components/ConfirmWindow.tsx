@@ -11,16 +11,16 @@ const ConfirmWindow = ({ message, onCancel, onConfirm }: Props) => {
         <p className="text-center font-medium max-w-[20ch] text-lg">
           {message}
         </p>
-        <div className="flex w-full justify-between items-center">
+        <div className="flex w-full justify-between gap-3 items-center">
           <button
             onClick={onCancel}
-            className="bg-bg_black py-3 border-2 border-bg_black hover:bg-white hover:text-bg_black px-10 rounded-[15px] text-white"
+            className="bg-bg_black py-3 border border-bg_black w-1/2 hover:bg-white hover:text-bg_black rounded-[15px] text-white"
           >
             No
           </button>
           <button
             onClick={onConfirm}
-            className="bg-red py-3 px-10 border-2 border-red hover:bg-white hover:text-red rounded-[15px] text-white"
+            className="bg-red py-3 border w-1/2 border-red hover:bg-white hover:text-red rounded-[15px] text-white"
           >
             Yes
           </button>

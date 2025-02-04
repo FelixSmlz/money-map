@@ -2,10 +2,11 @@ import React from "react";
 
 type AvatarType = {
   name: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
+  className?: string;
 };
 
-const Avatar = ({ name, size = "md" }: AvatarType) => {
+const Avatar = ({ name, size = "md", className }: AvatarType) => {
   const initials = name
     .split(" ")
     .map((word) => word[0])
@@ -17,6 +18,7 @@ const Avatar = ({ name, size = "md" }: AvatarType) => {
     sm: "w-8 h-8 text-sm",
     md: "w-10 h-10 text-base",
     lg: "w-20 h-20 text-lg",
+    xl: "w-24 h-24 text-[2rem]",
   };
 
   return (
@@ -30,6 +32,7 @@ const Avatar = ({ name, size = "md" }: AvatarType) => {
         flex 
         items-center 
         justify-center
+        ${className}
       `}
     >
       {initials}

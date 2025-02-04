@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->controller(UserController::class)->group(func
     Route::put('user/{id}', 'update');
     Route::delete('user/{id}', 'destroy');
     Route::post("user/toggle-notifications", "toggleNotifications");
+    Route::post("user/change-password", "changePassword");
 });
 
 // Endpoints for transactions
@@ -43,15 +44,6 @@ Route::middleware('auth:sanctum')->controller(TransactionController::class)->gro
     Route::post('transactions', 'store');
     Route::put('transactions/{id}', 'update');
     Route::delete('transactions/{id}', 'destroy');
-});
-
-// Endpoints for user details
-
-Route::middleware(['verified', 'auth:sanctum'])->controller(UserDetailsController::class)->group(function () {
-    Route::get('user-details', 'index');
-    Route::post('user-details', 'store');
-    Route::put('user-details/{id}', 'update');
-    Route::delete('user-details/{id}', 'destroy');
 });
 
 // Endpoints for budgets
@@ -85,6 +77,7 @@ Route::middleware('auth:sanctum')->controller(CategoryController::class)->group(
 });
 
 // Endpoints for notifications
+
 Route::middleware('auth:sanctum')->controller(NotificationController::class)->group(function () {
     Route::get('notifications', 'index');
     Route::get('notifications/unread', 'unread');

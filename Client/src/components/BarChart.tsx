@@ -7,6 +7,8 @@ import {
   XAxis,
   Tooltip,
   TooltipProps,
+  ReferenceLine,
+  Cell,
 } from "recharts";
 import { useEffect, useState } from "react";
 import { getDailyBalances } from "../utils/api";
@@ -42,57 +44,6 @@ function BarChartComponent() {
     fetchDailyBalances();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchDailyTransactions = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const transactions = await getTransactions();
-
-  //       if (!transactions || !Array.isArray(transactions)) {
-  //         setError("No transactions found");
-  //         return;
-  //       }
-
-  //       const last7Days = [...Array(7)]
-  //         .map((_, i) => {
-  //           const d = new Date();
-  //           d.setDate(d.getDate() - i);
-  //           return d.toISOString().split("T")[0];
-  //         })
-  //         .reverse();
-
-  //       const dailyTotals = last7Days.map((date) => {
-  //         const dayTransactions = transactions.filter(
-  //           (t: TransactionType) => t.date === date
-  //         );
-
-  //         const balance = dayTransactions.reduce(
-  //           (sum: number, t: TransactionType) => {
-  //             const amount = Number(t.amount);
-  //             return t.type === "expense" ? sum - amount : sum + amount;
-  //           },
-  //           0
-  //         );
-
-  //         return {
-  //           day: new Date(date).toLocaleDateString("en-US", {
-  //             weekday: "short",
-  //           }),
-  //           amount: balance,
-  //         };
-  //       });
-
-  //       setChartData(dailyTotals);
-  //     } catch (err) {
-  //       setError("Failed to fetch transactions");
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchDailyTransactions();
-  // }, []);
-
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!chartData.length) return <div>No data available</div>;
@@ -110,12 +61,20 @@ function BarChartComponent() {
           tick={{ fill: "#fff", fontSize: 12 }}
         />
         <Tooltip content={<CustomTooltip />} />
-        <Bar
-          dataKey="amount"
-          fill="#80D9FF"
-          radius={[10, 10, 2, 2]}
-          barSize={25}
+        <ReferenceLine
+          strokeWidth={2}
+          y={0}
+          stroke="#7e7e7e"
+          strokeOpacity={0.5}
         />
+        <Bar dataKey="amount" radius={[10, 10, 2, 2]} barSize={25}>
+          {chartData.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={entry.amount >= 0 ? "#80D9FF" : "#FF8080"}
+            />
+          ))}
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   );

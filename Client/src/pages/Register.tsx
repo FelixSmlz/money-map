@@ -127,7 +127,7 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="bg-bg_black hover:bg-white border-2 border-bg_black hover:text-bg_black text-white rounded-[15px] p-3 w-full"
+            className="bg-bg_black hover:bg-white border border-bg_black hover:text-bg_black text-white rounded-[15px] p-3 w-full"
           >
             Register
           </button>

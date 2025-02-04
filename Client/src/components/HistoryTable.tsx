@@ -1,32 +1,112 @@
 import HistoryTableHeading from "./HistoryTableHeading";
 import TransactionRow from "./transactions/TransactionRow";
 import GoalRow from "./goals/GoalRow";
+import CategoryRow from "./categories/CategoryRow";
 import BudgetRow from "./budgets/BudgetRow";
 import { useContext } from "react";
 import { DataContext, DataType } from "../pages/History";
+import { FilterState } from "./FilterMenu";
+import { useState } from "react";
+import { set } from "react-hook-form";
 
 type Props = {
   searchFilter: string;
 };
 
 const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
-  const { data, dataType } = useContext(DataContext) as {
+  const {
+    data = [],
+    dataType,
+    filters,
+  } = useContext(DataContext) as {
     data: any[];
     dataType: DataType;
+    filters: FilterState;
+  };
+
+  const applyFilters = (items: any[]) => {
+    return items.filter((item) => {
+      if (!item.name.toLowerCase().includes(searchFilter.toLowerCase())) {
+        return false;
+      }
+
+      if (filters.icon_name && item.icon_name !== filters.icon_name) {
+        return false;
+      }
+
+      if (filters.dateFrom) {
+        const itemDate = new Date(item.date || item.start_date);
+        if (itemDate < new Date(filters.dateFrom)) return false;
+      }
+      if (filters.dateTo) {
+        const itemDate = new Date(item.date || item.start_date);
+        if (itemDate > new Date(filters.dateTo)) return false;
+      }
+
+      const amount = item.amount || item.target_amount || item.limit;
+      if (filters.amountMin && amount < filters.amountMin) return false;
+      if (filters.amountMax && amount > filters.amountMax) return false;
+
+      if (filters.type && item.type !== filters.type) return false;
+
+      if (filters.period && item.period !== filters.period) return false;
+
+      return true;
+    });
   };
 
   const generateHistoryTable = () => {
     const jsx: React.ReactElement[] = [];
+    const [errorSet, setErrorSet] = useState(false);
 
-    const filteredData = data
-      .filter((item) => {
-        return item.name.toLowerCase().includes(searchFilter.toLowerCase());
-      })
-      .sort((a, b) => {
-        const dateA = new Date(a.date || a.start_date).getTime();
-        const dateB = new Date(b.date || b.start_date).getTime();
-        return dateB - dateA;
-      });
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      if (!errorSet) setErrorSet(true);
+      return (
+        <div className="flex items-center justify-center h-96">
+          <p className="text-center text-gray py-8">No {dataType} yet</p>
+        </div>
+      );
+    }
+
+    const filteredData = applyFilters(data).sort((a, b) => {
+      const dateA = new Date(a.date || a.start_date).getTime();
+      const dateB = new Date(b.date || b.start_date).getTime();
+      return dateB - dateA;
+    });
+
+    if (
+      filteredData.length === 0 &&
+      (searchFilter ||
+        filters.dateFrom ||
+        filters.dateTo ||
+        filters.amountMin ||
+        filters.amountMax ||
+        filters.type ||
+        filters.period ||
+        filters.icon_name)
+    ) {
+      return (
+        <p className="text-center text-gray py-8">
+          No {dataType} match your filters
+        </p>
+      );
+    }
+
+    if (dataType === "categories") {
+      return (
+        <div className="grid mt-4 grid-cols-2 gap-2">
+          {filteredData.map((category) => (
+            <CategoryRow
+              key={`category-${category.id}`}
+              id={category.id}
+              name={category.name}
+              color_code={category.color_code}
+              icon_name={category.icon_name}
+            />
+          ))}
+        </div>
+      );
+    }
 
     filteredData.map((item: any, index: number, orgData: any[]) => {
       const itemDate = item.date || item.start_date;
@@ -47,7 +127,7 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
               amount={item.amount}
               type={item.type}
               date={item.date}
-              category_id={item.categoryId}
+              category_id={item.category_id}
             />
           );
           break;
@@ -79,15 +159,6 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
             />
           );
           break;
-        // case "categories":
-        //   jsx.push(
-        //     <CategoryRow
-        //       key={`category-${item.id}`}
-        //       name={item.name}
-        //       description={item.description}
-        //     />
-        //   );
-        //   break;
         default:
           break;
       }

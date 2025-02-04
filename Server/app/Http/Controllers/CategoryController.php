@@ -22,11 +22,11 @@ class CategoryController extends Controller
     {
         $params = $this->getPaginationParams();
 
-        $goals = Goal::where('user_id', Auth::id())
+        $categories = Category::where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->paginate($params['per_page']);
 
-        return response()->json($this->paginationResponse($goals));
+        return response()->json($this->paginationResponse($categories));
     }
 
     // Create category

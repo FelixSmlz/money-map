@@ -27,7 +27,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     >
       {withText && (
         <div className="text-base text-center text-bg_black">
-          {currentAmount}€ / {limit}€
+          {currentAmount} / {limit}€
         </div>
       )}
       <div

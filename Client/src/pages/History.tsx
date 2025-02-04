@@ -17,11 +17,6 @@ import { FilterState } from "../components/FilterMenu";
 
 export type DataType = "transactions" | "categories" | "budgets" | "goals";
 
-// export const DataContext = createContext<any>({
-//   data: [],
-//   dataType: "transactions",
-// });
-
 export const DataContext = createContext<{
   data: any[];
   dataType: DataType;
@@ -35,7 +30,16 @@ export const DataContext = createContext<{
 });
 
 function History() {
-  const [dataType, setDataType] = useState<DataType>("transactions");
+  const [dataType, setDataType] = useState<DataType>(() => {
+    const stored = localStorage.getItem("selectedDataType");
+    return (stored as DataType) || "transactions";
+  });
+
+  const handleDataTypeChange = (value: DataType) => {
+    setDataType(value);
+    setFilters({});
+    localStorage.setItem("selectedDataType", value);
+  };
   const [filters, setFilters] = useState<FilterState>({});
 
   const { data, isLoading, error } = useQuery({
@@ -63,10 +67,7 @@ function History() {
       <Background />
       <header className="flex items-center justify-between">
         <div className="text-bg_black flex items-center gap-2 bg-transparent text-lg font-medium">
-          <DataTypeMenu
-            value={dataType}
-            onChange={(value) => setDataType(value as DataType)}
-          />
+          <DataTypeMenu value={dataType} onChange={handleDataTypeChange} />
         </div>
         <div className="flex items-center gap-2">
           <NotificationDropdown />

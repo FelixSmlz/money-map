@@ -58,6 +58,10 @@ function Recent() {
       <div className="flex flex-col gap-2 w-full">
         {isLoading ? (
           <p>Loading...</p>
+        ) : transactions.length === 0 ? (
+          <div className="flex items-center justify-center h-[140px]">
+            <p className="text-center text-bg_black">No recent transactions</p>
+          </div>
         ) : (
           transactions.map((transaction) => (
             <TransactionRow key={transaction.id} {...transaction} />

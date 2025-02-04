@@ -4,9 +4,13 @@ import ConfirmWindow from "./ConfirmWindow";
 
 type Props = {
   onDelete: () => void;
+  message?: string;
 };
 
-const DeleteBtn = ({ onDelete }: Props) => {
+const DeleteBtn = ({
+  onDelete,
+  message = "Are you sure you want to delete this item?",
+}: Props) => {
   const [showConfirm, setShowConfirm] = useState(false);
   return (
     <>
@@ -19,7 +23,7 @@ const DeleteBtn = ({ onDelete }: Props) => {
       </button>
       {showConfirm && (
         <ConfirmWindow
-          message="Are you sure you want to delete this item?"
+          message={message}
           onCancel={() => setShowConfirm(false)}
           onConfirm={onDelete}
         />

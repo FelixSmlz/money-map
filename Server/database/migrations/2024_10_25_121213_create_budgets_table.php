@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name', 250)->nullable(false);
-            $table->float('limit', 6, 2)->unsigned()->nullable(false);
-            $table->float('current_amount', 6, 2)->unsigned()->nullable(true)->default(0);
+            $table->decimal('limit', 8, 2)->unsigned()->nullable(false);
+            $table->decimal('current_amount', 8, 2)->unsigned()->nullable(true)->default(0);
             $table->date('start_date')->nullable(false)->default(now());
             $table->integer('days_left')->nullable(true);
             $table->enum('period', ['daily', 'weekly', 'monthly', 'custom'])->nullable(false);

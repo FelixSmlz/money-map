@@ -14,7 +14,6 @@ class Goal extends Model
         'name',
         'target_amount',
         'start_date',
-        'end_date',
         'category_id',
     ];
 
