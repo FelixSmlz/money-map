@@ -224,11 +224,20 @@ class TransactionController extends Controller
                     : $sum + $transaction->amount;
             }, 0);
 
-            return [
-                'day' => $date->format('D'),
-                'amount' => number_format($balance, 2)
-            ];
+            if ($dayTransactions->isNotEmpty()) {
+                return [
+                    'day' => $date->format('D'),
+                    'amount' => number_format($balance, 2),
+                ];
+            } else {
+                return [
+                    'day' => $date->format('D'),
+                    'amount' => null,
+                ];
+            }
         });
+
+
 
         return response()->json($dailyBalances);
     }

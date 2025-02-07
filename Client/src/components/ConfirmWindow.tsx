@@ -6,8 +6,8 @@ type Props = {
 
 const ConfirmWindow = ({ message, onCancel, onConfirm }: Props) => {
   return (
-    <div className="w-dvw h-dvh bg-bg_black flex justify-center items-center absolute top-0 left-0 z-20 bg-opacity-50 px-5">
-      <div className="flex flex-col items-center gap-6 bg-white w-full rounded-[15px] p-10">
+    <div className="w-dvw h-dvh bg-bg_black  flex justify-center items-center absolute top-0 left-0 z-20 bg-opacity-50 px-5">
+      <div className="flex flex-col items-center gap-6 bg-white max-w-[500px] w-full rounded-[15px] p-10">
         <p className="text-center font-medium max-w-[20ch] text-lg">
           {message}
         </p>

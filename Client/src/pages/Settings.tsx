@@ -13,6 +13,8 @@ import { redirect } from "react-router-dom";
 import NotificationSwitch from "../components/NotificationSwitch";
 import ChangePasswordBtn from "../components/ChangePasswordBtn";
 import FeedbackBtn from "../components/FeedbackBtn";
+import { useState } from "react";
+import DesktopNav from "../components/DesktopNav";
 
 export const loader = async () => {
   const { user } = await isLoggedIn();
@@ -55,12 +57,32 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 function Settings() {
   const data = useLoaderData<typeof loader>();
   const user = data?.user;
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="px-5 py-10 position-relative">
       <Background />
       <header className="flex justify-between items-center mb-8 text-bg_black">
         <div className="flex items-center space-x-4">
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="hidden lg:block mr-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
           <a href="/settings" className="text-lg text-bg_black font-semibold">
             Settings
           </a>
@@ -69,7 +91,7 @@ function Settings() {
       </header>
       <div className="flex flex-col gap-5 items-center">
         <div className="flex items-center gap-5 mb-6">
-          <Avatar name={user?.name} size="lg" />
+          <Avatar color={user?.profile_color} name={user?.name} size="lg" />
           <div className="flex flex-col gap-2">
             <p className="text-lg">{user?.name}</p>
             <small className="text-base text-gray font-light">
@@ -78,7 +100,7 @@ function Settings() {
           </div>
         </div>
       </div>
-      <div className="flex mt-6 flex-col p-3 bg-white rounded-[15px] shadow-md w-full">
+      <div className="flex mt-6 flex-col p-2 bg-white max-w-[500px] mx-auto rounded-[15px] shadow-md w-full">
         <div className="flex items-center gap-4 mx-4 py-4 border-b border-light_gray">
           <div className="bg-[#F2F2F2] w-fit p-2 rounded-[15px]">
             <svg
@@ -110,7 +132,18 @@ function Settings() {
         <DeleteProfileBtn />
         <LogoutBtn />
       </div>
-      <AddMenu />
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block">
+        <DesktopNav
+          onClose={() => setIsSidebarOpen(false)}
+          isOpen={isSidebarOpen}
+          user={user}
+          userFirstName={user?.name.split(" ")[0]}
+        />
+      </div>
+      <div className="lg:hidden">
+        <AddMenu />
+      </div>
     </div>
   );
 }

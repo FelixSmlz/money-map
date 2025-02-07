@@ -93,6 +93,7 @@ const router = createBrowserRouter([
         path: "change-password",
         element: <ChangePassword />,
         action: changePasswordAction,
+        loader: dashboardLoader,
       },
     ],
   },

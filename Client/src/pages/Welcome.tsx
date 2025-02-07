@@ -6,7 +6,7 @@ const Welcome = () => {
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full rounded-[15px] shadow-sm p-10 flex flex-col items-center gap-8">
+      <div className="bg-white w-full max-w-[500px] 2xl:max-w-[700px] 2xl:p-[100px] rounded-[15px] shadow-md p-10 flex flex-col items-center gap-8">
         <div className="flex flex-col items-center gap-2">
           <Logo />
           <p className="text-gray text-center max-w-[25ch]">

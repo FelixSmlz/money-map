@@ -10,10 +10,16 @@ import NotificationDropdown from "../components/NotificationMenu";
 import DataRow from "../components/DataRow";
 import Avatar from "../components/Avatar";
 import BackArrow from "../components/BackArrow";
+import UpdateModal from "../components/UpdateModal";
+import editIcon from "../assets/icons/edit.svg";
+import { useState } from "react";
 
-type FieldValues = {
+export type UserType = {
+  id: string;
   name: string;
   email: string;
+  phone: string;
+  profile_color: string;
   password: string;
 };
 
@@ -27,6 +33,18 @@ export const loader = async () => {
 function Profile() {
   const data = useLoaderData<typeof loader>();
   const user = data?.user;
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
+  const renderColor = () => {
+    return (
+      <div className="flex gap-2 items-center">
+        <div
+          className="w-8 h-8 rounded-full"
+          style={{ backgroundColor: user?.profile_color }}
+        ></div>
+      </div>
+    );
+  };
 
   return (
     <div className="px-5 py-10 position-relative">
@@ -38,13 +56,36 @@ function Profile() {
         </div>
         <NotificationDropdown />
       </header>
-      <Avatar size="xl" className="mx-auto mb-6" name={user?.name} />
-      <div className="flex flex-col gap-4 bg-white w-full p-5 rounded-[15px] shadow-sm">
-        <DataRow label="Name" value={user?.name} />
-        <DataRow label="Email" value={user?.email} />
+      <Avatar
+        color={user?.profile_color}
+        size="xl"
+        className="mx-auto mb-6"
+        name={user?.name}
+      />
+      <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col max-w-[500px] mx-auto gap-4 bg-white w-full p-5 rounded-[15px] shadow-sm">
+          <DataRow label="Name" value={user?.name} />
+          <DataRow label="Email" value={user?.email} />
+          <DataRow label="Phone" value={user?.phone} />
+          <DataRow label="Profile Color" value={renderColor()} />
+        </div>
+        <button
+          onClick={() => setIsUpdateModalOpen(true)}
+          className="bg-bg_black text-white p-4 shadow-md rounded-full"
+        >
+          <img src={editIcon} alt="edit" />
+        </button>
       </div>
-      <Nav />
-      <AddMenu />
+      <div className="lg:hidden">
+        <AddMenu />
+      </div>
+
+      <UpdateModal
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        type="user"
+        data={user}
+      />
     </div>
   );
 }

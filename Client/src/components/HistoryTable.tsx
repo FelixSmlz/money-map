@@ -56,7 +56,6 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
   };
 
   const generateHistoryTable = () => {
-    const jsx: React.ReactElement[] = [];
     const [errorSet, setErrorSet] = useState(false);
 
     if (!data || !Array.isArray(data) || data.length === 0) {
@@ -94,7 +93,7 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
 
     if (dataType === "categories") {
       return (
-        <div className="grid mt-4 grid-cols-2 gap-2">
+        <div className="grid mt-4 lg:grid-cols-3 grid-cols-2 gap-2">
           {filteredData.map((category) => (
             <CategoryRow
               key={`category-${category.id}`}
@@ -108,62 +107,74 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
       );
     }
 
-    filteredData.map((item: any, index: number, orgData: any[]) => {
-      const itemDate = item.date || item.start_date;
-      const prevItemDate =
-        orgData[index - 1]?.date || orgData[index - 1]?.start_date;
+    return (
+      <div className="flex flex-col gap-4">
+        {filteredData.map((item: any, index: number, orgData: any[]) => {
+          const itemDate = item.date || item.start_date;
+          const prevItemDate =
+            orgData[index - 1]?.date || orgData[index - 1]?.start_date;
 
-      if (index === 0 || itemDate !== prevItemDate) {
-        jsx.push(<HistoryTableHeading key={index} date={itemDate} />);
-      }
-
-      switch (dataType) {
-        case "transactions":
-          jsx.push(
-            <TransactionRow
-              key={`transaction-${item.id}`}
-              id={item.id}
-              name={item.name}
-              amount={item.amount}
-              type={item.type}
-              date={item.date}
-              category_id={item.category_id}
-            />
-          );
-          break;
-        case "budgets":
-          jsx.push(
-            <BudgetRow
-              key={`budget-${item.id}`}
-              id={item.id}
-              name={item.name}
-              limit={item.limit}
-              period={item.custom_period ? item.custom_period : item.period}
-              start_date={item.start_date}
-              current_amount={item.current_amount}
-              custom_period={item.custom_period}
-              category_id={item.category_id}
-            />
-          );
-          break;
-        case "goals":
-          jsx.push(
-            <GoalRow
-              key={`goal-${item.id}`}
-              id={item.id}
-              name={item.name}
-              target_amount={item.target_amount}
-              current_amount={item.current_amount}
-              start_date={item.start_date}
-              category_id={item.category_id}
-            />
-          );
-          break;
-        default:
-          break;
-      }
-    });
-    return jsx;
+          if (index === 0 || itemDate !== prevItemDate) {
+            return (
+              <div key={`date-${itemDate}`} className="w-full">
+                <HistoryTableHeading date={itemDate} />
+                <div className="grid lg:grid-cols-2 gap-4 mt-4">
+                  {filteredData
+                    .filter((i: any) => (i.date || i.start_date) === itemDate)
+                    .map((filteredItem: any) => {
+                      switch (dataType) {
+                        case "transactions":
+                          return (
+                            <TransactionRow
+                              key={`transaction-${filteredItem.id}`}
+                              id={filteredItem.id}
+                              name={filteredItem.name}
+                              amount={filteredItem.amount}
+                              type={filteredItem.type}
+                              date={filteredItem.date}
+                              category_id={filteredItem.category_id}
+                            />
+                          );
+                        case "budgets":
+                          return (
+                            <BudgetRow
+                              key={`budget-${filteredItem.id}`}
+                              id={filteredItem.id}
+                              name={filteredItem.name}
+                              limit={filteredItem.limit}
+                              period={
+                                filteredItem.custom_period
+                                  ? filteredItem.custom_period
+                                  : filteredItem.period
+                              }
+                              start_date={filteredItem.start_date}
+                              current_amount={filteredItem.current_amount}
+                              custom_period={filteredItem.custom_period}
+                              category_id={filteredItem.category_id}
+                            />
+                          );
+                        case "goals":
+                          return (
+                            <GoalRow
+                              key={`goal-${filteredItem.id}`}
+                              id={filteredItem.id}
+                              name={filteredItem.name}
+                              target_amount={filteredItem.target_amount}
+                              current_amount={filteredItem.current_amount}
+                              start_date={filteredItem.start_date}
+                              category_id={filteredItem.category_id}
+                            />
+                          );
+                      }
+                    })}
+                </div>
+              </div>
+            );
+          }
+          return null;
+        })}
+      </div>
+    );
   };
 
   return <div className="flex flex-col gap-3">{generateHistoryTable()}</div>;

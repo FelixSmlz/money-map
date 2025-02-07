@@ -12,6 +12,15 @@ export default {
         light_gray: "#7e7e7e6f",
         turkois: "#80D9FF",
       },
+      screens: {
+        xs: "375px",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
+        "3xl": "1920px",
+      },
       boxShadow: {
         card: "rgba(0, 0, 0, 0.3) 0 1px 3px",
       },

@@ -44,13 +44,14 @@ export const logout = async () => {
 
 // User Profile
 
-export const updateProfile = async (
-  formData: FormData,
-  id: FormDataEntryValue
-) => {
+export const updateProfile = async (id: string, formData: FormData) => {
   try {
+    await axios.get(API_URL + "/sanctum/csrf-cookie");
     const response = await axios.put(`${API_URL}/user/${id}`, formData, {
       withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     return response;
   } catch (error: any) {

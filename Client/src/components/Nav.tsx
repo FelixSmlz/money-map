@@ -13,7 +13,7 @@ function Nav() {
     { to: "settings", icon: settingsIcon, iconHover: settingsIconHover },
   ];
   return (
-    <nav className="fixed bottom-0 left-0 py-7 shadow-[0_7px_20px_rgba(0,0,0,0.062)] px-[4rem] bg-white rounded-t-[30px] w-full">
+    <nav className="fixed bottom-0 lg:hidden left-0 py-7 shadow-[0_7px_20px_rgba(0,0,0,0.062)] px-[4rem] bg-white rounded-t-[30px] w-full">
       <ul className="flex gap-[5rem] items-center justify-center">
         {privateLinks.map((link) => (
           <li key={link.to}>

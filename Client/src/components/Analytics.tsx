@@ -9,6 +9,7 @@ function Analytics() {
           <p className="text-my_gray text-[0.75rem] font-medium">Last week</p>
         </div>
       </div>
+
       <BarChartComponent />
     </div>
   );

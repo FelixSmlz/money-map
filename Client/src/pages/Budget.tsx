@@ -13,6 +13,8 @@ import NotificationDropdown from "../components/NotificationMenu";
 import BackArrow from "../components/BackArrow";
 import { getCategory } from "../utils/api";
 import { CategoryType } from "./Category";
+import editIcon from "../assets/icons/edit.svg";
+import UpdateModal from "../components/UpdateModal";
 
 export type BudgetType = {
   id: string;
@@ -57,6 +59,7 @@ const Budget = () => {
     category: CategoryType;
   };
   const [currentBudget, setCurrentBudget] = useState(budget);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   const handleDelete = async () => {
     const response = await deleteBudget(budget.id);
@@ -103,7 +106,7 @@ const Budget = () => {
           />
           <DeleteBtn onDelete={handleDelete} />
         </div>
-        <div className="flex flex-col gap-6 bg-white w-full p-4 rounded-[15px] shadow-sm">
+        <div className="flex flex-col gap-6 max-w-[500px] mx-auto bg-white w-full p-4 rounded-[15px] shadow-sm">
           <DataRow label="name" value={budget.name} />
           <DataRow
             label={
@@ -120,7 +123,19 @@ const Budget = () => {
           <DataRow label="start date" value={budget.start_date} />
           <DataRow label="category" value={category.icon_name} />
         </div>
+        <button
+          onClick={() => setIsUpdateModalOpen(true)}
+          className="bg-bg_black text-white p-4 shadow-md rounded-full"
+        >
+          <img src={editIcon} alt="edit" />
+        </button>
       </div>
+      <UpdateModal
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        type="budget"
+        data={budget}
+      />
     </div>
   );
 };

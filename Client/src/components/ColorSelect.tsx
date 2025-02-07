@@ -9,6 +9,7 @@ type ColorSelectProps = {
   errorMsg?: string;
   className?: string;
   handler?: any;
+  windowPosition?: string;
   placeholder?: string;
 };
 
@@ -19,6 +20,7 @@ const ColorSelect = ({
   label,
   errorMsg,
   className,
+  windowPosition = "bottom",
   handler,
   placeholder,
 }: ColorSelectProps) => {
@@ -85,7 +87,14 @@ const ColorSelect = ({
         </button>
 
         {isOpen && (
-          <div className="absolute z-10 w-full mt-2 bg-white rounded-[15px] shadow-lg p-4">
+          <div
+            className={`absolute ${
+              windowPosition === "top" ? "bottom-full mb-2" : "top-full mt-2"
+            } left-0 z-50 w-full bg-white rounded-[15px] shadow-lg p-4`}
+            style={{
+              transformOrigin: windowPosition === "top" ? "bottom" : "top",
+            }}
+          >
             <HexColorPicker
               color={value}
               onChange={onChange}

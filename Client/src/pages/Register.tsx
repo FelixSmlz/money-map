@@ -5,11 +5,13 @@ import Background from "../components/Background";
 import Input from "../components/Input";
 import { register } from "../utils/api";
 import { NavLink } from "react-router-dom";
+import PhoneInputV2 from "../components/PhoneInput";
 
 type FieldValues = {
   name: string;
   email: string;
   password: string;
+  phone: string;
   confirmPassword: string;
 };
 
@@ -31,6 +33,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 const Register = () => {
   const nameId = useId();
   const emailId = useId();
+  const phoneId = useId();
   const passwordId = useId();
   const confirmPasswordId = useId();
 
@@ -52,7 +55,7 @@ const Register = () => {
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full rounded-[15px] shadow-md p-10">
+      <div className="bg-white w-full max-w-[500px] 2xl:max-w-[700px] 2xl:p-[100px] rounded-[15px] shadow-md p-10">
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}
@@ -93,6 +96,20 @@ const Register = () => {
               })}
               errorMsg={errors.email?.message}
             />
+            <Input
+              type="tel"
+              id={phoneId}
+              placeholder="phone number"
+              handler={register("phone", {
+                required: { value: true, message: "Phone number is required" },
+                maxLength: {
+                  value: 250,
+                  message: "Phone number is too long (max. 250 characters)",
+                },
+              })}
+              errorMsg={errors.phone?.message}
+            />
+
             <Input
               type="password"
               id={passwordId}

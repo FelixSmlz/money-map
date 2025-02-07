@@ -8,6 +8,7 @@ import {
   redirect,
   NavLink,
 } from "react-router-dom";
+import { useState } from "react";
 import { login } from "../utils/api";
 
 type FieldValues = {
@@ -34,6 +35,8 @@ function Login() {
   const emailId = useId();
   const passwordId = useId();
 
+  const [email, setEmail] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -49,7 +52,7 @@ function Login() {
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full rounded-[15px] shadow-md p-10">
+      <div className="bg-white w-full max-w-[500px] 2xl:max-w-[700px] 2xl:p-[100px] rounded-[15px] shadow-md p-10">
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}
@@ -63,7 +66,6 @@ function Login() {
             <Input
               type="email"
               id={emailId}
-              value=""
               placeholder="email"
               handler={register("email", {
                 required: { value: true, message: "Email is required" },
@@ -81,7 +83,6 @@ function Login() {
             <Input
               type="password"
               id={passwordId}
-              value=""
               placeholder="password"
               handler={register("password", {
                 required: { value: true, message: "Password is required" },

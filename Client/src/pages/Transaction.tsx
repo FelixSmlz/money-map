@@ -15,6 +15,8 @@ import DataRow from "../components/DataRow";
 import NotificationDropdown from "../components/NotificationMenu";
 import { CategoryType } from "./Category";
 import BackArrow from "../components/BackArrow";
+import UpdateModal from "../components/UpdateModal";
+import editIcon from "../assets/icons/edit.svg";
 
 export type TransactionType = {
   id: string;
@@ -57,6 +59,7 @@ const Transaction = () => {
     user: any;
   };
   const [currentTransaction, setCurrentTransaction] = useState(transaction);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   const handleTypeSwitch = (newType: "income" | "expense") => {
     const formData = new FormData();
@@ -80,7 +83,7 @@ const Transaction = () => {
   };
 
   return (
-    <div className="px-5 py-10 position-relative">
+    <div className="px-5  py-10 position-relative">
       <Background />
       <header className="flex justify-between items-center mb-8 text-bg_black">
         <BackArrow />
@@ -102,14 +105,27 @@ const Transaction = () => {
             onChange={handleTypeSwitch}
             initialType={currentTransaction.type}
           />
+
           <DeleteBtn onDelete={handleDelete} />
         </div>
-        <div className="flex flex-col gap-6 bg-white w-full p-4 rounded-[15px] shadow-sm">
+        <UpdateModal
+          isOpen={isUpdateModalOpen}
+          onClose={() => setIsUpdateModalOpen(false)}
+          type="transaction"
+          data={currentTransaction}
+        />
+        <div className="flex flex-col gap-6 max-w-[500px] mx-auto bg-white w-full p-4 rounded-[15px] shadow-sm">
           <DataRow label="name" value={transaction.name} />
           <DataRow label="amount" value={transaction.amount} />
           <DataRow label="date" value={transaction.date} />
           <DataRow label="category" value={category.name} />
         </div>
+        <button
+          onClick={() => setIsUpdateModalOpen(true)}
+          className="bg-bg_black text-white p-4 shadow-md rounded-full"
+        >
+          <img src={editIcon} alt="edit" />
+        </button>
       </div>
     </div>
   );

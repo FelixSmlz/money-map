@@ -13,7 +13,7 @@ const TransactionRow = ({
   return (
     <Link
       to={`/transactions/${id}`}
-      className="group flex w-full items-center bg-white hover:bg-bg_black rounded-[15px] p-4 gap-5"
+      className="group flex w-full items-center shadow-md bg-white hover:bg-bg_black rounded-[15px] p-4 gap-5"
     >
       <CategoryIcon className="bg-gray-100" category_id={category_id} />
       <div className="flex justify-between w-full items-center">

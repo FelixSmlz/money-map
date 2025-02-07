@@ -15,6 +15,8 @@ import {
 } from "../utils/api";
 import { ActionFunctionArgs } from "react-router";
 import BackArrow from "../components/BackArrow";
+import UpdateModal from "../components/UpdateModal";
+import editIcon from "../assets/icons/edit.svg";
 
 export type CategoryType = {
   id: string;
@@ -37,11 +39,11 @@ export const loader = async ({ params }: any) => {
 
 const Category = () => {
   const navigate = useNavigate();
-  //   const fetcher = useFetcher<typeof action>();
   const { category } = useLoaderData() as {
     category: CategoryType;
     user: any;
   };
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   const handleDelete = async () => {
     const response = await deleteCategory(category.id);
@@ -76,11 +78,23 @@ const Category = () => {
           <CategoryIcon category_id={category.id} />
           <DeleteBtn onDelete={handleDelete} />
         </div>
-        <div className="flex flex-col gap-6 bg-white w-full p-4 rounded-[15px] shadow-sm">
+        <div className="flex flex-col gap-6 max-w-[500px] mx-auto bg-white w-full p-4 rounded-[15px] shadow-sm">
           <DataRow label="name" value={category.name} />
           <DataRow label="icon" value={category.icon_name} />
           <DataRow label="color" value={renderColor()} />
         </div>
+        <UpdateModal
+          isOpen={isUpdateModalOpen}
+          onClose={() => setIsUpdateModalOpen(false)}
+          type="category"
+          data={category}
+        />
+        <button
+          onClick={() => setIsUpdateModalOpen(true)}
+          className="bg-bg_black text-white p-4 shadow-md rounded-full"
+        >
+          <img src={editIcon} alt="edit" />
+        </button>
       </div>
     </div>
   );

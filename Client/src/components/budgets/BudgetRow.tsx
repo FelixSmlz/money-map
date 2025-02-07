@@ -29,7 +29,7 @@ const BudgetRow = ({
           </p>
         </div>
         <BudgetIndicator
-          maxWidth="100px"
+          maxWidth="140px"
           currentAmount={current_amount}
           limit={limit}
         />

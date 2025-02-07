@@ -3,10 +3,36 @@ import React from "react";
 type AvatarType = {
   name: string;
   size?: "sm" | "md" | "lg" | "xl";
+  color?: string;
   className?: string;
 };
 
-const Avatar = ({ name, size = "md", className }: AvatarType) => {
+const isLightColor = (hexColor: string): boolean => {
+  // Remove # if present
+  const hex = hexColor.replace("#", "");
+
+  // Convert hex to RGB
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+
+  // Calculate brightness using YIQ formula
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+  // Return true if color is light (brightness > 128)
+  return brightness > 128;
+};
+
+const getContrastingTextColor = (backgroundColor: string): string => {
+  return isLightColor(backgroundColor) ? "#1A1B1C" : "#FFFFFF";
+};
+
+const Avatar = ({
+  name,
+  size = "md",
+  className,
+  color = "#80d9ff",
+}: AvatarType) => {
   const initials = name
     .split(" ")
     .map((word) => word[0])
@@ -21,12 +47,17 @@ const Avatar = ({ name, size = "md", className }: AvatarType) => {
     xl: "w-24 h-24 text-[2rem]",
   };
 
+  const textColor = getContrastingTextColor(color);
+
   return (
     <div
+      style={{
+        backgroundColor: color,
+        color: textColor,
+      }}
       className={`
         ${sizeClasses[size]}
         rounded-full 
-        bg-turkois 
         text-white 
         font-medium 
         flex 

@@ -28,6 +28,7 @@ function BarChartComponent() {
       try {
         const response = await getDailyBalances();
         if (response && Array.isArray(response)) {
+          console.log(response);
           setChartData(response);
         } else {
           setChartData([]);
@@ -44,9 +45,23 @@ function BarChartComponent() {
     fetchDailyBalances();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (!chartData.length) return <div>No data available</div>;
+  if (isLoading) {
+    return (
+      <div className="h-[200px] flex items-center justify-center text-white">
+        Loading...
+      </div>
+    );
+  }
+  if (error || chartData.length === 0) {
+    return (
+      <div className="h-[200px] flex flex-col items-center justify-center">
+        <p className="text-my_gray text-center mb-2">No transactions yet</p>
+        <p className="text-my_gray text-sm text-center">
+          Add your first transaction to see your analytics
+        </p>
+      </div>
+    );
+  }
 
   return (
     <ResponsiveContainer width="100%" height={200}>
