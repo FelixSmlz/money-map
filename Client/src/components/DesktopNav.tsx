@@ -45,7 +45,7 @@ const DesktopNav = ({
           />
         </svg>
       </button>
-      <div className="p-12 flex flex-col gap-14">
+      <div className="p-12 flex flex-col gap-10">
         <div className="flex items-center space-x-4">
           <Avatar
             color={user.profile_color}
@@ -56,7 +56,7 @@ const DesktopNav = ({
             Hi, {userFirstName}
           </a>
         </div>
-        <nav className="flex flex-col gap-6">
+        <nav className="flex flex-col items-start gap-6">
           <NavLink className={"flex gap-4 items-center"} to="/dashboard">
             <img src={dashboardIcon} alt="Dashboard" />
             <span>Dashboard</span>
