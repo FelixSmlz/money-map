@@ -122,6 +122,8 @@ const Transaction = () => {
           <DataRow label="category" value={category.name} />
         </div>
         <button
+          role="button"
+          name="edit"
           onClick={() => setIsUpdateModalOpen(true)}
           className="bg-bg_black text-white p-4 shadow-md rounded-full"
         >
