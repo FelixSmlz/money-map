@@ -16,7 +16,6 @@ type ColorSelectProps = {
 const ColorSelect = ({
   value = "#000000",
   onChange,
-  id,
   label,
   errorMsg,
   className,

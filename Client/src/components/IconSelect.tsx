@@ -13,7 +13,6 @@ type IconSelectType = {
 
 const IconDropdown = ({
   value,
-  id,
   onChange,
   label,
   errorMsg,

@@ -8,9 +8,7 @@ const BudgetRow = ({
   name,
   limit,
   period,
-  custom_period,
   current_amount,
-  start_date,
   category_id,
 }: BudgetType) => {
   return (

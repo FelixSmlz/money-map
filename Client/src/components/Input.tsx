@@ -19,7 +19,6 @@ const Input = ({
   placeholder,
   handler,
   errorMsg,
-  onChange,
 }: Props) => {
   const hasValue = value || handler !== undefined;
 

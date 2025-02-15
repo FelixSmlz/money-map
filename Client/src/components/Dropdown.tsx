@@ -16,14 +16,12 @@ type DropdownProps = {
 };
 
 const Dropdown = ({
-  id,
   value,
   options,
   onChange,
   placeholder = "Select...",
   handler,
   errorMsg,
-  label,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

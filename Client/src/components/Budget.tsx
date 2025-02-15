@@ -9,14 +9,7 @@ type Props = {
   categoryId: number;
 };
 
-const Budget = ({
-  name,
-  limit,
-  period,
-  startDate,
-  customPeriod,
-  categoryId,
-}: Props) => {
+const Budget = ({ name, limit, period }: Props) => {
   return (
     <a
       href="/transaction"

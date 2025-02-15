@@ -22,11 +22,9 @@ const countryCodes = [
 const PhoneInputV2 = ({
   id,
   className,
-  value,
   placeholder,
   handler,
   errorMsg,
-  onChange,
 }: Props) => {
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
   const [isOpen, setIsOpen] = useState(false);
