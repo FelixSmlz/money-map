@@ -2,14 +2,9 @@ import { useState } from "react";
 import Input from "./Input";
 import { useForm } from "react-hook-form";
 import IconSelect from "./IconSelect";
-import { IconMap } from "../utils/IconMap";
 import Dropdown from "./Dropdown";
 import crossIcon from "../assets/icons/cross.svg";
 import CategoryDropdown from "./CategoryDropdown";
-import { TransactionType } from "../pages/Transaction";
-import { CategoryType } from "../pages/Category";
-import { GoalType } from "../pages/Goal";
-import { BudgetType } from "../pages/Budget";
 import { createTransaction } from "../utils/api";
 import { createBudget } from "../utils/api";
 import { createGoal } from "../utils/api";
@@ -17,7 +12,6 @@ import { createCategory } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import ColorSelect from "./ColorSelect";
 import DatePicker from "./DatePicker";
-import { useEffect } from "react";
 
 type FormType = "transaction" | "budget" | "goal" | "category";
 

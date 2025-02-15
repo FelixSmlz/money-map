@@ -101,6 +101,7 @@ function Dashboard() {
           isOpen={isSidebarOpen}
         />
       </div>
+      <AddMenu />
     </div>
   );
 }

@@ -33,10 +33,10 @@ function AddMenu() {
   return (
     <div
       ref={menuRef}
-      className="fixed bottom-[6rem] lg:top-[31%] lg:left-[38%] right-0  mr-5 z-10"
+      className="fixed bottom-[6rem] lg:bottom-[3rem] lg:right-[3rem] right-0  mr-5 z-10"
     >
       {isOpen && (
-        <div className="absolute bottom-16 lg:top-16 lg:h-fit lg:left-12 right-0 bg-white rounded-[15px] shadow-lg p-2 min-w-[200px]">
+        <div className="absolute bottom-[5rem] lg:h-fit right-12 bg-white rounded-[15px] shadow-lg p-2 min-w-[200px]">
           {menuItems.map((item) => (
             <button
               key={item.path}

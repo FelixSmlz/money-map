@@ -74,7 +74,6 @@ const DesktopNav = ({
             <span>Profile</span>
           </NavLink>
         </nav>
-        <AddMenu />
       </div>
     </div>
   );
