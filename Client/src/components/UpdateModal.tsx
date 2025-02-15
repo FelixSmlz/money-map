@@ -174,8 +174,8 @@ const UpdateModal = ({ isOpen, onClose, type, data }: UpdateModalProps) => {
 
         case "user":
           updateData.append("name", formData.name);
-          updateData.append("email", formData.email);
-          if (formData.phone) updateData.append("phone", formData.phone);
+          updateData.append("email", selectedEmail);
+          if (formData.phone) updateData.append("phone", selectedPhone);
           if (selectedColor) updateData.append("profile_color", selectedColor);
           response = await updateProfile(data.id, updateData);
           break;
@@ -503,6 +503,7 @@ const UpdateModal = ({ isOpen, onClose, type, data }: UpdateModalProps) => {
           </button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          {error && <h3 className="text-center text-red">{error}</h3>}
           {renderForm()}
           <button
             disabled={isLoading}
