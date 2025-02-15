@@ -1,5 +1,5 @@
+import { render, screen } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
 import AddMenu from "./AddMenu";
 
 test("renders AddMenu component", () => {
