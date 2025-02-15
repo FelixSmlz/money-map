@@ -32,7 +32,7 @@ const Input = ({
           autoComplete="off"
           value={value}
           {...handler}
-          className={`${className} peer w-full focus:outline-bg_black p-3 lg:p-4 border border-my_gray ${
+          className={`${className} peer w-full focus:outline-bg_black p-3 border border-my_gray ${
             errorMsg ? "border-red" : ""
           } rounded-[15px]`}
         />
