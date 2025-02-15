@@ -1,18 +1,14 @@
-import Background from "../components/Background";
-import Nav from "../components/Nav";
-import AddMenu from "../components/AddMenu";
-import Input from "../components/Input";
-import { useId } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { isLoggedIn, updateProfile } from "../utils/api";
-import NotificationDropdown from "../components/NotificationMenu";
-import DataRow from "../components/DataRow";
+import editIcon from "../assets/icons/edit.svg";
+import AddMenu from "../components/AddMenu";
 import Avatar from "../components/Avatar";
 import BackArrow from "../components/BackArrow";
+import Background from "../components/Background";
+import DataRow from "../components/DataRow";
+import NotificationDropdown from "../components/NotificationMenu";
 import UpdateModal from "../components/UpdateModal";
-import editIcon from "../assets/icons/edit.svg";
-import { useState } from "react";
+import { isLoggedIn } from "../utils/api";
 
 export type UserType = {
   id: string;

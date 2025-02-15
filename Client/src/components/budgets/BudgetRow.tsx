@@ -1,7 +1,7 @@
-import BudgetIndicator from "./BudgetIndicator";
-import { BudgetType } from "../../pages/Budget";
 import { Link } from "react-router-dom";
+import { BudgetType } from "../../pages/Budget";
 import CategoryIcon from "../CategoryIcon";
+import BudgetIndicator from "./BudgetIndicator";
 
 const BudgetRow = ({
   id,

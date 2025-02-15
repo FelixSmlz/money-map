@@ -1,16 +1,18 @@
 import { useState } from "react";
-import Input from "./Input";
 import { useForm } from "react-hook-form";
-import IconSelect from "./IconSelect";
-import Dropdown from "./Dropdown";
 import crossIcon from "../assets/icons/cross.svg";
+import {
+  createBudget,
+  createCategory,
+  createGoal,
+  createTransaction,
+} from "../utils/api";
 import CategoryDropdown from "./CategoryDropdown";
-import { createTransaction } from "../utils/api";
-import { createBudget } from "../utils/api";
-import { createGoal } from "../utils/api";
-import { createCategory } from "../utils/api";
 import ColorSelect from "./ColorSelect";
 import DatePicker from "./DatePicker";
+import Dropdown from "./Dropdown";
+import IconSelect from "./IconSelect";
+import Input from "./Input";
 
 type FormType = "transaction" | "budget" | "goal" | "category";
 

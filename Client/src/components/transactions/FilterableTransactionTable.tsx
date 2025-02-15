@@ -1,10 +1,10 @@
 import { useState } from "react";
 import SearchBar from "../SearchBar";
 import TransactionTable from "./TransactionTable";
-import { Transaction } from "./TransactionRow";
+import { TransactionType } from "../../pages/Transaction";
 
 type Props = {
-  transactions: Transaction[];
+  transactions: TransactionType[];
 };
 
 const FilterableTransactionTable = ({ transactions }: Props) => {

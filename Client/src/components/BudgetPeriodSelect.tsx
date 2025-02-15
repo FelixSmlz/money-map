@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 type Period = "daily" | "weekly" | "monthly" | "custom";
 

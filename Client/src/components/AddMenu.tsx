@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from "react";
-import AddModal from "./AddModal";
-import transactionIcon from "../assets/icons/transaction.svg";
+import { useEffect, useRef, useState } from "react";
 import budgetIcon from "../assets/icons/budget.svg";
-import goalIcon from "../assets/icons/goal.svg";
 import categoryIcon from "../assets/icons/category.svg";
+import goalIcon from "../assets/icons/goal.svg";
+import transactionIcon from "../assets/icons/transaction.svg";
+import AddModal from "./AddModal";
 
 type FormType = "transaction" | "budget" | "goal" | "category";
 

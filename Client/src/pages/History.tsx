@@ -1,21 +1,21 @@
-import Background from "../components/Background";
-import Nav from "../components/Nav";
-import AddMenu from "../components/AddMenu";
-import {
-  getTransactions,
-  getBudgets,
-  getGoals,
-  getCategories,
-} from "../utils/api";
-import FilterableHistoryTable from "../components/FilterableHistoryTable";
-import { useState, createContext } from "react";
-import NotificationDropdown from "../components/NotificationMenu";
-import DataTypeMenu from "../components/DataTypeMenu";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "../pages/Loading";
-import { FilterState } from "../components/FilterMenu";
-import DesktopNav from "../components/DesktopNav";
+import { createContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import AddMenu from "../components/AddMenu";
+import Background from "../components/Background";
+import DataTypeMenu from "../components/DataTypeMenu";
+import DesktopNav from "../components/DesktopNav";
+import FilterableHistoryTable from "../components/FilterableHistoryTable";
+import { FilterState } from "../components/FilterMenu";
+import Nav from "../components/Nav";
+import NotificationDropdown from "../components/NotificationMenu";
+import Loading from "../pages/Loading";
+import {
+  getBudgets,
+  getCategories,
+  getGoals,
+  getTransactions,
+} from "../utils/api";
 import { loader } from "./Dashboard";
 
 export type DataType = "transactions" | "categories" | "budgets" | "goals";

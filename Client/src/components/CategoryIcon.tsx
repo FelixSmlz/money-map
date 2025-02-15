@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IconMap } from "../utils/IconMap";
 import { getCategory } from "../utils/api";
 

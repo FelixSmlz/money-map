@@ -1,5 +1,5 @@
-import { IconMap, selectableIcons } from "../utils/IconMap";
 import { useEffect, useRef, useState } from "react";
+import { IconMap, selectableIcons } from "../utils/IconMap";
 
 type IconSelectType = {
   id: string;

@@ -1,6 +1,6 @@
-import ChangePasswordIcon from "../assets/icons/change_password.svg";
 import { Link } from "react-router-dom";
 import ArrowIcon from "../assets/icons/arrow-right.svg";
+import ChangePasswordIcon from "../assets/icons/change_password.svg";
 
 const ChangePasswordBtn = () => {
   return (

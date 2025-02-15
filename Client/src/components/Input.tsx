@@ -1,4 +1,3 @@
-import { useId, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {

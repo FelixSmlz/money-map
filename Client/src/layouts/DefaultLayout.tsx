@@ -1,9 +1,4 @@
-import {
-  ActionFunctionArgs,
-  Outlet,
-  useLoaderData,
-  redirect,
-} from "react-router-dom";
+import { Outlet, redirect, useLoaderData } from "react-router-dom";
 
 import Nav from "../components/Nav";
 import { isLoggedIn } from "../utils/api";

@@ -1,23 +1,23 @@
-import Background from "../components/Background";
-import EditBtn from "../components/EditBtn";
-import AddMenu from "../components/AddMenu";
-import DeleteProfileBtn from "../components/DeleteProfileBtn";
-import LogoutBtn from "../components/LogoutBtn";
-import { isLoggedIn, toggleNotifications } from "../utils/api";
-import { useLoaderData } from "react-router-dom";
-import Avatar from "../components/Avatar";
-import NotificationMenu from "../components/NotificationMenu";
-import { ActionFunctionArgs, useFetcher } from "react-router";
-import { logout, deleteProfile } from "../utils/api";
-import { redirect } from "react-router-dom";
-import NotificationSwitch from "../components/NotificationSwitch";
-import ChangePasswordBtn from "../components/ChangePasswordBtn";
-import FeedbackBtn from "../components/FeedbackBtn";
 import { useState } from "react";
+import { ActionFunctionArgs } from "react-router";
+import { redirect, useLoaderData } from "react-router-dom";
+import AddMenu from "../components/AddMenu";
+import Avatar from "../components/Avatar";
+import Background from "../components/Background";
+import ChangePasswordBtn from "../components/ChangePasswordBtn";
+import DeleteProfileBtn from "../components/DeleteProfileBtn";
 import DesktopNav from "../components/DesktopNav";
+import FeedbackBtn from "../components/FeedbackBtn";
+import LogoutBtn from "../components/LogoutBtn";
+import NotificationMenu from "../components/NotificationMenu";
+import NotificationSwitch from "../components/NotificationSwitch";
 import ProfileLink from "../components/ProfileLink";
-import profileIcon from "../assets/icons/profile.svg";
-import notificationIcon from "../assets/icons/notification.svg";
+import {
+  deleteProfile,
+  isLoggedIn,
+  logout,
+  toggleNotifications,
+} from "../utils/api";
 
 export const loader = async () => {
   const { user } = await isLoggedIn();

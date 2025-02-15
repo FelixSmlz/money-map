@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import profileIcon from "../assets/icons/profile.svg";
 
 function ProfileBtn() {
   return (

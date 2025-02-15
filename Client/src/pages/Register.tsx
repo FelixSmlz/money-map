@@ -1,11 +1,10 @@
 import { useId } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { ActionFunctionArgs, redirect, useFetcher } from "react-router";
+import { NavLink } from "react-router-dom";
 import Background from "../components/Background";
 import Input from "../components/Input";
 import { register } from "../utils/api";
-import { NavLink } from "react-router-dom";
-import PhoneInputV2 from "../components/PhoneInput";
 
 type FieldValues = {
   name: string;

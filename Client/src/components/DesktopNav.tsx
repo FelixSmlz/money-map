@@ -1,11 +1,9 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
-import Avatar from "./Avatar";
-import AddMenu from "./AddMenu";
 import dashboardIcon from "../assets/icons/dashboard.svg";
 import historyIcon from "../assets/icons/history.svg";
-import settingsIcon from "../assets/icons/settings.svg";
 import profileIcon from "../assets/icons/profile.svg";
+import settingsIcon from "../assets/icons/settings.svg";
+import Avatar from "./Avatar";
 
 type DesktopNavType = {
   user?: any;

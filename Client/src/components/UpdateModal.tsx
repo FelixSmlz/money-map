@@ -1,29 +1,24 @@
-import { useState } from "react";
-import Input from "./Input";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import IconSelect from "./IconSelect";
-import { IconMap } from "../utils/IconMap";
-import Dropdown from "./Dropdown";
 import crossIcon from "../assets/icons/cross.svg";
-import CategoryDropdown from "./CategoryDropdown";
-import { TransactionType } from "../pages/Transaction";
+import { BudgetType } from "../pages/Budget";
 import { CategoryType } from "../pages/Category";
 import { GoalType } from "../pages/Goal";
-import { BudgetType } from "../pages/Budget";
-import { createTransaction } from "../utils/api";
-import { createBudget } from "../utils/api";
-import { createGoal } from "../utils/api";
-import { createCategory } from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { UserType } from "../pages/Profile";
+import { TransactionType } from "../pages/Transaction";
+import {
+  updateBudget,
+  updateCategory,
+  updateGoal,
+  updateProfile,
+  updateTransaction,
+} from "../utils/api";
+import CategoryDropdown from "./CategoryDropdown";
 import ColorSelect from "./ColorSelect";
 import DatePicker from "./DatePicker";
-import { useEffect } from "react";
-import { updateTransaction } from "../utils/api";
-import { updateBudget } from "../utils/api";
-import { updateGoal } from "../utils/api";
-import { updateCategory } from "../utils/api";
-import { UserType } from "../pages/Profile";
-import { updateProfile } from "../utils/api";
+import Dropdown from "./Dropdown";
+import IconSelect from "./IconSelect";
+import Input from "./Input";
 
 type FormType = "transaction" | "budget" | "goal" | "category" | "user";
 

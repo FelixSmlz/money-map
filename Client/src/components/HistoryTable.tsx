@@ -1,13 +1,11 @@
+import { useContext, useState } from "react";
+import { DataContext, DataType } from "../pages/History";
+import BudgetRow from "./budgets/BudgetRow";
+import CategoryRow from "./categories/CategoryRow";
+import { FilterState } from "./FilterMenu";
+import GoalRow from "./goals/GoalRow";
 import HistoryTableHeading from "./HistoryTableHeading";
 import TransactionRow from "./transactions/TransactionRow";
-import GoalRow from "./goals/GoalRow";
-import CategoryRow from "./categories/CategoryRow";
-import BudgetRow from "./budgets/BudgetRow";
-import { useContext } from "react";
-import { DataContext, DataType } from "../pages/History";
-import { FilterState } from "./FilterMenu";
-import { useState } from "react";
-import { set } from "react-hook-form";
 
 type Props = {
   searchFilter: string;

@@ -1,36 +1,33 @@
 import { createBrowserRouter } from "react-router-dom";
-import { action as registerAction } from "./pages/Register";
-import { action as loginAction } from "./pages/Login";
-import DefaultLayout from "./layouts/DefaultLayout";
-import Dashboard from "./pages/Dashboard";
-import { loader as dashboardLoader } from "./pages/Dashboard";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import DefaultLayout, {
+  loader as defaultLoader,
+} from "./layouts/DefaultLayout";
+import GuestLayout, { loader as guestLoader } from "./layouts/GuestLayout";
+import Budget, {
+  action as budgetAction,
+  loader as budgetLoader,
+} from "./pages/Budget";
+import Category, { loader as categoryLoader } from "./pages/Category";
+import ChangePassword, {
+  action as changePasswordAction,
+} from "./pages/ChangePassword";
+import Dashboard, { loader as dashboardLoader } from "./pages/Dashboard";
+import Goal, { action as goalAction, loader as goalLoader } from "./pages/Goal";
 import History from "./pages/History";
-import Settings from "./pages/Settings";
-import Profile from "./pages/Profile";
-import { loader as profileLoader } from "./pages/Profile";
-import { loader as defaultLoader } from "./layouts/DefaultLayout";
-import GuestLayout from "./layouts/GuestLayout";
-import { loader as guestLoader } from "./layouts/GuestLayout";
-import NotFound from "./pages/NotFound";
 import Loading from "./pages/Loading";
-import { loader as settingsLoader } from "./pages/Settings";
-import { action as settingsAction } from "./pages/Settings";
-import Transaction from "./pages/Transaction";
-import { loader as transactionLoader } from "./pages/Transaction";
-import { action as transactionAction } from "./pages/Transaction";
-import Budget from "./pages/Budget";
-import { loader as budgetLoader } from "./pages/Budget";
-import { action as budgetAction } from "./pages/Budget";
-import Goal from "./pages/Goal";
-import { loader as goalLoader } from "./pages/Goal";
-import { action as goalAction } from "./pages/Goal";
+import Login, { action as loginAction } from "./pages/Login";
+import NotFound from "./pages/NotFound";
+import Profile, { loader as profileLoader } from "./pages/Profile";
+import Register, { action as registerAction } from "./pages/Register";
+import Settings, {
+  action as settingsAction,
+  loader as settingsLoader,
+} from "./pages/Settings";
+import Transaction, {
+  action as transactionAction,
+  loader as transactionLoader,
+} from "./pages/Transaction";
 import Welcome from "./pages/Welcome";
-import Category from "./pages/Category";
-import { loader as categoryLoader } from "./pages/Category";
-import ChangePassword from "./pages/ChangePassword";
-import { action as changePasswordAction } from "./pages/ChangePassword";
 
 const router = createBrowserRouter([
   {

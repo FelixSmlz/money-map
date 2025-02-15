@@ -1,16 +1,16 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
-  BarChart,
   Bar,
+  BarChart,
+  Cell,
+  ReferenceLine,
   ResponsiveContainer,
-  XAxis,
   Tooltip,
   TooltipProps,
-  ReferenceLine,
-  Cell,
+  XAxis,
 } from "recharts";
-import { useEffect, useState } from "react";
 import { getDailyBalances } from "../utils/api";
 
 type dailyTotalsType = {

@@ -1,9 +1,9 @@
-import { useState, useContext, useEffect } from "react";
-import { DataContext } from "../pages/History";
+import { useContext, useEffect, useState } from "react";
 import crossIcon from "../assets/icons/cross.svg";
-import Input from "./Input";
+import { DataContext } from "../pages/History";
 import Dropdown from "./Dropdown";
 import IconSelect from "./IconSelect";
+import Input from "./Input";
 
 export type FilterState = {
   dateFrom?: string;

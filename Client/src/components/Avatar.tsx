@@ -1,5 +1,3 @@
-import React from "react";
-
 type AvatarType = {
   name: string;
   size?: "sm" | "md" | "lg" | "xl";

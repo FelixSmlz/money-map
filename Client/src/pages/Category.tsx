@@ -1,22 +1,15 @@
-import { useNavigate } from "react-router-dom";
-import { useLoaderData, useFetcher } from "react-router";
 import { useState } from "react";
-import Background from "../components/Background";
-import NotificationDropdown from "../components/NotificationMenu";
-import CategoryIcon from "../components/CategoryIcon";
-import TransactionTypeSwitch from "../components/TransactionTypeSwitch";
-import DeleteBtn from "../components/DeleteBtn";
-import DataRow from "../components/DataRow";
-import {
-  getCategory,
-  deleteCategory,
-  updateCategory,
-  isLoggedIn,
-} from "../utils/api";
-import { ActionFunctionArgs } from "react-router";
-import BackArrow from "../components/BackArrow";
-import UpdateModal from "../components/UpdateModal";
+import { useLoaderData } from "react-router";
+import { useNavigate } from "react-router-dom";
 import editIcon from "../assets/icons/edit.svg";
+import BackArrow from "../components/BackArrow";
+import Background from "../components/Background";
+import CategoryIcon from "../components/CategoryIcon";
+import DataRow from "../components/DataRow";
+import DeleteBtn from "../components/DeleteBtn";
+import NotificationDropdown from "../components/NotificationMenu";
+import UpdateModal from "../components/UpdateModal";
+import { deleteCategory, getCategory, isLoggedIn } from "../utils/api";
 
 export type CategoryType = {
   id: string;

@@ -1,22 +1,23 @@
-import Background from "../components/Background";
-import { getTransaction, isLoggedIn } from "../utils/api";
-import { useLoaderData, useFetcher, useNavigate } from "react-router-dom";
-import { useId, useState, useEffect } from "react";
-import DeleteBtn from "../components/DeleteBtn";
-import TransactionTypeSwitch from "../components/TransactionTypeSwitch";
-import CategoryIcon from "../components/CategoryIcon";
+import { useState } from "react";
 import { ActionFunctionArgs } from "react-router";
+import { useFetcher, useLoaderData, useNavigate } from "react-router-dom";
+import editIcon from "../assets/icons/edit.svg";
+import BackArrow from "../components/BackArrow";
+import Background from "../components/Background";
+import CategoryIcon from "../components/CategoryIcon";
+import DataRow from "../components/DataRow";
+import DeleteBtn from "../components/DeleteBtn";
+import NotificationDropdown from "../components/NotificationMenu";
+import TransactionTypeSwitch from "../components/TransactionTypeSwitch";
+import UpdateModal from "../components/UpdateModal";
 import {
-  updateTransaction,
   deleteTransaction,
   getCategory,
+  getTransaction,
+  isLoggedIn,
+  updateTransaction,
 } from "../utils/api";
-import DataRow from "../components/DataRow";
-import NotificationDropdown from "../components/NotificationMenu";
 import { CategoryType } from "./Category";
-import BackArrow from "../components/BackArrow";
-import UpdateModal from "../components/UpdateModal";
-import editIcon from "../assets/icons/edit.svg";
 
 export type TransactionType = {
   id: string;

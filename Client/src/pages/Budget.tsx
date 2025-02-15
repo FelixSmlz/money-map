@@ -1,20 +1,24 @@
-import { getBudget, updateBudget, isLoggedIn } from "../utils/api";
-import Background from "../components/Background";
-import { ActionFunctionArgs, useNavigate } from "react-router";
 import { useState } from "react";
-import { useLoaderData, useFetcher, Link } from "react-router-dom";
-import DataRow from "../components/DataRow";
-import CategoryIcon from "../components/CategoryIcon";
-import DeleteBtn from "../components/DeleteBtn";
-import { deleteBudget } from "../utils/api";
+import { ActionFunctionArgs, useNavigate } from "react-router";
+import { useFetcher, useLoaderData } from "react-router-dom";
+import editIcon from "../assets/icons/edit.svg";
+import BackArrow from "../components/BackArrow";
+import Background from "../components/Background";
 import BudgetPeriodSelect from "../components/BudgetPeriodSelect";
 import BudgetIndicator from "../components/budgets/BudgetIndicator";
+import CategoryIcon from "../components/CategoryIcon";
+import DataRow from "../components/DataRow";
+import DeleteBtn from "../components/DeleteBtn";
 import NotificationDropdown from "../components/NotificationMenu";
-import BackArrow from "../components/BackArrow";
-import { getCategory } from "../utils/api";
-import { CategoryType } from "./Category";
-import editIcon from "../assets/icons/edit.svg";
 import UpdateModal from "../components/UpdateModal";
+import {
+  deleteBudget,
+  getBudget,
+  getCategory,
+  isLoggedIn,
+  updateBudget,
+} from "../utils/api";
+import { CategoryType } from "./Category";
 
 export type BudgetType = {
   id: string;

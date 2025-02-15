@@ -1,9 +1,9 @@
 import TransactionRow from "./TransactionRow";
-import { Transaction } from "./TransactionRow";
+import { TransactionType } from "../../pages/Transaction";
 import TransactionDate from "./TransactionDate";
 
 type Props = {
-  transactions: Transaction[];
+  transactions: TransactionType[];
   searchFilter: string;
 };
 
@@ -31,11 +31,12 @@ const TransactionTable = ({
 
         jsx.push(
           <TransactionRow
+            id={transaction.id}
             name={transaction.name}
             amount={transaction.amount}
             type={transaction.type}
             date={transaction.date}
-            categoryId={transaction.categoryId}
+            category_id={transaction.categoryId}
           />
         );
       }

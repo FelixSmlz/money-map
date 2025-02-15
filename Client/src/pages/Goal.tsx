@@ -1,27 +1,22 @@
-import {
-  getGoal,
-  updateGoal,
-  deleteGoal,
-  isLoggedIn,
-  getCategory,
-} from "../utils/api";
-import {
-  ActionFunctionArgs,
-  useNavigate,
-  useFetcher,
-  useLoaderData,
-} from "react-router";
-import DataRow from "../components/DataRow";
-import CategoryIcon from "../components/CategoryIcon";
-import DeleteBtn from "../components/DeleteBtn";
+import { useState } from "react";
+import { ActionFunctionArgs, useLoaderData, useNavigate } from "react-router";
+import editIcon from "../assets/icons/edit.svg";
+import BackArrow from "../components/BackArrow";
 import Background from "../components/Background";
+import CategoryIcon from "../components/CategoryIcon";
+import DataRow from "../components/DataRow";
+import DeleteBtn from "../components/DeleteBtn";
 import GoalIndicator from "../components/goals/GoalIndicator";
 import NotificationDropdown from "../components/NotificationMenu";
-import BackArrow from "../components/BackArrow";
-import { CategoryType } from "./Category";
-import { useState } from "react";
-import editIcon from "../assets/icons/edit.svg";
 import UpdateModal from "../components/UpdateModal";
+import {
+  deleteGoal,
+  getCategory,
+  getGoal,
+  isLoggedIn,
+  updateGoal,
+} from "../utils/api";
+import { CategoryType } from "./Category";
 
 export type GoalType = {
   id: string;

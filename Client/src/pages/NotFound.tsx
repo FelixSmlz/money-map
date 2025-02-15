@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import Background from "../components/Background";
 import notFound from "../assets/icons/not_found.svg";
+import Background from "../components/Background";
 
 const NotFound = () => {
   return (
