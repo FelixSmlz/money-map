@@ -119,7 +119,7 @@ export const routes = [
 ];
 
 const router = createBrowserRouter(routes, {
-  basename: import.meta.env.BASE_URL,
+  basename: "/money-map",
 });
 
 export default router;
