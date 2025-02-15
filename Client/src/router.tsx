@@ -29,7 +29,7 @@ import Transaction, {
 } from "./pages/Transaction";
 import Welcome from "./pages/Welcome";
 
-const router = createBrowserRouter([
+export const routes = [
   {
     path: "",
     element: <DefaultLayout />,
@@ -116,6 +116,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+const router = createBrowserRouter(routes, {
+  basename: import.meta.env.BASE_URL,
+});
 
 export default router;
