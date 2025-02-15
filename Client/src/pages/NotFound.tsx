@@ -6,7 +6,7 @@ const NotFound = () => {
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full rounded-[15px] p-10 flex flex-col gap-8 justify-center items-center">
+      <div className="bg-white max-w-[400px] w-full rounded-[15px] p-10 flex flex-col gap-8 justify-center items-center">
         <div className="flex flex-col items-center">
           <h1 className="text-bg_black font-semibold text-[4rem]">oops!</h1>
           <p className="text-center text-base text-gray mb-8">
