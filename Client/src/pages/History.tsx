@@ -49,7 +49,7 @@ function History() {
   };
   const [filters, setFilters] = useState<FilterState>({});
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [dataType],
     queryFn: async () => {
       switch (dataType) {
