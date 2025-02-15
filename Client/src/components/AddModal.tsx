@@ -9,7 +9,6 @@ import { createTransaction } from "../utils/api";
 import { createBudget } from "../utils/api";
 import { createGoal } from "../utils/api";
 import { createCategory } from "../utils/api";
-import { useNavigate } from "react-router-dom";
 import ColorSelect from "./ColorSelect";
 import DatePicker from "./DatePicker";
 
@@ -24,7 +23,6 @@ type AddModalProps = {
 const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedType, setSelectedType] = useState<string>("");
@@ -380,6 +378,7 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
           </button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          {error && <h3 className="text-center text-red">{error}</h3>}
           {renderForm()}
           <button
             disabled={isLoading}

@@ -8,7 +8,6 @@ import {
   redirect,
   NavLink,
 } from "react-router-dom";
-import { useState } from "react";
 import { login } from "../utils/api";
 
 type FieldValues = {
@@ -34,8 +33,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 function Login() {
   const emailId = useId();
   const passwordId = useId();
-
-  const [email, setEmail] = useState("");
 
   const {
     register,
