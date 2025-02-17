@@ -63,7 +63,7 @@ const NotificationMenu = () => {
       {user?.notifications_enabled ? (
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="group bg-white hover:bg-bg_black p-2 rounded-full relative"
+          className="group bg-white hover:bg-bg_black p-2 rounded-full relative hover:scale-105 transition-all duration-200 ease-out"
         >
           <svg
             fill="none"
@@ -91,7 +91,10 @@ const NotificationMenu = () => {
             </g>
           </svg>
           {hasUnread && (
-            <div className="absolute top-2 right-2.5 w-2 h-2 bg-red rounded-full" />
+            <div
+              data-testid="unread-indicator"
+              className="absolute top-2 right-2.5 w-2 h-2 bg-red rounded-full"
+            />
           )}
         </button>
       ) : (
@@ -125,7 +128,7 @@ const NotificationMenu = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-80 bg-white rounded-[15px] shadow-lg z-50">
           <div className="p-4">
-            <h3 className="text-base font-medium mb-2">Notifications</h3>
+            <h3 className="text-base font-medium mb-4">Notifications</h3>
             <div className="flex flex-col gap-2">
               {notifications.length > 0 ? (
                 notifications.map((notification) => (
@@ -141,7 +144,7 @@ const NotificationMenu = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-center text-gray py-2">
+                <p className="text-center text-gray py-4">
                   No new notifications
                 </p>
               )}

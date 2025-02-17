@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 const BackArrow = () => {
   const navigate = useNavigate();
   return (
-    <div onClick={() => navigate(-1)}>
+    <div className="pointer" onClick={() => navigate(-1)}>
       <svg
         fill="none"
         stroke="black"
         strokeWidth="1"
         height="35"
-        viewBox="0 0 24 24"
         width="35"
+        viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path

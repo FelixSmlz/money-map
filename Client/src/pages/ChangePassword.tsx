@@ -7,6 +7,7 @@ import DesktopNav from "../components/DesktopNav";
 import { useState } from "react";
 import { useLoaderData } from "react-router";
 import { loader } from "./Dashboard";
+import BackArrow from "../components/BackArrow";
 
 type PasswordFormInputs = {
   oldPassword: string;
@@ -56,26 +57,8 @@ const ChangePassword = () => {
 
   return (
     <>
-      <div className="flex absolute justify-between py-10 px-5 items-center w-full text-bg_black">
-        <button
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="hidden lg:block mr-4"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
+      <div className="flex justify-between py-10 px-5 max-w-[1024px] mx-auto items-center w-full text-bg_black">
+        <BackArrow />
       </div>
       <div className="flex items-center max-w-[500px] mx-auto justify-center h-dvh px-5 py-10 position-relative">
         <Background />

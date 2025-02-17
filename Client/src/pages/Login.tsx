@@ -49,7 +49,7 @@ function Login() {
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full max-w-[450px] rounded-[15px] shadow-md p-10">
+      <div className="bg-white w-full max-w-[450px] rounded-[15px] shadow-md lg:p-14 p-10">
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}

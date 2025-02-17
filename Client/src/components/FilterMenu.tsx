@@ -281,8 +281,8 @@ const FilterMenu = () => {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-          <div className="bg-white rounded-2xl shadow-xl w-80 max-h-[90vh] overflow-y-auto">
-            <div className="p-6 pb-0">
+          <div className="bg-white rounded-2xl shadow-xl w-80 lg:w-[500px] max-h-[90vh] overflow-y-auto">
+            <div className="p-6 lg:p-10 lg:pb-0 pb-0">
               <div className="flex justify-between items-center">
                 <h2 className="text-lg text-bg_black font-medium">Filter</h2>
                 <button
@@ -294,7 +294,7 @@ const FilterMenu = () => {
               </div>
             </div>
 
-            <div className="p-6">
+            <div className="p-6 lg:p-10">
               {renderFilters()}
 
               <div className="mt-8 flex gap-3">

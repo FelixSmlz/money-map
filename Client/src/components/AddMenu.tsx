@@ -33,10 +33,10 @@ function AddMenu() {
   return (
     <div
       ref={menuRef}
-      className="fixed bottom-[6rem] lg:bottom-[3rem] lg:right-[3rem] right-0  mr-5 z-10"
+      className="fixed bottom-[6rem] lg:bottom-[3rem] lg:right-[3rem] right-0 mr-5 z-10"
     >
       {isOpen && (
-        <div className="absolute bottom-[5rem] lg:h-fit right-12 bg-white rounded-[15px] shadow-lg p-2 min-w-[200px]">
+        <div className="absolute bottom-[5rem] lg:h-fit right-4 bg-white rounded-[15px] shadow-lg p-2 min-w-[200px]">
           {menuItems.map((item) => (
             <button
               key={item.path}
@@ -60,9 +60,14 @@ function AddMenu() {
       />
 
       <button
-        className="bg-bg_black shadow-card p-4 flex justify-center items-center rounded-full text-white group hover:bg-white"
+        className="add-button bg-bg_black shadow-card p-4 flex justify-center items-center rounded-full text-white group hover:bg-white hover:scale-105 relative transition-all duration-200 ease-out"
         onClick={() => setIsOpen(!isOpen)}
       >
+        <div className="absolute right-full -translate-x-2 top-1/2 -translate-y-1/2 pointer-events-none">
+          <span className="bg-white px-3 py-1.5 rounded-lg shadow-md text-bg_black text-sm whitespace-nowrap opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 ease-out">
+            Add new item
+          </span>
+        </div>
         <svg
           fill="none"
           height="28"

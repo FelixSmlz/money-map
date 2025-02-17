@@ -54,7 +54,7 @@ const Register = () => {
   return (
     <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
       <Background />
-      <div className="bg-white w-full max-w-[500px] 2xl:max-w-[700px] 2xl:p-[100px] rounded-[15px] shadow-md p-10">
+      <div className="bg-white w-full max-w-[450px] rounded-[15px] shadow-md lg:p-14 p-10">
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}
@@ -122,6 +122,10 @@ const Register = () => {
                 maxLength: {
                   value: 250,
                   message: "Password is too long (max. 250 characters)",
+                },
+                pattern: {
+                  value: /^(?=.*\d)/,
+                  message: "Password must contain at least one number",
                 },
               })}
               errorMsg={errors.password?.message}

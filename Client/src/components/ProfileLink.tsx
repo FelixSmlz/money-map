@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import ArrowIcon from "../assets/icons/arrow-right.svg";
 
 function ProfileBtn() {
   return (
@@ -32,7 +33,8 @@ function ProfileBtn() {
           />
         </svg>
       </div>
-      <p className="text-bg_black text-base h-fit mr-auto">Profile</p>
+      <p className="text-bg_black text-base h-fit mr-auto">My Profile</p>
+      <img className="w-4" src={ArrowIcon} alt="" />
     </NavLink>
   );
 }

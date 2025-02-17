@@ -108,6 +108,10 @@ const CategoryDropdown = ({
             <div className="max-h-[200px] overflow-y-auto">
               {isLoading ? (
                 <div className="p-4 text-center">Loading...</div>
+              ) : categories.length === 0 ? (
+                <div className="p-4 text-center">
+                  No categories yet, please add a category first!
+                </div>
               ) : (
                 <>
                   {categories.map((category) => (

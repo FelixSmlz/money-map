@@ -11,7 +11,7 @@ const SearchBar = ({ searchFilter, setSearchFilter }: Props) => {
     <div className="relative w-full">
       <input
         autoComplete="off"
-        className="w-full focus:outline-none p-2 shadow-sm rounded-[15px]"
+        className="w-full focus:outline-none py-2 px-4 shadow-sm rounded-[15px]"
         type="search"
         id={searchId}
         name="search"
@@ -21,7 +21,7 @@ const SearchBar = ({ searchFilter, setSearchFilter }: Props) => {
       />
       {searchFilter === "" && (
         <svg
-          className="absolute top-2 right-2"
+          className="absolute top-2 right-4"
           width="24"
           height="24"
           viewBox="0 0 24 24"

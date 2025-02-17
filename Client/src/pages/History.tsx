@@ -70,7 +70,7 @@ function History() {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="px-5 py-10 position-relative">
+    <div className="px-5 max-w-[1024px] py-10 mx-auto position-relative">
       <Background />
       <header className="flex items-center justify-between">
         <div className="text-bg_black flex items-center gap-2 bg-transparent text-lg font-medium">
@@ -113,8 +113,8 @@ function History() {
       {/* Navigation - Show only on mobile */}
       <div className="lg:hidden">
         <Nav />
-        <AddMenu />
       </div>
+      <AddMenu />
     </div>
   );
 }

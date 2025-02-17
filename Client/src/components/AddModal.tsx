@@ -123,9 +123,10 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
               }}
               errorMsg={errors.category_id?.message as string}
             />
-            <div className="flex items-center gap-4">
+            <div className="flex items-center w-full gap-4">
               <Input
                 type="text"
+                className="flex-1"
                 id="name"
                 placeholder="name"
                 handler={register("name", { required: "Name is required" })}
@@ -133,6 +134,7 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
               />
               <Input
                 type="number"
+                className="flex-1"
                 id="amount"
                 placeholder="amount"
                 handler={register("amount", {
@@ -372,7 +374,7 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
 
   return (
     <div className="fixed w-dvw inset-0 bg-black/50 z-50">
-      <div className="absolute lg:top-1/2 bottom-0 lg:left-1/2 lg:translate-x-[-50%] h-fit lg:translate-y-[-50%] lg:max-w-[600px] left-0 right-0 bg-white lg:rounded-b-[15px] rounded-t-[15px] p-6">
+      <div className="absolute lg:top-1/2 bottom-0 lg:left-1/2 lg:translate-x-[-50%] h-fit lg:translate-y-[-50%] lg:max-w-[600px] left-0 right-0 bg-white lg:rounded-b-[15px] rounded-t-[15px] lg:p-10 p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg font-medium">New {type}</h2>
           <button onClick={onClose}>

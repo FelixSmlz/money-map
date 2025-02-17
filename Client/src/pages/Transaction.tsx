@@ -84,7 +84,7 @@ const Transaction = () => {
   };
 
   return (
-    <div className="px-5  py-10 position-relative">
+    <div className="px-5 max-w-[1024px] mx-auto py-10 position-relative">
       <Background />
       <header className="flex justify-between items-center mb-8 text-bg_black">
         <BackArrow />

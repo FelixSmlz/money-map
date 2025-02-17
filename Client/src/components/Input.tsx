@@ -23,7 +23,7 @@ const Input = ({
   const hasValue = value || handler !== undefined;
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex w-full flex-col gap-1.5">
       <div className="relative">
         <input
           type={type}
@@ -32,9 +32,9 @@ const Input = ({
           autoComplete="off"
           value={value}
           {...handler}
-          className={`${className} peer w-full focus:outline-bg_black p-3 border border-my_gray ${
+          className={`peer w-full focus:outline-bg_black p-3 border border-my_gray ${
             errorMsg ? "border-red" : ""
-          } rounded-[15px]`}
+          } rounded-[15px] ${className}`}
         />
         <label
           className={`absolute left-4 text-my_gray transform pointer-events-none rounded-[15px] transition-all duration-150 ${

@@ -43,10 +43,10 @@ function Profile() {
   };
 
   return (
-    <div className="px-5 py-10 position-relative">
+    <div className="px-5 max-w-[1024px] mx-auto py-10 position-relative">
       <Background />
       <header className="flex justify-between items-center mb-8 text-bg_black">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-10">
           <BackArrow />
           <h1 className="text-lg text-bg_black font-semibold">My Profile</h1>
         </div>

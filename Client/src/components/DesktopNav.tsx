@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
 import dashboardIcon from "../assets/icons/dashboard.svg";
+import dashboardIconHover from "../assets/icons/dashboard_hover.svg";
 import historyIcon from "../assets/icons/history.svg";
-import profileIcon from "../assets/icons/profile.svg";
+import historyIconHover from "../assets/icons/history_hover.svg";
 import settingsIcon from "../assets/icons/settings.svg";
+import settingsIconHover from "../assets/icons/settings_hover.svg";
+import profileIcon from "../assets/icons/profile.svg";
 import Avatar from "./Avatar";
 
 type DesktopNavType = {
@@ -18,9 +21,34 @@ const DesktopNav = ({
   isOpen,
   onClose,
 }: DesktopNavType) => {
+  const navLinks = [
+    {
+      to: "/dashboard",
+      icon: dashboardIcon,
+      iconHover: dashboardIconHover,
+      label: "Dashboard",
+    },
+    {
+      to: "/history",
+      icon: historyIcon,
+      iconHover: historyIconHover,
+      label: "History",
+    },
+    {
+      to: "/profile",
+      icon: profileIcon,
+      label: "Profile",
+    },
+    {
+      to: "/settings",
+      icon: settingsIcon,
+      iconHover: settingsIconHover,
+      label: "Settings",
+    },
+  ];
   return (
     <div
-      className={`fixed left-0 top-0 h-full bg-white w-64 shadow-lg transform transition-transform duration-300 ${
+      className={`fixed left-0 bg-white top-0 h-full w-64 shadow-lg transform transition-transform duration-300 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -43,7 +71,7 @@ const DesktopNav = ({
           />
         </svg>
       </button>
-      <div className="p-12 flex flex-col gap-10">
+      <div className="p-12 bg-white/100 flex flex-col gap-10">
         <div className="flex items-center space-x-4">
           <Avatar
             color={user.profile_color}
@@ -55,7 +83,7 @@ const DesktopNav = ({
           </a>
         </div>
         <nav className="flex flex-col items-start gap-6">
-          <NavLink className={"flex gap-4 items-center"} to="/dashboard">
+          {/* <NavLink className={"flex gap-4 items-center"} to="/dashboard">
             <img src={dashboardIcon} alt="Dashboard" />
             <span>Dashboard</span>
           </NavLink>
@@ -63,14 +91,31 @@ const DesktopNav = ({
             <img src={historyIcon} alt="History" />
             <span>History</span>
           </NavLink>
-          <NavLink className={"flex gap-4 items-center"} to="/settings">
-            <img src={settingsIcon} alt="Settings" />
-            <span>Settings</span>
-          </NavLink>
           <NavLink className={"flex gap-4 items-center"} to="/profile">
             <img src={profileIcon} alt="Profile" />
             <span>Profile</span>
           </NavLink>
+          <NavLink className={"flex gap-4 items-center"} to="/settings">
+            <img src={settingsIcon} alt="Settings" />
+            <span>Settings</span>
+          </NavLink> */}
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              className="flex gap-4 items-center"
+              to={link.to}
+            >
+              {({ isActive }) => (
+                <>
+                  <img
+                    src={isActive ? link.iconHover : link.icon}
+                    alt={link.label}
+                  />
+                  <span>{link.label}</span>
+                </>
+              )}
+            </NavLink>
+          ))}
         </nav>
       </div>
     </div>

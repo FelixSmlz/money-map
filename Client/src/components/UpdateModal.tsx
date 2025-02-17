@@ -491,7 +491,7 @@ const UpdateModal = ({ isOpen, onClose, type, data }: UpdateModalProps) => {
 
   return (
     <div className="fixed w-dvw inset-0 bg-black/50 z-50">
-      <div className="absolute bottom-0 lg:top-1/2 lg:left-1/2 lg:translate-x-[-50%] h-fit lg:translate-y-[-50%] lg:max-w-[600px ] left-0 right-0 bg-white lg:rounded-b-[15px] rounded-t-[15px] p-6">
+      <div className="absolute bottom-0 lg:top-1/2 lg:left-1/2 lg:translate-x-[-50%] h-fit lg:translate-y-[-50%] lg:max-w-[600px ] left-0 right-0 bg-white lg:rounded-b-[15px] rounded-t-[15px] lg:p-10 p-6">
         <div className="flex justify-between items-center mb-6">
           {type === "user" ? (
             <h2 className="text-lg font-medium">Edit Profile</h2>

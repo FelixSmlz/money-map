@@ -63,7 +63,7 @@ function Settings() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="px-5 py-10 position-relative">
+    <div className="px-5 py-10 max-w-[1024px] mx-auto position-relative">
       <Background />
       <header className="flex justify-between items-center mb-8 text-bg_black">
         <div className="flex items-center space-x-4">
@@ -150,9 +150,7 @@ function Settings() {
           userFirstName={user?.name.split(" ")[0]}
         />
       </div>
-      <div className="lg:hidden">
-        <AddMenu />
-      </div>
+      <AddMenu />
     </div>
   );
 }

@@ -1,0 +1,60 @@
+.driver-popover.custom-class {
+  background-color: white;
+  color: #1a1b1c;
+  border-radius: 15px;
+  max-width: 350px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.driver-popover.custom-class .driver-popover-title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-block: 0.75rem;
+}
+
+.driver-popover.custom-class .driver-popover-description {
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.driver-popover.custom-class .driver-popover-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.driver-popover.custom-class .driver-popover-progress-text {
+  color: #6b7280;
+}
+
+.driver-popover.custom-class .driver-popover-close-btn {
+  color: #6b7280;
+  border-radius: 999999px;
+  border: none;
+  top: 6px;
+  right: 6px;
+  cursor: pointer;
+}
+
+.driver-popover.custom-class .driver-popover-prev-btn {
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  color: #1a1b1c;
+  border: 1px solid #1a1b1c;
+}
+
+.driver-popover.custom-class .driver-popover-next-btn {
+  background-color: #1a1b1c;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  color: white;
+  border: 1px solid #1a1b1c;
+}
+.driver-popover.custom-class .driver-popover-prev-btn:hover {
+  background-color: #f3f4f6;
+}
+.driver-popover.custom-class .driver-popover-next-btn:hover {
+  background-color: #3e3e3e;
+}
