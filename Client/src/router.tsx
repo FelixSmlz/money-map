@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DefaultLayout, {
   loader as defaultLoader,
+  action as defaultAction,
 } from "./layouts/DefaultLayout";
 import GuestLayout, { loader as guestLoader } from "./layouts/GuestLayout";
 import Budget, {
@@ -35,6 +36,7 @@ export const routes = [
     element: <DefaultLayout />,
     errorElement: <NotFound />,
     loader: defaultLoader,
+    action: defaultAction,
     hydrateFallbackElement: <Loading />,
     children: [
       {

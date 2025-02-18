@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
+import "../assets/css/scrollbar.css";
 
 type DropdownProps = {
   id: string;
@@ -80,7 +81,7 @@ const Dropdown = ({
 
         {isOpen && (
           <div className="absolute top-full left-0 mt-2 w-full bg-white rounded-[15px] shadow-lg p-2 z-10">
-            <div className="max-h-[200px] overflow-y-auto">
+            <div className="max-h-[200px] overflow-y-scroll dropdown-scrollbar">
               {options.map((option) => (
                 <div
                   key={option.value}

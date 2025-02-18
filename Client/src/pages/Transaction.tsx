@@ -84,52 +84,77 @@ const Transaction = () => {
   };
 
   return (
-    <div className="px-5 max-w-[1024px] mx-auto py-10 position-relative">
+    <div className="min-h-dvh bg-bg_gray/5 px-5 max-w-[1024px] mx-auto py-10 relative">
       <Background />
-      <header className="flex justify-between items-center mb-8 text-bg_black">
+      <header className="flex justify-between items-center mb-12 text-bg_black">
         <BackArrow />
         <NotificationDropdown />
       </header>
-      <div className="flex flex-col items-center gap-6">
-        {currentTransaction.type === "income" ? (
-          <p className="text-bg_black text-xl text-center">
-            {currentTransaction.amount}€
-          </p>
-        ) : (
-          <p className="text-bg_black text-xl text-center">
-            - {currentTransaction.amount}€
-          </p>
-        )}
+      <div className="flex flex-col items-center gap-8 animate-fadeIn">
+        <div className="bg-white/95 backdrop-blur-sm p-8 rounded-[25px] w-full max-w-[250px] shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5">
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-my_gray text-sm uppercase tracking-wider">
+              {currentTransaction.type === "income" ? "Income" : "Expense"}
+            </p>
+            <p
+              className={`text-4xl font-semibold ${
+                currentTransaction.type === "income"
+                  ? "text-turkois"
+                  : "text-red"
+              }`}
+            >
+              {currentTransaction.type === "income" ? "+" : "-"}
+              {currentTransaction.amount}€
+            </p>
+          </div>
+        </div>
         <div className="flex gap-3 items-center">
           <CategoryIcon category_id={currentTransaction.category_id} />
           <TransactionTypeSwitch
             onChange={handleTypeSwitch}
             initialType={currentTransaction.type}
           />
-
           <DeleteBtn onDelete={handleDelete} />
         </div>
-        <UpdateModal
-          isOpen={isUpdateModalOpen}
-          onClose={() => setIsUpdateModalOpen(false)}
-          type="transaction"
-          data={currentTransaction}
-        />
-        <div className="flex flex-col gap-6 max-w-[500px] mx-auto bg-white w-full p-4 rounded-[15px] shadow-sm">
-          <DataRow label="name" value={transaction.name} />
-          <DataRow label="amount" value={transaction.amount} />
-          <DataRow label="date" value={transaction.date} />
-          <DataRow label="category" value={category.name} />
+
+        <div className="flex flex-col w-full max-w-[500px] bg-white/95 backdrop-blur-sm p-8 rounded-[25px] shadow-xl">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-[1.75rem] font-semibold text-bg_black">
+              Details
+            </h2>
+            <button
+              onClick={() => setIsUpdateModalOpen(true)}
+              className="bg-bg_black hover:bg-white text-white hover:text-bg_black p-3 rounded-full shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-bg_black group"
+            >
+              <img
+                src={editIcon}
+                alt="edit"
+                className="w-5 h-5 transition-all duration-300 group-hover:scale-110 group-hover:invert"
+              />
+            </button>
+          </div>
+
+          <div className="space-y-6">
+            <DataRow label="name" value={transaction.name} />
+            <DataRow label="amount" value={`${transaction.amount}€`} />
+            <DataRow
+              label="date"
+              value={new Date(transaction.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            />
+            <DataRow label="category" value={category.name} />
+          </div>
         </div>
-        <button
-          role="button"
-          name="edit"
-          onClick={() => setIsUpdateModalOpen(true)}
-          className="bg-bg_black text-white p-4 shadow-md rounded-full"
-        >
-          <img src={editIcon} alt="edit" />
-        </button>
       </div>
+      <UpdateModal
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        type="transaction"
+        data={currentTransaction}
+      />
     </div>
   );
 };

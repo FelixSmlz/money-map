@@ -17,6 +17,8 @@ import {
   getTransactions,
 } from "../utils/api";
 import { loader } from "./Dashboard";
+import { useEffect } from "react";
+import { driver } from "driver.js";
 
 export type DataType = "transactions" | "categories" | "budgets" | "goals";
 
@@ -67,20 +69,83 @@ function History() {
     },
   });
 
+  useEffect(() => {
+    const tutorialStep = localStorage.getItem(`tutorialStep_${user?.id}`);
+
+    if (tutorialStep === "history") {
+      const driverObj = driver({
+        showProgress: true,
+        animate: true,
+        showButtons: ["close", "next", "previous"],
+        allowClose: false,
+        steps: [
+          {
+            element: ".type-menu",
+            popover: {
+              title: "View Different Items 📋",
+              description:
+                "Switch between transactions, budgets, goals, and categories to view your data.",
+              popoverClass: "custom-class",
+              side: "bottom",
+            },
+          },
+          {
+            element: ".table",
+            popover: {
+              title: "Filter Your Data 🔍",
+              description:
+                "Use filters to find specific items or analyze your spending patterns.",
+              popoverClass: "custom-class",
+              side: "left",
+            },
+          },
+          {
+            popover: {
+              title: "Congratulations, you did it! 🎉",
+              description:
+                "I hope I could help you get started. Enjoy saving money with MoneyMap!",
+              popoverClass: "custom-class",
+              side: "top",
+            },
+          },
+        ],
+        onDestroyStarted: () => {
+          localStorage.setItem(`hasSeenTutorial_${user?.id}`, "true");
+          localStorage.removeItem(`tutorialStep_${user?.id}`);
+          driverObj.destroy();
+        },
+        onDestroyed: () => {
+          localStorage.setItem(`hasSeenTutorial_${user?.id}`, "true");
+          localStorage.removeItem(`tutorialStep_${user?.id}`);
+          window.location.href = "/dashboard";
+        },
+      });
+
+      const timer = setTimeout(() => {
+        driverObj.drive();
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [user]);
+
   if (isLoading) return <Loading />;
 
   return (
-    <div className="px-5 max-w-[1024px] py-10 mx-auto position-relative">
+    <div className="min-h-dvh bg-bg_gray/5 px-5 max-w-[1024px] mx-auto py-10 relative">
       <Background />
-      <header className="flex items-center justify-between">
-        <div className="text-bg_black flex items-center gap-2 bg-transparent text-lg font-medium">
+      <header className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="hidden lg:block mr-4"
+            className="hidden lg:flex items-center justify-center w-10 h-10 
+              bg-white/95 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg 
+              transition-all duration-300 hover:scale-105 hover:bg-bg_black 
+              group border border-transparent hover:border-turkois/10"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-5 w-5 text-bg_black group-hover:text-white"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -93,15 +158,19 @@ function History() {
               />
             </svg>
           </button>
-          <DataTypeMenu value={dataType} onChange={handleDataTypeChange} />
+
+          <div className="type-menu">
+            <DataTypeMenu value={dataType} onChange={handleDataTypeChange} />
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <NotificationDropdown />
-        </div>
+
+        <NotificationDropdown />
       </header>
-      <DataContext.Provider value={{ data, dataType, filters, setFilters }}>
-        <FilterableHistoryTable />
-      </DataContext.Provider>
+      <div className="table w-full">
+        <DataContext.Provider value={{ data, dataType, filters, setFilters }}>
+          <FilterableHistoryTable />
+        </DataContext.Provider>
+      </div>
       <div className="hidden lg:block">
         <DesktopNav
           onClose={() => setIsSidebarOpen(false)}
@@ -110,7 +179,6 @@ function History() {
           userFirstName={userFirstName}
         />
       </div>
-      {/* Navigation - Show only on mobile */}
       <div className="lg:hidden">
         <Nav />
       </div>

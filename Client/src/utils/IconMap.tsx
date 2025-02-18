@@ -15,6 +15,7 @@ import transport from "../assets/icons/category_icons/transport.svg";
 import trophy from "../assets/icons/category_icons/trophy.svg";
 import shoppingBag from "../assets/icons/category_icons/shopping-bag.svg";
 import notAssigned from "../assets/icons/category_icons/not-assigned.svg";
+import others from "../assets/icons/category_icons/others.svg";
 
 type IconMapType = {
   [key: string]: string;
@@ -39,6 +40,7 @@ export const selectableIcons = {
   transport: transport,
   trophy: trophy,
   shopping_bag: shoppingBag,
+  others: others,
 } as IconMapType;
 
 export const IconMap = {

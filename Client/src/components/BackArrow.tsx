@@ -2,16 +2,22 @@ import { useNavigate } from "react-router-dom";
 
 const BackArrow = () => {
   const navigate = useNavigate();
+
   return (
-    <div className="pointer" onClick={() => navigate(-1)}>
+    <button
+      onClick={() => navigate(-1)}
+      className="group p-2 -ml-2 rounded-full hover:bg-bg_black/5 transition-all duration-200 ease-out"
+      aria-label="Go back"
+    >
       <svg
         fill="none"
-        stroke="black"
-        strokeWidth="1"
-        height="35"
-        width="35"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        height="24"
+        width="24"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
+        className="text-bg_black transition-transform duration-200 ease-out group-hover:-translate-x-0.5"
       >
         <path
           clipRule="evenodd"
@@ -19,7 +25,7 @@ const BackArrow = () => {
           fillRule="evenodd"
         />
       </svg>
-    </div>
+    </button>
   );
 };
 

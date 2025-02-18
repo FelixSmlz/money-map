@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import Background from "../components/Background";
 import Input from "../components/Input";
 import { register } from "../utils/api";
+import PasswordRequirements from "../components/PasswordRequirements";
 
 type FieldValues = {
   name: string;
@@ -32,7 +33,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 const Register = () => {
   const nameId = useId();
   const emailId = useId();
-  const phoneId = useId();
   const passwordId = useId();
   const confirmPasswordId = useId();
 
@@ -43,6 +43,8 @@ const Register = () => {
     formState: { errors },
   } = useForm<FieldValues>();
 
+  const password = watch("password");
+
   const fetcher = useFetcher<typeof action>();
 
   const onValid: SubmitHandler<FieldValues> = (_, event) => {
@@ -52,23 +54,33 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
+    <div className="flex items-center justify-center min-h-dvh px-5 py-10 relative">
       <Background />
-      <div className="bg-white w-full max-w-[450px] rounded-[15px] shadow-md lg:p-14 p-10">
+      <div className="bg-white/95 backdrop-blur-sm w-full max-w-[450px] rounded-[25px] shadow-xl lg:p-14 p-10 animate-fadeIn">
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}
-          className="flex flex-col gap-6"
+          className="flex flex-col gap-8"
         >
-          <h1 className="text-bg_black font-medium text-lg">Register</h1>
+          <div className="space-y-2 text-center">
+            <h1 className="text-bg_black font-semibold text-2xl">
+              Create an Account
+            </h1>
+            <p className="text-gray-600 text-sm">
+              Join MoneyMap to start managing your finances
+            </p>
+          </div>
+
           {fetcher.data && typeof fetcher.data === "string" ? (
-            <h3 className="text-center text-red">{fetcher.data}</h3>
+            <div className="bg-red/10 border border-red/20 rounded-xl p-4 text-center">
+              <span className="text-red text-sm">{fetcher.data}</span>
+            </div>
           ) : null}
           <div className="flex flex-col gap-4">
             <Input
               type="text"
               id={nameId}
-              placeholder="name"
+              placeholder="name*"
               handler={register("name", {
                 required: { value: true, message: "Name is required" },
                 maxLength: {
@@ -81,7 +93,7 @@ const Register = () => {
             <Input
               type="email"
               id={emailId}
-              placeholder="email"
+              placeholder="email*"
               handler={register("email", {
                 required: { value: true, message: "Email is required" },
                 maxLength: {
@@ -95,24 +107,11 @@ const Register = () => {
               })}
               errorMsg={errors.email?.message}
             />
-            <Input
-              type="tel"
-              id={phoneId}
-              placeholder="phone number"
-              handler={register("phone", {
-                required: { value: true, message: "Phone number is required" },
-                maxLength: {
-                  value: 250,
-                  message: "Phone number is too long (max. 250 characters)",
-                },
-              })}
-              errorMsg={errors.phone?.message}
-            />
 
             <Input
               type="password"
               id={passwordId}
-              placeholder="password"
+              placeholder="password*"
               handler={register("password", {
                 required: { value: true, message: "Password is required" },
                 minLength: {
@@ -130,33 +129,44 @@ const Register = () => {
               })}
               errorMsg={errors.password?.message}
             />
-            <Input
-              type="password"
-              id={confirmPasswordId}
-              handler={register("confirmPassword", {
-                required: {
-                  value: true,
-                  message: "Confirm your password",
-                },
-                validate: (value) =>
-                  value === watch("password") || "Passwords do not match",
-              })}
-              errorMsg={errors.confirmPassword?.message}
-              placeholder="confirm password"
-            />
+            <div className="space-y-2">
+              <Input
+                type="password"
+                id={confirmPasswordId}
+                handler={register("confirmPassword", {
+                  required: {
+                    value: true,
+                    message: "Confirm your password",
+                  },
+                  validate: (value) =>
+                    value === watch("password") || "Passwords do not match",
+                })}
+                errorMsg={errors.confirmPassword?.message}
+                placeholder="confirm password*"
+              />
+              {password && <PasswordRequirements password={password} />}
+            </div>
           </div>
-          <button
-            type="submit"
-            className="bg-bg_black hover:bg-white border border-bg_black hover:text-bg_black text-white rounded-[15px] p-3 w-full"
-          >
-            Register
-          </button>
-          <NavLink
-            className="text-bg_black font-medium hover:text-gray text-sm underline"
-            to="../login"
-          >
-            Already registered?
-          </NavLink>
+          <div className="space-y-4">
+            <button
+              type="submit"
+              className="bg-bg_black hover:bg-white w-full border-2 border-bg_black text-white hover:text-bg_black rounded-[15px] p-4 font-medium transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              Create Account
+            </button>
+
+            <div className="text-center">
+              <NavLink
+                className="text-gray-600 hover:text-bg_black text-sm transition-colors inline-flex items-center gap-1"
+                to="../login"
+              >
+                Already have an account?{" "}
+                <span className="font-medium text-bg_black hover:text-turkois">
+                  Login →
+                </span>
+              </NavLink>
+            </div>
+          </div>
         </form>
       </div>
     </div>

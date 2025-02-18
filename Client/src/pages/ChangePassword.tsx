@@ -1,13 +1,10 @@
-import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import { ActionFunctionArgs, useFetcher } from "react-router";
-import Background from "../components/Background";
-import { changePassword } from "../utils/api";
-import DesktopNav from "../components/DesktopNav";
-import { useState } from "react";
-import { useLoaderData } from "react-router";
-import { loader } from "./Dashboard";
 import BackArrow from "../components/BackArrow";
+import Background from "../components/Background";
+import Input from "../components/Input";
+import PasswordRequirements from "../components/PasswordRequirements";
+import { changePassword } from "../utils/api";
 
 type PasswordFormInputs = {
   oldPassword: string;
@@ -39,9 +36,11 @@ const ChangePassword = () => {
     watch,
     formState: { errors },
   } = useForm<PasswordFormInputs>();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const loaderData = useLoaderData<typeof loader>();
-  const user = loaderData?.user;
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const loaderData = useLoaderData<typeof loader>();
+  // const user = loaderData?.user;
+
+  const newPassword = watch("newPassword");
 
   const onSubmit = (data: PasswordFormInputs) => {
     const formData = new FormData();
@@ -56,32 +55,38 @@ const ChangePassword = () => {
   };
 
   return (
-    <>
-      <div className="flex justify-between py-10 px-5 max-w-[1024px] mx-auto items-center w-full text-bg_black">
+    <div className="min-h-dvh bg-bg_gray/5 flex flex-col">
+      <div className="h-[72px] flex justify-between px-5 max-w-[1024px] mx-auto items-center w-full text-bg_black">
         <BackArrow />
       </div>
-      <div className="flex items-center max-w-[500px] mx-auto justify-center h-dvh px-5 py-10 position-relative">
+
+      <div className="flex-1 flex items-center max-w-[500px] mx-auto justify-center px-5 relative -mt-[36px]">
         <Background />
-        <div className="bg-white w-full rounded-[15px] shadow-md p-10">
+        <div className="bg-white/95 backdrop-blur-sm w-full rounded-[25px] shadow-xl p-10 animate-fadeIn">
           <form
             onSubmit={handleSubmit(onSubmit)}
             noValidate
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-8"
           >
-            <h1 className="text-bg_black text-center font-medium text-lg">
-              Change your Password
-            </h1>
+            <div className="space-y-2 text-center">
+              <h1 className="text-2xl font-semibold text-bg_black">
+                Change Password
+              </h1>
+              <p className="text-gray-600 text-sm">
+                Please enter your current password and choose a new one
+              </p>
+            </div>
 
             {fetcher.data && (
-              <h3
-                className={`text-center ${
+              <div
+                className={`p-4 rounded-xl text-center text-sm font-medium ${
                   fetcher.data === "Password changed successfully"
-                    ? "text-green"
-                    : "text-red"
-                }`}
+                    ? "bg-green/10 text-green border border-green/20"
+                    : "bg-red/10 text-red border border-red/20"
+                } animate-fadeIn`}
               >
                 {fetcher.data}
-              </h3>
+              </div>
             )}
 
             <div className="flex flex-col gap-4">
@@ -97,6 +102,8 @@ const ChangePassword = () => {
                 })}
                 errorMsg={errors.oldPassword?.message}
               />
+
+              <div className="border-t border-gray-100 my-2" />
 
               <Input
                 type="password"
@@ -115,38 +122,36 @@ const ChangePassword = () => {
                 errorMsg={errors.newPassword?.message}
               />
 
-              <Input
-                type="password"
-                id="confirmPassword"
-                placeholder="Confirm New Password"
-                handler={register("confirmPassword", {
-                  required: {
-                    value: true,
-                    message: "Please confirm your password",
-                  },
-                  validate: (value) =>
-                    value === watch("newPassword") || "Passwords do not match",
-                })}
-                errorMsg={errors.confirmPassword?.message}
-              />
+              <div className="space-y-2">
+                <Input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm New Password"
+                  handler={register("confirmPassword", {
+                    required: {
+                      value: true,
+                      message: "Please confirm your password",
+                    },
+                    validate: (value) =>
+                      value === watch("newPassword") ||
+                      "Passwords do not match",
+                  })}
+                  errorMsg={errors.confirmPassword?.message}
+                />
+                <PasswordRequirements password={newPassword || ""} />
+              </div>
             </div>
 
             <button
               type="submit"
-              className="bg-bg_black hover:bg-white border border-bg_black hover:text-bg_black text-white rounded-[15px] p-3 w-full transition-colors"
+              className="bg-bg_black hover:bg-white w-full border-2 border-bg_black text-white hover:text-bg_black rounded-[15px] p-4 font-medium transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
             >
-              Change Password
+              Update Password
             </button>
           </form>
         </div>
-        <DesktopNav
-          onClose={() => setIsSidebarOpen(false)}
-          isOpen={isSidebarOpen}
-          user={user?.name}
-          userFirstName={user?.name.split(" ")[0]}
-        />
       </div>
-    </>
+    </div>
   );
 };
 

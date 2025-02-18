@@ -1,0 +1,23 @@
+/* Custom scrollbar styles */
+.dropdown-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(229, 231, 235, 0.5) transparent;
+}
+
+.dropdown-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.dropdown-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdown-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(229, 231, 235, 0.5);
+  border-radius: 2px;
+}
+
+.dropdown-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(229, 231, 235, 0.8);
+}

@@ -13,6 +13,7 @@ import DatePicker from "./DatePicker";
 import Dropdown from "./Dropdown";
 import IconSelect from "./IconSelect";
 import Input from "./Input";
+import { useNavigate } from "react-router-dom";
 
 type FormType = "transaction" | "budget" | "goal" | "category";
 
@@ -25,6 +26,7 @@ type AddModalProps = {
 const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedType, setSelectedType] = useState<string>("");
@@ -93,7 +95,20 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
       if (response?.status === 201) {
         reset();
         onClose();
-        window.location.reload();
+        switch (type) {
+          case "transaction":
+            navigate(`/transactions/${response.data["transaction:"].id}`);
+            break;
+          case "budget":
+            navigate(`/budgets/${response.data["budget:"].id}`);
+            break;
+          case "goal":
+            navigate(`/goals/${response.data["goal:"].id}`);
+            break;
+          case "category":
+            navigate(`/categories/${response.data["category:"].id}`);
+            break;
+        }
       } else {
         console.error("Response Error: ", response);
         setError("Failed to create " + type);
@@ -142,6 +157,10 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
                   min: {
                     value: 0,
                     message: "Amount must be positive",
+                  },
+                  max: {
+                    value: 999999.99,
+                    message: "Amount exceeds maximum value",
                   },
                 })}
                 errorMsg={errors.amount?.message as string}
@@ -253,6 +272,10 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
                     value: 0,
                     message: "Limit must be positive",
                   },
+                  max: {
+                    value: 999999.99,
+                    message: "Amount exceeds maximum value",
+                  },
                 })}
                 errorMsg={errors.limit?.message as string}
               />
@@ -307,6 +330,10 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
                     value: 0,
                     message: "Target amount must be positive",
                   },
+                  max: {
+                    value: 999999.99,
+                    message: "Amount exceeds maximum value",
+                  },
                 })}
                 errorMsg={errors.target_amount?.message as string}
               />
@@ -336,7 +363,11 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
               id="color_code"
               handler={register("color_code", {
                 required: "Color is required",
-                value: selectedColor, // Add this
+                value: selectedColor,
+                pattern: {
+                  value: /^#[0-9A-Fa-f]{6}$/,
+                  message: "Invalid color code",
+                },
               })}
               onChange={(color) => {
                 setSelectedColor(color);
@@ -349,7 +380,7 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
               value={selectedIcon}
               handler={register("icon_name", {
                 required: "Icon is required",
-                value: selectedIcon, // Add this
+                value: selectedIcon,
               })}
               onChange={(icon) => {
                 setSelectedIcon(icon);
@@ -373,23 +404,64 @@ const AddModal = ({ isOpen, onClose, type }: AddModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed w-dvw inset-0 bg-black/50 z-50">
-      <div className="absolute lg:top-1/2 bottom-0 lg:left-1/2 lg:translate-x-[-50%] h-fit lg:translate-y-[-50%] lg:max-w-[600px] left-0 right-0 bg-white lg:rounded-b-[15px] rounded-t-[15px] lg:p-10 p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-medium">New {type}</h2>
-          <button onClick={onClose}>
-            <img src={crossIcon} alt="Exit add-menu" />
+    <div
+      className="fixed inset-0 bg-bg_black/40 backdrop-blur-[2px] z-50 
+      flex items-end lg:items-center justify-center"
+      onClick={onClose}
+    >
+      <div
+        className="w-full lg:w-[600px] bg-white/95 backdrop-blur-sm 
+        rounded-t-[25px] lg:rounded-[25px] p-8 lg:p-10 shadow-2xl 
+        animate-slideUp lg:animate-scaleIn"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Enhanced Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex items-center gap-3">
+            <h2 className="text-[1.75rem] font-semibold text-bg_black">
+              New {type}
+            </h2>
+            {isLoading && (
+              <div
+                className="w-5 h-5 border-2 border-turkois/20 border-t-turkois 
+              rounded-full animate-spin"
+              />
+            )}
+          </div>
+          <button
+            onClick={onClose}
+            className="group p-2 hover:bg-gray-100 rounded-full transition-all 
+            duration-300 hover:rotate-90"
+          >
+            <img src={crossIcon} alt="Close" className="w-5 h-5" />
           </button>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          {error && <h3 className="text-center text-red">{error}</h3>}
+
+        {/* Enhanced Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+          {error && (
+            <div
+              className="bg-red/10 text-red px-4 py-3 rounded-[15px] 
+            text-sm font-medium animate-shake"
+            >
+              {error}
+            </div>
+          )}
+
           {renderForm()}
+
+          {/* Enhanced Submit Button */}
           <button
             disabled={isLoading}
             type="submit"
-            className="w-full mt-4 bg-bg_black text-white p-3 rounded-[15px]"
+            className="w-full mt-4 bg-bg_black hover:bg-white text-white 
+            hover:text-bg_black py-3.5 px-6 rounded-[15px] font-medium 
+            transition-all duration-300 transform hover:scale-[1.02] 
+            shadow-sm hover:shadow-md border-2 border-transparent 
+            hover:border-bg_black disabled:opacity-50 
+            disabled:cursor-not-allowed"
           >
-            Add {type}
+            {isLoading ? "Creating..." : `Add ${type}`}
           </button>
         </form>
       </div>

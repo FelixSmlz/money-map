@@ -3,6 +3,7 @@ import { TransactionType } from "../pages/Transaction";
 import { getTransactions } from "../utils/api";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import noDataIcon from "../assets/icons/no-data.svg";
 
 function Recent() {
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
@@ -27,45 +28,66 @@ function Recent() {
   }, []);
 
   return (
-    <div className="py-8 flex flex-col justify-between items-center gap-7">
-      <div className="flex justify-between w-full">
-        <h3 className="text-base font-semibold text-black">
-          Recent Transaction
-        </h3>
+    <div className=" flex flex-col justify-between items-center gap-7">
+      <div className="flex justify-between w-full items-center">
+        <div className="flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-bg_black">
+            Recent Transactions
+          </h3>
+        </div>
         <Link
           to="/history"
-          className="flex font-semibold text-sm hover:text-gray text-black gap-0.5 justify-center items-center"
+          className="flex items-center gap-1.5 text-sm font-medium text-bg_black hover:text-turkois transition-colors duration-200"
         >
           See All
           <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            stroke="currentColor"
+            className="transition-transform duration-200 transform group-hover:translate-x-1"
           >
             <path
-              d="M3.71252 8.29995L6.42919 5.58328C6.75002 5.26245 6.75002 4.73745 6.42919 4.41662L3.71252 1.69995"
-              stroke="#1A1B1C"
-              strokeWidth="2"
-              strokeMiterlimit="10"
               strokeLinecap="round"
               strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 5l7 7-7 7"
             />
           </svg>
         </Link>
       </div>
-      <div className="flex flex-col gap-2 w-full">
+
+      <div className="flex flex-col gap-3 w-full">
         {isLoading ? (
-          <p>Loading...</p>
+          <div className="flex items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-turkois"></div>
+          </div>
         ) : transactions.length === 0 ? (
-          <div className="flex items-center justify-center h-[140px]">
-            <p className="text-center text-bg_black">No recent transactions</p>
+          <div className="flex flex-col items-center justify-center gap-4 py-12">
+            <img
+              src={noDataIcon}
+              alt="No Data"
+              className="w-16 h-16 opacity-50"
+            />
+            <div className="text-center">
+              <p className="text-my_gray font-medium">No recent transactions</p>
+              <p className="text-my_gray/60 text-sm mt-1">
+                Add your first transaction to see it here
+              </p>
+            </div>
           </div>
         ) : (
-          transactions.map((transaction) => (
-            <TransactionRow key={transaction.id} {...transaction} />
-          ))
+          <div className="space-y-3">
+            {transactions.map((transaction) => (
+              <div
+                key={transaction.id}
+                className="transition-all duration-200 hover:translate-x-1"
+              >
+                <TransactionRow {...transaction} />
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>

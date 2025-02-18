@@ -1,6 +1,8 @@
 import React from "react";
 
 interface GoalIndicatorProps {
+  className?: string;
+  textClassName?: string;
   currentAmount: number;
   targetAmount: number;
   size?: number;
@@ -11,6 +13,8 @@ interface GoalIndicatorProps {
 const GoalIndicator: React.FC<GoalIndicatorProps> = ({
   currentAmount,
   targetAmount,
+  className,
+  textClassName,
   size = 60,
   strokeWidth = 9,
   withText = true,
@@ -21,7 +25,10 @@ const GoalIndicator: React.FC<GoalIndicatorProps> = ({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div style={{ position: "relative", width: size, height: size }}>
+    <div
+      className={`${className}`}
+      style={{ position: "relative", width: size, height: size }}
+    >
       <svg width={size} height={size}>
         <circle
           cx={size / 2}
@@ -49,17 +56,10 @@ const GoalIndicator: React.FC<GoalIndicatorProps> = ({
       </svg>
       {withText && (
         <div
+          className={`absolute inset-0 flex items-center justify-center text-bg_black 
+      transition-colors ${textClassName}`}
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: size,
-            height: size,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
             fontSize: size * 0.23,
-            color: "#333",
           }}
         >
           {Math.round(progress)}%

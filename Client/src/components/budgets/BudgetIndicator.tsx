@@ -1,6 +1,8 @@
 import React from "react";
 
 interface ProgressBarProps {
+  className?: string;
+  textClassName?: string;
   currentAmount: number;
   limit: number;
   width?: string;
@@ -11,6 +13,8 @@ interface ProgressBarProps {
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   currentAmount,
+  className,
+  textClassName,
   limit,
   width = "100%",
   maxWidth = "80px",
@@ -22,11 +26,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
   return (
     <div
-      className="flex flex-col gap-2"
+      className={`flex flex-col gap-2 ${className}`}
       style={{ width: width, maxWidth: maxWidth }}
     >
       {withText && (
-        <div className="text-base text-center text-bg_black">
+        <div
+          className={`text-base text-center  transition-colors ${textClassName}`}
+        >
           {currentAmount} / {limit}€
         </div>
       )}

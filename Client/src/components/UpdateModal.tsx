@@ -222,7 +222,17 @@ const UpdateModal = ({ isOpen, onClose, type, data }: UpdateModalProps) => {
                 id="amount"
                 value={watchedValues.amount?.toString()}
                 placeholder="amount"
-                handler={register("amount", { required: "Amount is required" })}
+                handler={register("amount", {
+                  required: "Amount is required",
+                  min: {
+                    value: 0,
+                    message: "Amount must be positive",
+                  },
+                  max: {
+                    value: 999999.99,
+                    message: "Amount exceeds maximum value",
+                  },
+                })}
                 errorMsg={errors.amount?.message as string}
               />
             </div>
@@ -330,7 +340,17 @@ const UpdateModal = ({ isOpen, onClose, type, data }: UpdateModalProps) => {
                 id="limit"
                 value={watchedValues.limit?.toString()}
                 placeholder="limit"
-                handler={register("limit", { required: "Limit is required" })}
+                handler={register("limit", {
+                  required: "Limit is required",
+                  min: {
+                    value: 0,
+                    message: "Limit must be positive",
+                  },
+                  max: {
+                    value: 999999.99,
+                    message: "Amount exceeds maximum value",
+                  },
+                })}
                 errorMsg={errors.limit?.message as string}
               />
             </div>
@@ -382,6 +402,14 @@ const UpdateModal = ({ isOpen, onClose, type, data }: UpdateModalProps) => {
                 placeholder="target amount"
                 handler={register("target_amount", {
                   required: "Target amount is required",
+                  min: {
+                    value: 0,
+                    message: "Target amount must be positive",
+                  },
+                  max: {
+                    value: 999999.99,
+                    message: "Amount exceeds maximum value",
+                  },
                 })}
                 errorMsg={errors.target_amount?.message as string}
               />
@@ -462,14 +490,6 @@ const UpdateModal = ({ isOpen, onClose, type, data }: UpdateModalProps) => {
               handler={register("email", { required: "Email is required" })}
               errorMsg={errors.email?.message as string}
             />
-            <Input
-              type="tel"
-              id="phone"
-              value={watchedValues.phone}
-              placeholder="phone"
-              handler={register("phone")}
-              errorMsg={errors.phone?.message as string}
-            />
             <ColorSelect
               value={selectedColor}
               placeholder="Profile Color"
@@ -490,27 +510,68 @@ const UpdateModal = ({ isOpen, onClose, type, data }: UpdateModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed w-dvw inset-0 bg-black/50 z-50">
-      <div className="absolute bottom-0 lg:top-1/2 lg:left-1/2 lg:translate-x-[-50%] h-fit lg:translate-y-[-50%] lg:max-w-[600px ] left-0 right-0 bg-white lg:rounded-b-[15px] rounded-t-[15px] lg:p-10 p-6">
-        <div className="flex justify-between items-center mb-6">
-          {type === "user" ? (
-            <h2 className="text-lg font-medium">Edit Profile</h2>
-          ) : (
-            <h2 className="text-lg font-medium">Edit {type}</h2>
-          )}
-          <button onClick={onClose}>
-            <img src={crossIcon} alt="Exit add-menu" />
+    <div
+      className="fixed inset-0 bg-bg_black/40 backdrop-blur-[2px] z-50 
+        flex items-end lg:items-center justify-center"
+      onClick={onClose}
+    >
+      <div
+        className="w-full lg:w-[600px] bg-white/95 backdrop-blur-sm 
+          rounded-t-[25px] lg:rounded-[25px] p-8 lg:p-10 shadow-2xl 
+          animate-slideUp lg:animate-scaleIn"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Enhanced Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex items-center gap-3">
+            <h2 className="text-[1.75rem] font-semibold text-bg_black">
+              {type === "user" ? "Edit Profile" : `Edit ${type}`}
+            </h2>
+            {isLoading && (
+              <div
+                className="w-5 h-5 border-2 border-turkois/20 border-t-turkois 
+                rounded-full animate-spin"
+              />
+            )}
+          </div>
+          <button
+            onClick={onClose}
+            className="group p-2 hover:bg-gray-100 rounded-full transition-all 
+              duration-300 hover:rotate-90"
+          >
+            <img src={crossIcon} alt="Close" className="w-5 h-5" />
           </button>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          {error && <h3 className="text-center text-red">{error}</h3>}
+
+        {/* Enhanced Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+          {error && (
+            <div
+              className="bg-red/10 text-red px-4 py-3 rounded-[15px] 
+              text-sm font-medium animate-shake"
+            >
+              {error}
+            </div>
+          )}
+
           {renderForm()}
+
+          {/* Enhanced Submit Button */}
           <button
             disabled={isLoading}
             type="submit"
-            className="w-full mt-4 bg-bg_black text-white p-3 rounded-[15px]"
+            className="w-full mt-4 bg-bg_black hover:bg-white text-white 
+              hover:text-bg_black py-3.5 px-6 rounded-[15px] font-medium 
+              transition-all duration-300 transform hover:scale-[1.02] 
+              shadow-sm hover:shadow-md border-2 border-transparent 
+              hover:border-bg_black disabled:opacity-50 
+              disabled:cursor-not-allowed"
           >
-            {type === "user" ? "Update Profile" : "Update " + type}
+            {isLoading
+              ? "Updating..."
+              : type === "user"
+              ? "Update Profile"
+              : `Update ${type}`}
           </button>
         </form>
       </div>

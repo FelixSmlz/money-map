@@ -7,17 +7,34 @@ const ChangePasswordBtn = () => {
     <>
       <Link
         to="/change-password"
-        className="flex items-center justify-between mx-4 py-4 cursor-pointer border-b border-light_gray"
+        className="w-full flex items-center gap-4 p-4 hover:bg-bg_gray/5 
+        transition-colors  group border-b "
       >
-        <div className="flex items-center gap-4">
-          <div className="bg-[#F2F2F2] w-fit p-2 rounded-[15px]">
-            <img src={ChangePasswordIcon} alt="Change Password" />
-          </div>
-          <p className="text-bg_black text-base h-fit mr-auto">
-            Change Password
-          </p>
+        <div
+          className="bg-[#F2F2F2] p-3 rounded-[15px] transition-colors 
+        group-hover:bg-bg_black"
+        >
+          <img
+            src={ChangePasswordIcon}
+            alt="Change Password"
+            className="w-6 h-6 transition-transform group-hover:scale-110 
+            group-hover:invert"
+          />
         </div>
-        <img className="w-4" src={ArrowIcon} alt="" />
+
+        <div className="flex flex-col">
+          <p className="text-bg_black font-medium">Change Password</p>
+          <span className="text-my_gray text-sm">
+            Update your account password
+          </span>
+        </div>
+
+        <img
+          src={ArrowIcon}
+          alt=""
+          className="w-4 h-4 ml-auto transition-transform 
+          group-hover:translate-x-1"
+        />
       </Link>
     </>
   );

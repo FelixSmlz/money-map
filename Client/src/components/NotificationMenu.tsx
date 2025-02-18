@@ -63,7 +63,8 @@ const NotificationMenu = () => {
       {user?.notifications_enabled ? (
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="group bg-white hover:bg-bg_black p-2 rounded-full relative hover:scale-105 transition-all duration-200 ease-out"
+          className="group bg-white hover:bg-bg_black w-[42px] h-[42px] rounded-full relative hover:scale-105 transition-all duration-200 ease-out shadow-sm hover:shadow-md flex items-center justify-center"
+          aria-label="Notifications"
         >
           <svg
             fill="none"
@@ -71,9 +72,10 @@ const NotificationMenu = () => {
             viewBox="0 0 24 24"
             width="24"
             xmlns="http://www.w3.org/2000/svg"
+            className="transform transition-transform group-hover:rotate-12"
           >
             <g
-              className="group-hover:stroke-white"
+              className="group-hover:stroke-white transition-colors"
               stroke="#1A1B1C"
               strokeMiterlimit="10"
               strokeWidth="1.75"
@@ -93,18 +95,22 @@ const NotificationMenu = () => {
           {hasUnread && (
             <div
               data-testid="unread-indicator"
-              className="absolute top-2 right-2.5 w-2 h-2 bg-red rounded-full"
+              className="absolute top-2 right-2.5 w-2 h-2 bg-red rounded-full animate-pulse"
             />
           )}
         </button>
       ) : (
-        <button className="group bg-white/60 p-2 rounded-full relative">
+        <button
+          className="group bg-white/60 hover:bg-white/70 w-[42px] h-[42px] rounded-full relative transition-all duration-200 ease-out flex items-center justify-center"
+          aria-label="Notifications disabled"
+        >
           <svg
             fill="none"
             height="24"
             viewBox="0 0 24 24"
             width="24"
             xmlns="http://www.w3.org/2000/svg"
+            className="opacity-50"
           >
             <g stroke="#666666" strokeMiterlimit="10" strokeWidth="1.75">
               <path
@@ -119,34 +125,75 @@ const NotificationMenu = () => {
               <path d="m15.02 19.0601c0 1.65-1.35 3-3 3-.82 0-1.58-.34-2.11998-.88-.54-.54-.88-1.3-.88-2.12" />
             </g>
           </svg>
-          <div className="absolute top-0 left-0 w-[42px] h-[42px] flex items-center justify-center">
-            <div className="w-full h-[2px] bg-[#1A1B1C] rotate-45" />
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-[30px] h-[2px] bg-[#666666] rotate-45 rounded-full" />
           </div>
         </button>
       )}
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-[15px] shadow-lg z-50">
-          <div className="p-4">
-            <h3 className="text-base font-medium mb-4">Notifications</h3>
-            <div className="flex flex-col gap-2">
+        <div className="absolute right-0 mt-3 lg:w-96 w-80 bg-white  rounded-[20px] shadow-xl z-50 transform opacity-0 animate-fadeIn">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-bg_black">
+                Notifications
+              </h3>
+              {notifications.length > 0 && (
+                <span className="text-xs font-medium text-turkois bg-turkois/10 px-2.5 py-1 rounded-full">
+                  {notifications.length} new
+                </span>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto custom-scrollbar">
               {notifications.length > 0 ? (
                 notifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className="p-3 hover:bg-gray/5 rounded-[15px] cursor-pointer"
                     onClick={() => handleMarkAsRead(notification.id)}
+                    className="group p-4 hover:bg-gray-50 rounded-2xl cursor-pointer transition-all duration-200 ease-out border border-transparent hover:border-gray-100"
                   >
-                    <p className="font-medium">{notification.data.title}</p>
-                    <p className="text-sm text-gray">
-                      {notification.data.message}
-                    </p>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <p className="font-medium text-bg_black group-hover:text-turkois transition-colors mb-1">
+                          {notification.data.title}
+                        </p>
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          {notification.data.message}
+                        </p>
+                      </div>
+                      <button
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-red"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleMarkAsRead(notification.id);
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 ))
               ) : (
-                <p className="text-center text-gray py-4">
-                  No new notifications
-                </p>
+                <div className="py-8 text-center">
+                  <p className="text-gray-500 font-medium mb-2">
+                    No new notifications
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    We'll notify you when something arrives
+                  </p>
+                </div>
               )}
             </div>
           </div>

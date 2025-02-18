@@ -249,7 +249,7 @@ export const getBudget = async (id: string) => {
     const response = await axios.get(`${API_URL}/budgets/${id}`, {
       withCredentials: true,
     });
-    return response.data;
+    return response.data.budget;
   } catch (error: any) {
     return error.response;
   }

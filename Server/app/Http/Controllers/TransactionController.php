@@ -53,8 +53,11 @@ class TransactionController extends Controller
         $transaction->user_id = $user->id;
         $transaction->save();
 
-        $this->updateGoalsCurrentAmount($transaction);
-        $this->updateBudgetsCurrentAmount($transaction);
+        if ($transaction->type === 'income') {
+            $this->updateGoalsCurrentAmount($transaction, $transaction->amount);
+        } elseif ($transaction->type === 'expense') {
+            $this->updateBudgetsCurrentAmount($transaction, $transaction->amount);
+        }
 
         return response()->json(['message' => 'Transaction created successfully', 'transaction:' => $transaction], Response::HTTP_CREATED);
     }
@@ -82,7 +85,6 @@ class TransactionController extends Controller
 
     public function update(Request $request, string $id): JsonResponse
     {
-
         $transaction = Transaction::find($id);
 
         if (!$transaction) {
@@ -103,14 +105,74 @@ class TransactionController extends Controller
         ]);
 
 
+        $oldAmount = $transaction->amount;
+        $oldType = $transaction->type;
+        $oldCategoryId = $transaction->category_id;
+
 
         $transaction->fill($validatedData);
+
+
+        if (
+            $oldAmount !== $transaction->amount ||
+            $oldType !== $transaction->type ||
+            $oldCategoryId !== $transaction->category_id
+        ) {
+
+
+            if ($oldType === 'expense') {
+                $this->updateBudgetsCurrentAmount($transaction, -$oldAmount, $oldCategoryId);
+            } elseif ($oldType === 'income') {
+                $this->updateGoalsCurrentAmount($transaction, -$oldAmount, $oldCategoryId);
+            }
+
+
+            if ($transaction->type === 'expense') {
+                $this->updateBudgetsCurrentAmount($transaction, $transaction->amount, $transaction->category_id);
+            } elseif ($transaction->type === 'income') {
+                $this->updateGoalsCurrentAmount($transaction, $transaction->amount, $transaction->category_id);
+            }
+        }
+
         $transaction->save();
 
-        $this->updateGoalsCurrentAmount($transaction);
-        $this->updateBudgetsCurrentAmount($transaction);
+        return response()->json([
+            'message' => 'Transaction updated successfully',
+            'transaction:' => $transaction
+        ], Response::HTTP_OK);
+    }
 
-        return response()->json(['message' => 'Transaction updated successfully', 'transaction:' => $transaction], Response::HTTP_OK);
+    private function updateBudgetsCurrentAmount(Transaction $transaction, float $amount, ?int $categoryId = null): void
+    {
+        $budgets = Budget::where('category_id', $categoryId ?? $transaction->category_id)
+            ->where('user_id', $transaction->user_id)
+            ->where(function ($query) use ($transaction) {
+                $query->where(function ($q) use ($transaction) {
+                    $q->where('start_date', '<=', $transaction->date)
+                        ->whereRaw('DATE_ADD(start_date, INTERVAL days_left DAY) >= ?', [$transaction->date]);
+                });
+            })
+            ->get();
+
+        foreach ($budgets as $budget) {
+            $budget->current_amount = max(0, $budget->current_amount + $amount);
+            $budget->save();
+            $budget->checkAndNotify();
+        }
+    }
+
+    private function updateGoalsCurrentAmount(Transaction $transaction, float $amount, ?int $categoryId = null): void
+    {
+        $goals = Goal::where('category_id', $categoryId ?? $transaction->category_id)
+            ->where('user_id', $transaction->user_id)
+            ->where('start_date', '<=', $transaction->date)
+            ->get();
+
+        foreach ($goals as $goal) {
+            $goal->current_amount = max(0, $goal->current_amount + $amount);
+            $goal->save();
+            $goal->checkAndNotify();
+        }
     }
 
     // Delete transaction
@@ -128,61 +190,18 @@ class TransactionController extends Controller
             return response()->json(['message' => $authResponse->message()], Response::HTTP_FORBIDDEN);
         }
 
+
+        if ($transaction->type === 'expense') {
+
+            $this->updateBudgetsCurrentAmount($transaction, -$transaction->amount);
+        } elseif ($transaction->type === 'income') {
+
+            $this->updateGoalsCurrentAmount($transaction, -$transaction->amount);
+        }
+
         $transaction->delete();
 
-        if ($transaction->type === 'expense') {
-            $budget = Budget::where('category_id', $transaction->category_id)->where('user_id', $transaction->user_id)->first();
-            if ($budget) {
-            }
-        } elseif ($transaction->type === 'income') {
-            $goal = Goal::where('category_id', $transaction->category_id)->where('user_id', $transaction->user_id)->first();
-            if ($goal) {
-                $goal->updateSavedAmount();
-            }
-        } else {
-            return response()->json(['message' => 'Transaction type not found'], Response::HTTP_NOT_FOUND);
-        }
-
         return response()->json(['message' => 'Transaction deleted successfully'], Response::HTTP_OK);
-    }
-
-    private function updateGoalsCurrentAmount(Transaction $transaction): void
-    {
-        if ($transaction->type === 'income') {
-            $goals = Goal::where('category_id', $transaction->category_id)
-                ->where('user_id', $transaction->user_id)
-                ->where('start_date', '<=', $transaction->date)
-                ->where('end_date', '>=', $transaction->date)
-                ->get();
-
-            foreach ($goals as $goal) {
-                $goal->current_amount += $transaction->amount;
-                $goal->save();
-                $goal->checkAndNotify();
-            }
-        }
-    }
-
-    private function updateBudgetsCurrentAmount(Transaction $transaction): void
-    {
-
-        if ($transaction->type === 'expense') {
-            $budgets = Budget::where('category_id', $transaction->category_id)
-                ->where('user_id', $transaction->user_id)
-                ->where(function ($query) use ($transaction) {
-                    $query->where(function ($q) use ($transaction) {
-                        $q->where('start_date', '<=', $transaction->date)
-                            ->whereRaw('DATE_ADD(start_date, INTERVAL days_left DAY) >= ?', [$transaction->date]);
-                    });
-                })
-                ->get();
-
-            foreach ($budgets as $budget) {
-                $budget->current_amount += $transaction->amount;
-                $budget->save();
-                $budget->checkAndNotify();
-            }
-        }
     }
 
 

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import AddMenu from "../components/AddMenu";
 import Nav from "../components/Nav";
 import { isLoggedIn, getMonthlySpending } from "../utils/api";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Avatar from "../components/Avatar";
 import NotificationMenu from "../components/NotificationMenu";
 import { driver } from "driver.js";
@@ -24,6 +24,7 @@ export const loader = async () => {
 function Dashboard() {
   const data = useLoaderData<typeof loader>();
   const user = data?.user;
+  const navigate = useNavigate();
   const monthlySpent = data?.monthly_spent;
   const userFirstName = user?.name.split(" ")[0];
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -69,13 +70,13 @@ function Dashboard() {
             },
           },
           {
-            element: ".recent",
+            element: ".notifications",
             popover: {
-              title: "Recent Transactions 🕑",
+              title: "Notifications 🔔",
               description:
-                'View a short list of the last transactions you added. By clicking on "See All" you can view all your transactions.',
+                "Stay informed with notifications about your budgets, goals, and important updates.",
               popoverClass: "custom-class",
-              side: "left",
+              side: "right",
             },
           },
           {
@@ -89,21 +90,28 @@ function Dashboard() {
             },
           },
           {
+            element: ".recent",
             popover: {
-              title: "Congratulations, you did it! 🎉",
+              title: "Want to see more? 🔍",
               description:
-                "I hope, I could help you get started. Enjoy saving money with MoneyMap!",
+                "Let's check out the history page where you can view all your transactions!",
               popoverClass: "custom-class",
-              side: "top",
+              side: "left",
+              onNextClick: () => {
+                localStorage.setItem(`tutorialStep_${user?.id}`, "history");
+                navigate("/history");
+              },
             },
           },
         ],
         onDestroyStarted: () => {
           localStorage.setItem(tutorialKey, "true");
+          localStorage.removeItem(`tutorialStep_${user?.id}`);
           driverObj.destroy();
         },
         onDestroyed: () => {
           localStorage.setItem(tutorialKey, "true");
+          localStorage.removeItem(`tutorialStep_${user?.id}`);
         },
       });
 
@@ -113,20 +121,23 @@ function Dashboard() {
 
       return () => clearTimeout(timer);
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
-    <div className="px-5 py-10 max-w-[1024px] mx-auto position-relative mb-10">
+    <div className="px-5 py-10 max-w-[1024px] mx-auto position-relative mb-10 overflow-clip">
       <Background />
-      <header className="flex justify-between items-center text-bg_black">
-        <div className="flex items-center space-x-4">
+      <header className="flex justify-between items-center text-bg_black mb-8">
+        <div className="flex items-center gap-4 transition-all hover:opacity-90">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="hidden lg:block mr-4"
+            className="hidden lg:flex items-center justify-center w-10 h-10 
+              bg-white/95 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg 
+              transition-all duration-300 hover:scale-105 hover:bg-bg_black 
+              group border border-transparent hover:border-turkois/10"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-5 w-5 text-bg_black group-hover:text-white"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -140,15 +151,26 @@ function Dashboard() {
             </svg>
           </button>
           <Avatar color={user?.profile_color} name={user?.name} size="md" />
-          <a href="/dashboard" className="text-lg text-bg_black font-semibold">
+          <a
+            href="/dashboard"
+            className="text-lg text-bg_black font-semibold hover:opacity-80 transition-opacity"
+          >
             Hi, {userFirstName}
           </a>
         </div>
-        <NotificationMenu />
+        <div className="notifications">
+          <NotificationMenu />
+        </div>
       </header>
-      <div className="lg:bg-white/75 dashboard lg:px-[3rem] lg:pb-[3rem] lg:mt-[50%] lg:-translate-y-[50%] lg:rounded-[15px] lg:shadow-md">
-        <div className="flex flex-col sm:max-w-[600px] lg:max-w-[1024px] lg:gap-[3rem] sm:mx-auto lg:flex-row">
-          <div className="flex flex-col sm:w-[600px] lg:gap-[3rem] sm:mx-auto lg:w-[1000px] lg:flex-row ">
+      <div
+        className="lg:bg-white/75 dashboard lg:px-8 lg:py-10 lg:rounded-[25px] 
+        lg:shadow-xl backdrop-blur-sm transition-all duration-300"
+      >
+        <div
+          className="flex flex-col sm:max-w-[600px] lg:max-w-[1024px] lg:gap-12 
+          sm:mx-auto lg:flex-row"
+        >
+          <div className="flex flex-col sm:w-[600px] sm:mx-auto lg:w-[1000px] lg:flex-row">
             {/* Left Column */}
             <div className="lg:w-1/2  flex flex-col gap-8">
               <div className="p-6 rounded-[15px]">

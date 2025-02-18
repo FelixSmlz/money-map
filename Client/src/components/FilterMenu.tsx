@@ -4,6 +4,7 @@ import { DataContext } from "../pages/History";
 import Dropdown from "./Dropdown";
 import IconSelect from "./IconSelect";
 import Input from "./Input";
+import { createPortal } from "react-dom";
 
 export type FilterState = {
   dateFrom?: string;
@@ -262,13 +263,17 @@ const FilterMenu = () => {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-white hover:bg-bg_black group p-2 rounded-full transition-colors"
+        className="bg-white/95 backdrop-blur-sm hover:bg-bg_black group w-11 h-11
+        rounded-full shadow-md hover:shadow-lg transition-all duration-300 
+        hover:scale-105 border border-transparent hover:border-turkois/10
+        flex items-center justify-center"
       >
         <svg
-          width="24"
-          height="24"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
-          className="stroke-bg_black group-hover:stroke-white"
+          className="stroke-bg_black group-hover:stroke-white transition-all duration-300 
+          "
         >
           <path
             d="M9.53333 17.3333H14.4667M4.6 9.33333H19.4H4.6Z"
@@ -279,42 +284,73 @@ const FilterMenu = () => {
         </svg>
       </button>
 
-      {isOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-          <div className="bg-white rounded-2xl shadow-xl w-80 lg:w-[500px] max-h-[90vh] overflow-y-auto">
-            <div className="p-6 lg:p-10 lg:pb-0 pb-0">
-              <div className="flex justify-between items-center">
-                <h2 className="text-lg text-bg_black font-medium">Filter</h2>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-full p-1 group hover:bg-white"
-                >
-                  <img src={crossIcon} alt="Exit filters" />
-                </button>
+      {isOpen &&
+        createPortal(
+          <div
+            className="fixed inset-0 bg-bg_black/40 backdrop-blur-[2px]  flex items-center 
+          justify-center z-50 px-5"
+            onClick={() => setIsOpen(false)}
+          >
+            <div
+              className="bg-white backdrop-blur-sm  rounded-[25px] shadow-xl 
+            w-[90%] max-w-[500px] max-h-[90vh] overflow-y-auto animate-scaleIn"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-8 lg:p-10 lg:pb-5 pb-5 border-gray-100">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-[1.75rem] font-semibold text-bg_black">
+                      Filters
+                    </h2>
+                    {Object.keys(tempFilters).length > 0 && (
+                      <span
+                        className="bg-turkois/10 text-turkois text-xs font-medium 
+                    px-2.5 py-1 rounded-full"
+                      >
+                        {Object.keys(tempFilters).length} active
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="group p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <img
+                      src={crossIcon}
+                      alt="Close"
+                      className="w-5 h-5 transition-transform group-hover:rotate-90"
+                    />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-8 lg:p-10 lg:pt-5">
+                <div className="space-y-6">{renderFilters()}</div>
+
+                <div className="flex gap-4 mt-8">
+                  <button
+                    onClick={handleReset}
+                    className="w-1/2 py-3.5 px-6 text-red border-2 border-red rounded-[15px] 
+                  font-medium hover:bg-red hover:text-white transition-all duration-300 
+                  transform hover:scale-[1.02] shadow-sm hover:shadow-md"
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={handleApply}
+                    className="w-1/2 py-3.5 px-6 bg-bg_black border-2 border-bg_black 
+                  text-white rounded-[15px] font-medium hover:bg-white 
+                  hover:text-bg_black transition-all duration-300 transform 
+                  hover:scale-[1.02] shadow-sm hover:shadow-md"
+                  >
+                    Apply Filters
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div className="p-6 lg:p-10">
-              {renderFilters()}
-
-              <div className="mt-8 flex gap-3">
-                <button
-                  onClick={handleReset}
-                  className="w-1/2 p-3 text-center text-red border border-red rounded-[15px] hover:bg-red hover:text-white"
-                >
-                  Reset
-                </button>
-                <button
-                  onClick={handleApply}
-                  className="w-1/2 p-3 text-center bg-bg_black border border-bg_black text-white rounded-[15px] hover:text-bg_black hover:bg-white"
-                >
-                  Apply
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </>
   );
 };

@@ -105,7 +105,7 @@ const CategoryDropdown = ({
 
         {isOpen && (
           <div className="absolute z-10 w-full mt-1 bg-white rounded-[15px] shadow-lg p-2">
-            <div className="max-h-[200px] overflow-y-auto">
+            <div className="max-h-[200px] overflow-y-scroll dropdown-scrollbar">
               {isLoading ? (
                 <div className="p-4 text-center">Loading...</div>
               ) : categories.length === 0 ? (

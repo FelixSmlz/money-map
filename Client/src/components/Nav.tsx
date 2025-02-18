@@ -8,21 +8,64 @@ import settingsIconHover from "../assets/icons/settings_hover.svg";
 
 function Nav() {
   const privateLinks = [
-    { to: "dashboard", icon: dashboardIcon, iconHover: dashboardIconHover },
-    { to: "history", icon: historyIcon, iconHover: historyIconHover },
-    { to: "settings", icon: settingsIcon, iconHover: settingsIconHover },
+    {
+      to: "dashboard",
+      icon: dashboardIcon,
+      iconHover: dashboardIconHover,
+      label: "Dashboard",
+    },
+    {
+      to: "history",
+      icon: historyIcon,
+      iconHover: historyIconHover,
+      label: "History",
+    },
+    {
+      to: "settings",
+      icon: settingsIcon,
+      iconHover: settingsIconHover,
+      label: "Settings",
+    },
   ];
+
   return (
-    <nav className="fixed bottom-0 lg:hidden left-0 py-7 shadow-[0_7px_20px_rgba(0,0,0,0.062)] px-[4rem] bg-white rounded-t-[30px] w-full">
-      <ul className="flex gap-[5rem] items-center justify-center">
+    <nav
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 lg:hidden 
+      bg-white/95 backdrop-blur-sm rounded-[20px] shadow-xl py-4 px-6 
+      border border-bg_gray/5 animate-slideUp"
+    >
+      <ul className="flex items-center gap-12">
         {privateLinks.map((link) => (
           <li key={link.to}>
-            <NavLink to={link.to}>
+            <NavLink
+              to={link.to}
+              className={({ isActive }) =>
+                `group flex flex-col items-center gap-1.5 relative py-1 px-2
+                ${
+                  isActive ? "text-turkois" : "text-my_gray hover:text-bg_black"
+                }`
+              }
+            >
               {({ isActive }) => (
-                <img
-                  src={isActive ? link.iconHover : link.icon}
-                  alt={link.to}
-                />
+                <>
+                  <div className="relative">
+                    <img
+                      src={isActive ? link.iconHover : link.icon}
+                      alt={link.label}
+                      className="w-6 h-6 transition-transform duration-300 
+                        group-hover:scale-110 group-hover:-translate-y-0.5"
+                    />
+                    {isActive && (
+                      <div
+                        className="absolute -bottom-2 left-1/2 -translate-x-1/2 
+                        w-1 h-1 bg-turkois rounded-full animate-pulse"
+                      />
+                    )}
+                  </div>
+                  <span className="text-xs font-medium transition-colors">
+                    {link.label}
+                  </span>
+                </>
               )}
             </NavLink>
           </li>

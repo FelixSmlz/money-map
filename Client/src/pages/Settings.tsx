@@ -18,6 +18,7 @@ import {
   logout,
   toggleNotifications,
 } from "../utils/api";
+import TutorialResetBtn from "../components/TutorialResetBtn";
 
 export const loader = async () => {
   const { user } = await isLoggedIn();
@@ -63,17 +64,20 @@ function Settings() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="px-5 py-10 max-w-[1024px] mx-auto position-relative">
+    <div className="min-h-dvh bg-bg_gray/5 px-5 py-10 max-w-[1024px] mx-auto relative">
       <Background />
       <header className="flex justify-between items-center mb-8 text-bg_black">
         <div className="flex items-center space-x-4">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="hidden lg:block mr-4"
+            className="hidden lg:flex items-center justify-center w-10 h-10 
+              bg-white/95 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg 
+              transition-all duration-300 hover:scale-105 hover:bg-bg_black 
+              group border border-transparent hover:border-turkois/10"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-5 w-5 text-bg_black group-hover:text-white"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -92,29 +96,28 @@ function Settings() {
         </div>
         <NotificationMenu />
       </header>
-      <div className="flex flex-col gap-5 items-center">
-        <div className="flex items-center gap-5 mb-6">
+      <div className="flex flex-col items-center mb-8 animate-fadeIn">
+        <div className="flex items-center gap-6 p-6 rounded-[20px] bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300">
           <Avatar color={user?.profile_color} name={user?.name} size="lg" />
-          <div className="flex flex-col gap-2">
-            <p className="text-lg">{user?.name}</p>
-            <small className="text-base text-gray font-light">
-              {user?.email}
-            </small>
+          <div className="flex flex-col gap-1">
+            <h2 className="text-lg font-medium text-bg_black">{user?.name}</h2>
+            <p className="text-my_gray text-sm">{user?.email}</p>
           </div>
         </div>
       </div>
-      <div className="flex mt-6 flex-col p-2 bg-white max-w-[500px] mx-auto rounded-[15px] shadow-md w-full">
-        <div className="flex items-center gap-4 mx-4 py-4 border-b border-light_gray">
-          <div className="bg-[#F2F2F2] w-fit p-2 rounded-[15px]">
+      <div className="flex flex-col p-4 bg-white/95 backdrop-blur-sm max-w-[500px] mx-auto rounded-[20px] shadow-xl w-full transition-all duration-300 animate-fadeIn">
+        <div className="flex items-center gap-4 p-4 hover:bg-bg_gray/5  border-b  transition-all duration-300 group cursor-pointer">
+          <div className="bg-[#F2F2F2] p-3 rounded-[15px] transition-all duration-300 group-hover:bg-bg_black shadow-sm group-hover:shadow-md">
             <svg
               fill="none"
               height="24"
               viewBox="0 0 24 24"
               width="24"
               xmlns="http://www.w3.org/2000/svg"
+              className="transition-transform duration-300 group-hover:scale-110"
             >
               <g
-                className="group-hover:stroke-white"
+                className="transition-colors duration-300 group-hover:stroke-white"
                 stroke="#1A1B1C"
                 strokeMiterlimit="10"
                 strokeWidth="1.75"
@@ -132,14 +135,21 @@ function Settings() {
               </g>
             </svg>
           </div>
-          <p className="text-bg_black text-base h-fit mr-auto">Notification</p>
-          <NotificationSwitch enabled={user?.notifications_enabled} />
+          <p className="text-bg_black font-medium group-hover:text-bg_black/80 transition-colors duration-300">
+            Notifications
+          </p>
+          <div className="ml-auto">
+            <NotificationSwitch enabled={user?.notifications_enabled} />
+          </div>
         </div>
-        <ProfileLink />
-        <ChangePasswordBtn />
-        <FeedbackBtn />
-        <DeleteProfileBtn />
-        <LogoutBtn />
+        <div className="space-y-1">
+          <ProfileLink />
+          <ChangePasswordBtn />
+          <TutorialResetBtn />
+          <FeedbackBtn />
+          <DeleteProfileBtn />
+          <LogoutBtn />
+        </div>
       </div>
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">

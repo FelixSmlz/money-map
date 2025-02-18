@@ -6,6 +6,7 @@ import { FilterState } from "./FilterMenu";
 import GoalRow from "./goals/GoalRow";
 import HistoryTableHeading from "./HistoryTableHeading";
 import TransactionRow from "./transactions/TransactionRow";
+import noDataIcon from "../assets/icons/no-data.svg";
 
 type Props = {
   searchFilter: string;
@@ -59,8 +60,9 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
     if (!data || !Array.isArray(data) || data.length === 0) {
       if (!errorSet) setErrorSet(true);
       return (
-        <div className="flex items-center justify-center h-96">
-          <p className="text-center text-gray py-8">No {dataType} yet</p>
+        <div className="flex items-center justify-center mt-[50%] -translate-y-50% bg-white/75 w-fit mx-auto py-2 px-4 gap-2 rounded-[15px]">
+          <img src={noDataIcon} alt="No Data yet" />
+          <p className="text-center text-gray-400">No {dataType} yet</p>
         </div>
       );
     }
@@ -83,9 +85,12 @@ const HistoryTable = ({ searchFilter }: Props): React.ReactElement => {
         filters.icon_name)
     ) {
       return (
-        <p className="text-center text-gray py-8">
-          No {dataType} match your filters
-        </p>
+        <div className="flex items-center justify-center mt-[50%] -translate-y-50% bg-white/75 w-fit mx-auto py-2 px-4 gap-2 rounded-[15px]">
+          <img src={noDataIcon} alt="No Data yet" />
+          <p className="text-center text-gray-400">
+            No {dataType} match your filters
+          </p>
+        </div>
       );
     }
 

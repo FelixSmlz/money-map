@@ -47,18 +47,29 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center h-dvh px-5 py-10 position-relative">
+    <div className="flex items-center justify-center min-h-dvh px-5 py-10 relative">
       <Background />
-      <div className="bg-white w-full max-w-[450px] rounded-[15px] shadow-md lg:p-14 p-10">
+      <div className="bg-white/95 backdrop-blur-sm w-full max-w-[450px] rounded-[25px] shadow-xl lg:p-14 p-10 animate-fadeIn">
         <form
           noValidate
           onSubmit={handleSubmit(onValid)}
-          className="flex flex-col gap-6"
+          className="flex flex-col gap-8"
         >
-          <h1 className="text-bg_black font-medium text-lg">Login</h1>
+          <div className="space-y-2 text-center">
+            <h1 className="text-bg_black font-semibold text-2xl">
+              Welcome Back
+            </h1>
+            <p className="text-gray-600 text-sm">
+              Sign in to continue managing your finances
+            </p>
+          </div>
+
           {fetcher.data && typeof fetcher.data === "string" ? (
-            <h3 className="text-center text-red">{fetcher.data}</h3>
+            <div className="bg-red/10 border border-red/20 rounded-xl p-4 text-center">
+              <span className="text-red text-sm">{fetcher.data}</span>
+            </div>
           ) : null}
+
           <div className="flex flex-col gap-4">
             <Input
               type="email"
@@ -87,18 +98,27 @@ function Login() {
               errorMsg={errors.password?.message}
             />
           </div>
-          <button
-            type="submit"
-            className="bg-bg_black hover:bg-white border border-bg_black hover:text-bg_black text-white rounded-[15px] p-3 w-full"
-          >
-            Login
-          </button>
-          <NavLink
-            className="text-bg_black font-medium hover:text-gray text-sm underline"
-            to="../register"
-          >
-            Not registered yet?
-          </NavLink>
+
+          <div className="space-y-4">
+            <button
+              type="submit"
+              className="bg-bg_black hover:bg-white w-full border-2 border-bg_black text-white hover:text-bg_black rounded-[15px] p-4 font-medium transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              Login
+            </button>
+
+            <div className="text-center">
+              <NavLink
+                className="text-gray-600 hover:text-bg_black text-sm transition-colors inline-flex items-center gap-1"
+                to="../register"
+              >
+                Don't have an account?{" "}
+                <span className="font-medium text-bg_black hover:text-turkois">
+                  Register →
+                </span>
+              </NavLink>
+            </div>
+          </div>
         </form>
       </div>
     </div>

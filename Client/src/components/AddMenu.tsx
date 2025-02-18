@@ -33,25 +33,36 @@ function AddMenu() {
   return (
     <div
       ref={menuRef}
-      className="fixed bottom-[6rem] lg:bottom-[3rem] lg:right-[3rem] right-0 mr-5 z-10"
+      className="fixed bottom-[6rem] lg:bottom-[3rem] lg:right-[3rem] right-0 mr-5 z-50"
     >
       {isOpen && (
-        <div className="absolute bottom-[5rem] lg:h-fit right-4 bg-white rounded-[15px] shadow-lg p-2 min-w-[200px]">
-          {menuItems.map((item) => (
-            <button
-              key={item.path}
-              className="flex items-center gap-3 p-3 hover:bg-my_gray/5 rounded-[15px] cursor-pointer w-full text-left"
-              onClick={() => {
-                setFormType(item.title.toLowerCase() as FormType);
-                setIsOpen(false);
-              }}
-            >
-              <img src={item.icon} alt={item.title} />
-              <span className="text-bg_black">{item.title}</span>
-            </button>
-          ))}
+        <div className="absolute bottom-[5rem] lg:h-fit right-4 bg-white rounded-[20px] shadow-xl p-3 min-w-[240px] transform opacity-0 animate-slideUpFade">
+          <div className="flex flex-col gap-1">
+            {menuItems.map((item) => (
+              <button
+                key={item.path}
+                className="flex items-center gap-3 p-4 hover:bg-gray-50 rounded-xl cursor-pointer w-full text-left transition-all duration-200 group"
+                onClick={() => {
+                  setFormType(item.title.toLowerCase() as FormType);
+                  setIsOpen(false);
+                }}
+              >
+                <div className="bg-gray-50 group-hover:bg-white p-2 rounded-xl transition-colors">
+                  <img
+                    src={item.icon}
+                    alt={item.title}
+                    className="w-5 h-5 group-hover:scale-110 transition-transform"
+                  />
+                </div>
+                <span className="text-bg_black font-medium group-hover:text-turkois transition-colors">
+                  {item.title}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
+
       <AddModal
         isOpen={!!formType}
         key={formType}
@@ -60,23 +71,19 @@ function AddMenu() {
       />
 
       <button
-        className="add-button bg-bg_black shadow-card p-4 flex justify-center items-center rounded-full text-white group hover:bg-white hover:scale-105 relative transition-all duration-200 ease-out"
+        className="add-button bg-bg_black shadow-xl p-4 flex justify-center items-center rounded-full text-white group hover:bg-white hover:scale-105 relative transition-all duration-300 ease-out hover:rotate-180"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="absolute right-full -translate-x-2 top-1/2 -translate-y-1/2 pointer-events-none">
-          <span className="bg-white px-3 py-1.5 rounded-lg shadow-md text-bg_black text-sm whitespace-nowrap opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 ease-out">
-            Add new item
-          </span>
-        </div>
         <svg
           fill="none"
           height="28"
           viewBox="0 0 28 28"
           width="28"
           xmlns="http://www.w3.org/2000/svg"
+          className="transition-transform group-hover:rotate-180"
         >
           <g
-            className="group-hover:stroke-bg_black"
+            className="group-hover:stroke-bg_black transition-colors"
             stroke="#fff"
             strokeLinecap="round"
             strokeLinejoin="round"

@@ -6,15 +6,20 @@ import FilterMenu from "./FilterMenu";
 const FilterableHistoryTable = () => {
   const [searchFilter, setSearchFilter] = useState("");
   return (
-    <div className="pb-20 sm:mx-auto lg:max-w-[700px] sm:max-w-[500px]">
-      <div className="flex items-center gap-4 mt-6 mb-3">
-        <SearchBar
-          searchFilter={searchFilter}
-          setSearchFilter={setSearchFilter}
-        />
+    <div className="pb-20 sm:mx-auto lg:max-w-[700px] sm:max-w-[500px] animate-fadeIn">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="flex-1">
+          <SearchBar
+            searchFilter={searchFilter}
+            setSearchFilter={setSearchFilter}
+          />
+        </div>
         <FilterMenu />
       </div>
-      <HistoryTable searchFilter={searchFilter} />
+
+      <div className="transition-all duration-300">
+        <HistoryTable searchFilter={searchFilter} />
+      </div>
     </div>
   );
 };
