@@ -20,7 +20,7 @@ const TransactionTypeSwitch = ({
   return (
     <div
       onClick={handleToggle}
-      className="flex items-center gap-3 bg-white py-3 px-6 rounded-[15px] hover:bg-bg_black hover:text-white"
+      className="flex items-center cursor-pointer gap-3 bg-white py-3 px-6 rounded-[15px] hover:bg-bg_black hover:text-white"
     >
       <div className="relative bg-light_gray w-6 h-2 rounded-full transition-colors duration-200 ease-in-out">
         <span
