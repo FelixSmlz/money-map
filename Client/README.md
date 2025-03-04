@@ -1,50 +1,117 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img src="./src/assets/icons/moneymap.svg" alt="MoneyMap Logo" width="200" height="200">
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# MoneyMap - Personal Finance Tracker
 
-Currently, two official plugins are available:
+MoneyMap is a modern web application designed to help users manage their personal finances effectively. With intuitive features for tracking expenses, setting budgets, and managing financial goals, MoneyMap makes it easy to stay on top of your financial health.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+### 🏠 Dashboard
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Monthly spending overview
+- Weekly analytics visualization
+- Quick-add functionality for transactions, budgets, goals, and categories
+- Recent transactions overview
+- Real-time notifications
 
-- Configure the top-level `parserOptions` property like this:
+### 📊 History
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- View all transactions, budgets, goals, and categories
+- Advanced filtering options
+- Sortable data tables
+- Type switching between different data views
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 💰 Transactions
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- Add new transactions
+- Categorize expenses and income
+- Edit transaction details
+- View transaction history
+- Delete transactions
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### 📅 Budgets
+
+- Create periodic budgets (daily, weekly, monthly, custom)
+- Track spending against budgets
+- Visual progress indicators
+- Budget period management
+- Spending alerts
+
+### 🎯 Goals
+
+- Set financial goals
+- Track progress towards goals
+- Visual progress indicators
+- Goal categories
+- Timeline management
+
+### 🏷️ Categories
+
+- Create custom categories
+- Color coding system
+- Icon selection
+- Category management
+- Usage tracking
+
+### ⚙️ Settings
+
+- Profile management
+- Password changes
+- Notification preferences
+- Tutorial reset option
+- Account deletion
+- Feedback submission
+
+## Getting Started
+
+### First Time Setup
+
+1. **Registration**
+
+   - Visit the registration page
+   - Create an account with your email and password
+   - Set up your profile
+
+2. **Tutorial**
+
+   - Complete the interactive tutorial
+   - Learn about key features
+   - Understand the dashboard layout
+
+3. **Initial Setup**
+   - Create your first categories
+   - Set up your first budget
+   - Add your first transaction
+   - Create your first financial goal
+
+### Navigation Tips
+
+- Use the sidebar (desktop) or bottom navigation (mobile) to switch between pages
+- Access quick actions through the + button
+- View notifications through the bell icon
+- Access settings through the gear icon
+
+## Technologies Used
+
+- **Frontend**: React, TypeScript, TailwindCSS
+- **Backend**: Laravel, PHP
+- **Database**: MySQL
+- **Authentication**: Laravel Sanctum
+
+## Support
+
+If you encounter any issues or have questions:
+
+- Use the feedback button in settings
+- Contact support at schmoelz.felix@gmail.com
+- Check the tutorial (can be reset in settings)
+
+## Contributing
+
+MoneyMap is currently in active development. If you'd like to contribute or report issues, please contact the development team.
+
+## License
+
+© 2024 MoneyMap. All rights reserved.

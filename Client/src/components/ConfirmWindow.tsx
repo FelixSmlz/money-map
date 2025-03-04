@@ -52,7 +52,7 @@ const ConfirmWindow = ({ message, onCancel, onConfirm }: Props) => {
               duration-300 ease-out transform hover:scale-[1.02] shadow-sm 
               hover:shadow-md focus:outline-none focus:ring-2 focus:ring-bg_black/20"
           >
-            Cancel
+            No
           </button>
           <button
             onClick={onConfirm}
@@ -62,7 +62,7 @@ const ConfirmWindow = ({ message, onCancel, onConfirm }: Props) => {
               duration-300 ease-out transform hover:scale-[1.02] shadow-sm 
               hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red/20"
           >
-            Delete
+            Yes
           </button>
         </div>
       </div>

@@ -55,7 +55,7 @@ function Profile() {
 
       <div className="flex flex-col items-center gap-8 animate-fadeIn">
         {/* Profile Header Card */}
-        <div className="bg-white/95 backdrop-blur-sm p-8 rounded-[25px] w-full max-w-[500px] shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5">
+        <div className="bg-white/95 backdrop-blur-sm p-8 rounded-[25px] w-full max-w-[250px] shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5">
           <div className="flex flex-col items-center gap-4">
             <Avatar
               color={user?.profile_color}
@@ -91,7 +91,6 @@ function Profile() {
           <div className="space-y-6">
             <DataRow label="name" value={user?.name} />
             <DataRow label="email" value={user?.email} />
-            <DataRow label="phone" value={user?.phone} />
             <DataRow label="profile color" value={renderColor()} />
           </div>
         </div>
