@@ -2,11 +2,16 @@ import { isLoggedIn } from "../utils/api";
 import { Outlet, redirect, useLoaderData } from "react-router";
 
 export const loader = async () => {
-  const { isLoggedIn: loggedIn } = await isLoggedIn();
-  if (loggedIn) {
-    return redirect("/dashboard");
+  try {
+    const { isLoggedIn: loggedIn, user } = await isLoggedIn();
+    if (loggedIn && user) {
+      return redirect("/dashboard");
+    }
+    return null;
+  } catch (error) {
+    console.error("Auth check error:", error);
+    return null;
   }
-  return null;
 };
 
 const GuestLayout = () => {

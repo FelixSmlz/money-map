@@ -20,6 +20,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     const response = await login(formData);
     if (response.status === 200) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
       return redirect("/dashboard");
     } else {
       return response.data.message;

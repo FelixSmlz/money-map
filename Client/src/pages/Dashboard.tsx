@@ -38,7 +38,8 @@ function Dashboard() {
         showProgress: true,
         animate: true,
         showButtons: ["close", "next", "previous"],
-        allowClose: false,
+        allowClose: true,
+        popoverClass: "driver-popover",
         steps: [
           {
             element: ".dashboard",
